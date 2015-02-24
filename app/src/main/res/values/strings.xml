@@ -214,7 +214,7 @@
 
     <string name="drm_none">No DRM engine!</string>
     <string name="drm_req_sdk_11">Requires SDK version 11 or higher.</string>
-    
+
     <string name="account_none">No registered account!</string>
     <string name="account_auth">Authenticator</string>
     <string name="account_auth_none">No authenticator!</string>
@@ -225,6 +225,7 @@
 
     <string name="codec_info">Multimedia CODEC info</string>
     <string name="codec_is_encoder">(Encoder)</string>
+    <string name="codec_none">No CODEC info!</string>
 
     <string name="security_none">No security provider!</string>
     <string name="security_no_service">No service!</string>
@@ -238,6 +239,7 @@
     <string name="unsupported">* Unsupported or error</string>
     <string name="invalid_item">* Invalid item</string>
     <string name="no_iso3">* No ISO3 info</string>
+    <string name="sdk_version_required">Requires SDK version %1$d or higher.</string>
     <string name="none">* None</string>
-    
+
 </resources>

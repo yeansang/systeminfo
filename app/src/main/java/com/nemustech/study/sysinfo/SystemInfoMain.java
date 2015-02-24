@@ -29,10 +29,6 @@ import android.media.MediaCodecList;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.opengl.EGL14;
-import android.opengl.EGLConfig;
-import android.opengl.EGLContext;
-import android.opengl.EGLDisplay;
-import android.opengl.EGLSurface;
 import android.opengl.GLES10;
 import android.os.Build;
 import android.os.Build.VERSION;
@@ -70,7 +66,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import javax.microedition.khronos.opengles.GL10;
+import javax.microedition.khronos.egl.EGL10;
 
 public class SystemInfoMain extends Activity {
     @SuppressWarnings("unused")
@@ -80,11 +76,17 @@ public class SystemInfoMain extends Activity {
     ArrayAdapter<InfoItem> mAdapter;
     ListView mContentList;
 
-    private class GLHelper_14 {
-        private EGLDisplay display;
-        private EGLSurface surface;
-        private EGLContext context;
-        void onCreate() {
+    private interface GLHelper {
+        public void onCreate();
+        public void onDestroy();
+    }
+
+    private class GLHelper_14 implements GLHelper {
+        private android.opengl.EGLDisplay display;
+        private android.opengl.EGLSurface surface;
+        private android.opengl.EGLContext context;
+        @Override
+        public void onCreate() {
             //  Display
             display = EGL14.eglGetDisplay(EGL14.EGL_DEFAULT_DISPLAY);
             int[] ver = new int[2];
@@ -98,14 +100,14 @@ public class SystemInfoMain extends Activity {
                 EGL14.EGL_SURFACE_TYPE, EGL14.EGL_PBUFFER_BIT,
                 EGL14.EGL_NONE
             };
-            EGLConfig[] configs = new EGLConfig[1];
+            android.opengl.EGLConfig[] configs = new android.opengl.EGLConfig[1];
             int[] numConfig = new int[1];
             EGL14.eglChooseConfig(display, configAttr, 0, configs, 0, 1, numConfig, 0);
 
             if (numConfig[0] == 0) {
                 // TROUBLE! No config found.
             }
-            EGLConfig config = configs[0];
+            android.opengl.EGLConfig config = configs[0];
 
             //  Surface
             int[] surfAttr = {
@@ -124,7 +126,8 @@ public class SystemInfoMain extends Activity {
             
             EGL14.eglMakeCurrent(display, surface, surface, context);
         }
-        void onDestroy() {
+        @Override
+        public void onDestroy() {
             EGL14.eglMakeCurrent(display, EGL14.EGL_NO_SURFACE, EGL14.EGL_NO_SURFACE, EGL14.EGL_NO_CONTEXT);
             EGL14.eglDestroySurface(display, surface);
             EGL14.eglDestroyContext(display, context);
@@ -132,7 +135,59 @@ public class SystemInfoMain extends Activity {
         }
     }
 
-    private GLHelper_14 mGLHelper;
+    private class GLHelper_10 implements GLHelper {
+        javax.microedition.khronos.egl.EGLDisplay display;
+        javax.microedition.khronos.egl.EGLSurface surface;
+        javax.microedition.khronos.egl.EGLContext context;
+
+        @Override
+        public void onCreate() {
+            EGL10 egl = (EGL10)javax.microedition.khronos.egl.EGLContext.getEGL();
+
+            display = egl.eglGetDisplay(EGL10.EGL_DEFAULT_DISPLAY);
+            int[] vers = new int[2];
+            egl.eglInitialize(display, vers);
+
+            int[] configAttr = {
+                    EGL10.EGL_COLOR_BUFFER_TYPE, EGL10.EGL_RGB_BUFFER,
+                    EGL10.EGL_LEVEL, 0,
+                    EGL10.EGL_SURFACE_TYPE, EGL10.EGL_PBUFFER_BIT,
+                    EGL10.EGL_NONE
+            };
+            javax.microedition.khronos.egl.EGLConfig[] configs = new javax.microedition.khronos.egl.EGLConfig[1];
+            int[] numConfig = new int[1];
+            egl.eglChooseConfig(display, configAttr, configs, 1, numConfig);
+            if (numConfig[0] == 0) {
+                // TROUBLE! No config found.
+            }
+            javax.microedition.khronos.egl.EGLConfig config = configs[0];
+
+            int[] surfAttr = {
+                    EGL10.EGL_WIDTH, 64,
+                    EGL10.EGL_HEIGHT, 64,
+                    EGL10.EGL_NONE
+            };
+            surface = egl.eglCreatePbufferSurface(display, config, surfAttr);
+            final int EGL_CONTEXT_CLIENT_VERSION = 0x3098;  // missing in EGL10
+            int[] ctxAttrib = {
+                    EGL_CONTEXT_CLIENT_VERSION, 1,
+                    EGL10.EGL_NONE
+            };
+            context = egl.eglCreateContext(display, config, EGL10.EGL_NO_CONTEXT, ctxAttrib);
+            egl.eglMakeCurrent(display, surface, surface, context);
+        }
+        @Override
+        public void onDestroy() {
+            EGL10 egl = (EGL10)javax.microedition.khronos.egl.EGLContext.getEGL();
+
+            egl.eglMakeCurrent(display, EGL10.EGL_NO_SURFACE, EGL10.EGL_NO_SURFACE, EGL10.EGL_NO_CONTEXT);
+            egl.eglDestroySurface(display, surface);
+            egl.eglDestroyContext(display, context);
+            egl.eglTerminate(display);
+        }
+    }
+
+    private GLHelper mGLHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,15 +201,15 @@ public class SystemInfoMain extends Activity {
         setItemSelected(R.id.item_android);
         if (Build.VERSION_CODES.JELLY_BEAN_MR1 <= Build.VERSION.SDK_INT) {
             mGLHelper = new GLHelper_14();
-            mGLHelper.onCreate();
+        } else {
+            mGLHelper = new GLHelper_10();
         }
+        mGLHelper.onCreate();
     }
 
     @Override
     protected void onDestroy() {
-        if (Build.VERSION_CODES.JELLY_BEAN_MR1 <= Build.VERSION.SDK_INT) {
-            mGLHelper.onDestroy();
-        }
+        mGLHelper.onDestroy();
         super.onDestroy();
     }
     ArrayList<InfoItem> mAndroidContent;
@@ -549,7 +604,13 @@ public class SystemInfoMain extends Activity {
             title = getString(titleId);
             switch (titleId) {
                 case R.string.memory_available: value = formatFileSize(am.availMem); break;
-                case R.string.memory_total: value = formatFileSize(am.totalMem); break;
+                case R.string.memory_total: {
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                        value = getString(R.string.sdk_version_required, Build.VERSION_CODES.JELLY_BEAN);
+                    } else {
+                        value = formatFileSize(am.totalMem);
+                    }
+                } break;
                 case R.string.memory_threshold: value = formatFileSize(am.threshold); break;
                 case R.string.memory_runtime_free: value = formatFileSize(rt.freeMemory()); break;
                 case R.string.memory_runtime_max: value = formatFileSize(rt.maxMemory()); break;
@@ -609,7 +670,15 @@ public class SystemInfoMain extends Activity {
                 case R.string.storage_total_space: value = formatFileSize(file.getTotalSpace()); break;
                 case R.string.storage_free_space: value = formatFileSize(file.getFreeSpace()); break;
                 case R.string.storage_usable_space: value = formatFileSize(file.getUsableSpace()); break;
-                case R.string.storage_state: value = Environment.getStorageState(file); break;
+                case R.string.storage_state: {
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+                        value = getString(R.string.sdk_version_required, Build.VERSION_CODES.KITKAT);
+                    } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                        value = Environment.getStorageState(file);
+                    } else {
+                        value = Environment.getExternalStorageState(file);
+                    }
+                } break;
                 default: value = getString(R.string.invalid_item);
             }
         } catch (Error e) {
@@ -1005,13 +1074,17 @@ public class SystemInfoMain extends Activity {
     private ArrayList<InfoItem> getInputContent() {
         if (null == mInputContent) {
             mInputContent = new ArrayList<InfoItem>();
-            InputManager im = (InputManager)getSystemService(INPUT_SERVICE);
-            int[] ids = im.getInputDeviceIds();
-            if (null == ids || 0 == ids.length) {
-                mInputContent.add(new InfoItem(getString(R.string.item_input), getString(R.string.input_none)));
+            if (VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                mInputContent.add(new InfoItem(getString(R.string.item_input), getString(R.string.sdk_version_required, Build.VERSION_CODES.JELLY_BEAN)));
             } else {
-                for (int id: ids) {
-                    mInputContent.add(getInputItem(id));
+                InputManager im = (InputManager)getSystemService(INPUT_SERVICE);
+                int[] ids = im.getInputDeviceIds();
+                if (null == ids || 0 == ids.length) {
+                    mInputContent.add(new InfoItem(getString(R.string.item_input), getString(R.string.input_none)));
+                } else {
+                    for (int id : ids) {
+                        mInputContent.add(getInputItem(id));
+                    }
                 }
             }
         }
@@ -1582,7 +1655,7 @@ public class SystemInfoMain extends Activity {
             mDrmContent = new ArrayList<InfoItem>();
 
             if (VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-                mDrmContent.add(new InfoItem(getString(R.string.item_drm), getString(R.string.drm_req_sdk_11)));
+                mDrmContent.add(new InfoItem(getString(R.string.item_input), getString(R.string.sdk_version_required, Build.VERSION_CODES.HONEYCOMB)));
             } else {
                 DrmManagerClient dcm = new DrmManagerClient(this);
                 String[] engines = dcm.getAvailableDrmEngines();
@@ -1596,7 +1669,9 @@ public class SystemInfoMain extends Activity {
                     }
                     mDrmContent.add(new InfoItem(getString(R.string.item_drm), sb.toString()));
                 }
-                dcm.release();
+                if (Build.VERSION_CODES.JELLY_BEAN <= VERSION.SDK_INT) {
+                    dcm.release();
+                }
             }
         }
         return mDrmContent;
@@ -1730,12 +1805,22 @@ public class SystemInfoMain extends Activity {
         if (null == mCodecContent) {
             mCodecContent = new ArrayList<InfoItem>();
             if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                mCodecContent.add(new InfoItem(getString(R.string.codec_info), getString(R.string.unsupported)));
-            } else {
+                mCodecContent.add(new InfoItem(getString(R.string.codec_info), getString(R.string.sdk_version_required, Build.VERSION_CODES.JELLY_BEAN)));
+            } else if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                 int count = MediaCodecList.getCodecCount();
                 for (int idx = 0; idx < count; ++idx) {
                     MediaCodecInfo info = MediaCodecList.getCodecInfoAt(idx);
                     mCodecContent.add(getCodecInfoItem(info));
+                }
+            } else {
+                MediaCodecList mcl = new MediaCodecList(MediaCodecList.ALL_CODECS);
+                MediaCodecInfo[] infos = mcl.getCodecInfos();
+                if (null == infos || 0 == infos.length) {
+                    mCodecContent.add(new InfoItem(getString(R.string.codec_info), getString(R.string.codec_none)));
+                } else {
+                    for (MediaCodecInfo info: infos) {
+                        mCodecContent.add(getCodecInfoItem(info));
+                    }
                 }
             }
         }
