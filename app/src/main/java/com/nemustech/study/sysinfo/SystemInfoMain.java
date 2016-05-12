@@ -187,6 +187,7 @@ public class SystemInfoMain extends Activity {
     private GLHelper mGLHelper;
 
     private AndroidInfoProvider mAndroidProvider;
+    private SystemInfoProvider mSystemProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -198,6 +199,7 @@ public class SystemInfoMain extends Activity {
         mContentList.setAdapter(mAdapter);
 
         mAndroidProvider = new AndroidInfoProvider(this);
+        mSystemProvider = new SystemInfoProvider(this);
 
         setItemSelected(R.id.item_android);
         if (Build.VERSION_CODES.JELLY_BEAN_MR1 <= Build.VERSION.SDK_INT) {
@@ -213,8 +215,6 @@ public class SystemInfoMain extends Activity {
         mGLHelper.onDestroy();
         super.onDestroy();
     }
-    ArrayList<InfoItem> mAndroidContent;
-    ArrayList<InfoItem> mSystemContent;
     ArrayList<InfoItem> mScreenContent;
     ArrayList<InfoItem> mMemoryContent;
     ArrayList<InfoItem> mStorageContent;
@@ -233,49 +233,6 @@ public class SystemInfoMain extends Activity {
     ArrayList<InfoItem> mSecurityContent;
 
 
-
-    private String formatSeparator(char ch) {
-        if (Character.isWhitespace(ch)) {
-            return String.format("(0x%1$02X)", (int)ch);
-        } else {
-            return String.format("%1$c (0x%2$02X)", ch, (int)ch);
-        }
-    }
-    private String formatSeparators(String str) {
-        StringBuffer sb = new StringBuffer();
-        if (null != str && 0 < str.length()) {
-            sb.append(formatSeparator(str.charAt(0)));
-            for (int idx = 1; idx < str.length(); ++idx) {
-                sb.append('\n').append(formatSeparator(str.charAt(0)));
-            }
-        } else {
-            sb.append(getString(R.string.none));
-        }
-        return sb.toString();
-    }
-
-    private ArrayList<InfoItem> getSystemContent() {
-        if (null == mSystemContent) {
-            mSystemContent = new ArrayList<InfoItem>();
-            mSystemContent.add(new InfoItem(getString(R.string.system_processors), String.valueOf(Runtime.getRuntime().availableProcessors())));
-            Properties prop = System.getProperties();
-            Enumeration<?> names = prop.propertyNames();
-            while (names.hasMoreElements()) {
-                String name = (String) names.nextElement();
-                if (name.contains("separator")) {
-                    mSystemContent.add(new InfoItem(name, formatSeparators(prop.getProperty(name))));
-                } else {
-                    mSystemContent.add(new InfoItem(name, prop.getProperty(name)));
-                }
-            }
-            Map<String, String> env = System.getenv();
-            Set<String> keys = env.keySet();
-            for (String key: keys) {
-                mSystemContent.add(new InfoItem(key, env.get(key)));
-            }
-        }
-        return mSystemContent;
-    }
     private String formatSize(int w, int h) {
         return String.format("%d x %d", w, h);
     }
@@ -1769,7 +1726,7 @@ public class SystemInfoMain extends Activity {
                 items = mAndroidProvider.getItems();
                 break;
             case R.id.item_system:
-                items = getSystemContent();
+                items = mSystemProvider.getItems();
                 break;
             case R.id.item_screen:
                 items = getScreenContent();

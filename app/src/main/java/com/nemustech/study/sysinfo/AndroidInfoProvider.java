@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class AndroidInfoProvider extends InfoProvider {
     @SuppressWarnings("unused")
     private static final String TAG = AndroidInfoProvider.class.getSimpleName();
-    static ArrayList<InfoItem> sAndroidContent;
+    private static ArrayList<InfoItem> sAndroidContent;
 
     public AndroidInfoProvider(Context context) {
         super(context);
