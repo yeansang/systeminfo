@@ -4,6 +4,7 @@ package com.nemustech.study.sysinfo;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.accounts.AuthenticatorDescription;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.MemoryInfo;
@@ -34,7 +35,6 @@ import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.Settings.Secure;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.FloatMath;
@@ -47,18 +47,14 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.nemustech.study.sysinfo.InfoListView.InfoItem;
-
 import java.io.File;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.security.Provider;
 import java.security.Security;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
@@ -77,10 +73,11 @@ public class SystemInfoMain extends Activity {
     ListView mContentList;
 
     private interface GLHelper {
-        public void onCreate();
-        public void onDestroy();
+        void onCreate();
+        void onDestroy();
     }
 
+    @SuppressLint("NewApi")
     private class GLHelper_14 implements GLHelper {
         private android.opengl.EGLDisplay display;
         private android.opengl.EGLSurface surface;
@@ -189,6 +186,8 @@ public class SystemInfoMain extends Activity {
 
     private GLHelper mGLHelper;
 
+    private AndroidInfoProvider mAndroidProvider;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -197,6 +196,8 @@ public class SystemInfoMain extends Activity {
         mAdapter = new InfoListView.InfoItemAdapter(this, 0, new ArrayList<InfoItem>());
         mContentList = (ListView)findViewById(R.id.l_content);
         mContentList.setAdapter(mAdapter);
+
+        mAndroidProvider = new AndroidInfoProvider(this);
 
         setItemSelected(R.id.item_android);
         if (Build.VERSION_CODES.JELLY_BEAN_MR1 <= Build.VERSION.SDK_INT) {
@@ -231,147 +232,7 @@ public class SystemInfoMain extends Activity {
     ArrayList<InfoItem> mCodecContent;
     ArrayList<InfoItem> mSecurityContent;
 
-    private static final String[] SDK_NAMES = {
-        "* Unknown",
-        "Base",
-        "Base_1_1",
-        "Cupcake",
-        "Donut",
-        "Eclair",
-        "Eclair_0_1",
-        "Eclair MR1",
-        "Froyo",
-        "Gingerbread",
-        "Gingerbread MR1",
-        "Honeycomb",
-        "Honeycomb_MR1",
-        "Honeycomb_MR2",
-        "Ice Cream Sandwich",
-        "Ice Cream Sandwich MR1",
-        "Jelly Bean",
-        "Jelly Bean MR1",
-        "Jelly Bean MR2",
-        "KitKat",
-        "KitKat for Wearables",
-        "Lollipop"
-    };
 
-    private String getSdkName(int sdkInt) {
-        int idx = (sdkInt < 0 || SDK_NAMES.length <= sdkInt)? 0: sdkInt;
-        return SDK_NAMES[idx];
-    }
-
-    private String formatSdk(int sdkInt) {
-        return String.format("%d (%s)", sdkInt, getSdkName(sdkInt));
-    }
-
-    private SimpleDateFormat mSdf = new SimpleDateFormat("yyyy-MM-dd HH:mm.ss");
-    private String formatTime(long time) {
-        return mSdf.format(new Date(time));
-    }
-
-    private String formatStringArray(String[] array) {
-        StringBuffer sb = new StringBuffer();
-        if (null != array && 0 < array.length) {
-            sb.append(array[0]);
-            for (int idx = 1; idx < array.length; ++idx) {
-                sb.append('\n').append(array[idx]);
-            }
-        } else {
-            sb.append(getString(R.string.none));
-        }
-        return sb.toString();
-    }
-
-    private String formatFloatArray(float[] array) {
-        StringBuffer sb = new StringBuffer();
-        if (null != array && 0 < array.length) {
-            sb.append(String.valueOf(array[0]));
-            for (int idx = 1; idx < array.length; ++idx) {
-                sb.append('\n').append(String.valueOf(array[idx]));
-            }
-        } else {
-            sb.append(getString(R.string.none));
-        }
-        return sb.toString();
-    }
-
-    private InfoItem getAndroidItem(int titleId) {
-        String title = getString(titleId);
-        String value;
-        try {
-            switch (titleId) {
-                case R.string.android_release: value = Build.VERSION.RELEASE; break;
-                case R.string.android_sdk: value = formatSdk(Build.VERSION.SDK_INT); break;
-                case R.string.android_time: value = formatTime(Build.TIME); break;
-                case R.string.android_tags: value = Build.TAGS; break;
-                case R.string.android_type: value = Build.TYPE; break;
-                case R.string.android_codename: value = Build.VERSION.CODENAME; break;
-                case R.string.android_display: value = Build.DISPLAY; break;
-                case R.string.android_fingerprint: value = Build.FINGERPRINT; break;
-                case R.string.android_manufacturer: value = Build.MANUFACTURER; break;
-                case R.string.android_brand: value = Build.BRAND; break;
-                case R.string.android_product: value = Build.PRODUCT; break;
-                case R.string.android_device: value = Build.DEVICE; break;
-                case R.string.android_model: value = Build.MODEL; break;
-                case R.string.android_hardware: value = Build.HARDWARE; break;
-                case R.string.android_serial: value = Build.SERIAL; break;
-                case R.string.android_board: value = Build.BOARD; break;
-                case R.string.android_bootloader: value = Build.BOOTLOADER; break;
-                case R.string.android_radio: value = Build.getRadioVersion(); break;
-                case R.string.android_incremental: value = Build.VERSION.INCREMENTAL; break;
-                case R.string.android_host: value = Build.HOST; break;
-                case R.string.android_id: value = Build.ID; break;
-                case R.string.android_secure_id: value = Secure.getString(getContentResolver(), Secure.ANDROID_ID); break;
-                case R.string.android_secure_class: value = Secure.getString(getContentResolver(), Secure.SETTINGS_CLASSNAME); break;
-                case R.string.android_secure_version: value = Secure.getString(getContentResolver(), Secure.SYS_PROP_SETTING_VERSION); break;
-                case R.string.android_supported_abis: value = formatStringArray(Build.SUPPORTED_ABIS); break;
-                case R.string.android_supported_32bit_abis: value = formatStringArray(Build.SUPPORTED_32_BIT_ABIS); break;
-                case R.string.android_supported_64bit_abis: value = formatStringArray(Build.SUPPORTED_64_BIT_ABIS); break;
-                default: value = getString(R.string.invalid_item);
-            }
-        } catch (Error e) {
-            Log.e(TAG, e.toString());
-            value = getString(R.string.unsupported);
-        }
-        return new InfoItem(title, value);
-    }
-
-    private ArrayList<InfoItem> getAndroidContent() {
-        if (null == mAndroidContent) {
-            mAndroidContent = new ArrayList<InfoItem>();
-            mAndroidContent.add(getAndroidItem(R.string.android_release));
-            mAndroidContent.add(getAndroidItem(R.string.android_sdk));
-            mAndroidContent.add(getAndroidItem(R.string.android_time));
-            mAndroidContent.add(getAndroidItem(R.string.android_tags));
-            mAndroidContent.add(getAndroidItem(R.string.android_type));
-            mAndroidContent.add(getAndroidItem(R.string.android_codename));
-            mAndroidContent.add(getAndroidItem(R.string.android_display));
-            mAndroidContent.add(getAndroidItem(R.string.android_id));
-            mAndroidContent.add(getAndroidItem(R.string.android_fingerprint));
-            mAndroidContent.add(getAndroidItem(R.string.android_manufacturer));
-            mAndroidContent.add(getAndroidItem(R.string.android_brand));
-            mAndroidContent.add(getAndroidItem(R.string.android_product));
-            mAndroidContent.add(getAndroidItem(R.string.android_device));
-            mAndroidContent.add(getAndroidItem(R.string.android_model));
-            mAndroidContent.add(getAndroidItem(R.string.android_hardware));
-            mAndroidContent.add(getAndroidItem(R.string.android_serial));
-            mAndroidContent.add(getAndroidItem(R.string.android_board));
-            mAndroidContent.add(getAndroidItem(R.string.android_bootloader));
-            mAndroidContent.add(getAndroidItem(R.string.android_radio));
-            mAndroidContent.add(getAndroidItem(R.string.android_incremental));
-            if (Build.VERSION_CODES.LOLLIPOP <= Build.VERSION.SDK_INT) {
-                mAndroidContent.add(getAndroidItem(R.string.android_supported_abis));
-                mAndroidContent.add(getAndroidItem(R.string.android_supported_32bit_abis));
-                mAndroidContent.add(getAndroidItem(R.string.android_supported_64bit_abis));
-            }
-            mAndroidContent.add(getAndroidItem(R.string.android_host));
-            mAndroidContent.add(getAndroidItem(R.string.android_secure_id));
-//            mAndroidContent.add(getAndroidItem(R.string.android_secure_class));
-//            mAndroidContent.add(getAndroidItem(R.string.android_secure_version));
-        }
-        return mAndroidContent;
-    }
 
     private String formatSeparator(char ch) {
         if (Character.isWhitespace(ch)) {
@@ -516,7 +377,7 @@ public class SystemInfoMain extends Activity {
         getDisplaySize(mTmpPoint, disp);
         final float w = mTmpPoint.x / dm.xdpi;
         final float h = mTmpPoint.y / dm.ydpi;
-        final float d = FloatMath.sqrt(w * w + h * h);
+        final double d = Math.sqrt(w * w + h * h);
         return String.format("%.2f x %.2f (%.2f inch)", w, h, d);
     }
     private void getDisplaySize(Point outPoint, Display disp) {
@@ -528,6 +389,21 @@ public class SystemInfoMain extends Activity {
             outPoint.y = disp.getHeight();
         }
     }
+
+    private String formatFloatArray(float[] array) {
+        StringBuffer sb = new StringBuffer();
+        if (null != array && 0 < array.length) {
+            sb.append(String.valueOf(array[0]));
+            for (int idx = 1; idx < array.length; ++idx) {
+                sb.append('\n').append(String.valueOf(array[idx]));
+            }
+        } else {
+            sb.append(getString(R.string.none));
+        }
+        return sb.toString();
+    }
+
+    @SuppressLint("NewApi")
     private InfoItem getScreenItem(int titleId, Display disp, DisplayMetrics dm) {
         String title = getString(titleId);
         String value;
@@ -1890,7 +1766,7 @@ public class SystemInfoMain extends Activity {
         ArrayList<InfoItem> items = null;
         switch (view.getId()) {
             case R.id.item_android:
-                items = getAndroidContent();
+                items = mAndroidProvider.getItems();
                 break;
             case R.id.item_system:
                 items = getSystemContent();

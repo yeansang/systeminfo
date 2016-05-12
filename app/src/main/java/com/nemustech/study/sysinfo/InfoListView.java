@@ -26,17 +26,6 @@ public class InfoListView extends ListView {
         super(context, attrs, defStyle);
     }
 
-    public static class InfoItem {
-        public InfoItem() {
-        }
-        public InfoItem(String name, String value) {
-            this.name = name;
-            this.value = value;
-        }
-        String name;
-        String value;
-    }
-
     public static class InfoItemAdapter extends ArrayAdapter<InfoItem> {
         @SuppressWarnings("unused")
         private static final String TAG = InfoItemAdapter.class.getSimpleName();

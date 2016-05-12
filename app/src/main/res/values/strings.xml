@@ -44,12 +44,12 @@
     <string name="android_sdk">SDK version</string>
     <string name="android_time">Build Time</string>
     <string name="android_secure_id">Android_id</string>
-    <string name="android_secure_class">Settings classname</string>
-    <string name="android_secure_version">Settings version</string>
     <string name="android_supported_abis">Supported ABIs</string>
     <string name="android_supported_32bit_abis">Supported 32bit ABIs</string>
     <string name="android_supported_64bit_abis">Supported 64bit ABIs</string>
-    
+    <string name="android_base_os">Base OS</string>
+    <string name="android_preview_sdk">Preview SDK version</string>
+
     <string name="system_processors">Available processors</string>
     
     <string name="screen_logical_density">Logical density</string>
@@ -239,7 +239,7 @@
     <string name="unsupported">* Unsupported or error</string>
     <string name="invalid_item">* Invalid item</string>
     <string name="no_iso3">* No ISO3 info</string>
-    <string name="sdk_version_required">Requires SDK version %1$d or higher.</string>
+    <string name="sdk_version_required">* Requires SDK version %1$d or higher.</string>
     <string name="none">* None</string>
 
 </resources>
