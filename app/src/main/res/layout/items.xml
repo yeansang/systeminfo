@@ -1,21 +1,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/l_items"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
->
+    android:orientation="vertical">
     <TextView android:id="@+id/item_android"
         style="@style/ListItemText"
         android:text="@string/item_android"
         />
-    <TextView android:id="@+id/item_system"
-        style="@style/ListItemText"
-        android:text="@string/item_system"
-        />
     <TextView android:id="@+id/item_screen"
         style="@style/ListItemText"
         android:text="@string/item_screen"
+        />
+    <TextView android:id="@+id/item_system"
+        style="@style/ListItemText"
+        android:text="@string/item_system"
         />
     <TextView android:id="@+id/item_memory"
         style="@style/ListItemText"

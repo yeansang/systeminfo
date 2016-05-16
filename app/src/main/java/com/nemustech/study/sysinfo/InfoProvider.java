@@ -39,9 +39,10 @@ public abstract class InfoProvider {
         mContext = context.getApplicationContext();
     }
 
-//    String getString(int id, Object... args) {
-//        return mContext.getString(id, args);
-//    }
+    String getString(int id, Object... args) {
+        return mContext.getString(id, args);
+    }
+
     String getString(int id) {
         return mContext.getString(id);
     }
@@ -72,6 +73,25 @@ public abstract class InfoProvider {
         return sb.toString();
     }
 
+    private static final String[] sUNIT = {
+            "", "K", "M", "G", "T", "P", "E", "*"
+    };
+
+    String formatStorageSize(long size) {
+        int kidx = 0;
+        long tmp = size;
+        long div = 1;
+        while (tmp > 1024) {
+            ++kidx;
+            tmp /= 1024;
+            div *= 1024;
+        }
+        float v = (float)size / (float)div;
+        if (sUNIT.length <= kidx) {
+            kidx = sUNIT.length - 1;
+        }
+        return String.format("%.1f %s (%,d)", v, sUNIT[kidx], size);
+    }
     static protected class InfoSpec {
         int titleId;
         int minSdk;

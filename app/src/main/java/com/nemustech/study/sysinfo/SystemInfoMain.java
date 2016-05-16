@@ -6,8 +6,6 @@ import android.accounts.AccountManager;
 import android.accounts.AuthenticatorDescription;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.app.ActivityManager.MemoryInfo;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.pm.PackageManager;
@@ -15,8 +13,6 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.drm.DrmManagerClient;
 import android.graphics.ImageFormat;
-import android.graphics.PixelFormat;
-import android.graphics.Point;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.Sensor;
@@ -36,13 +32,9 @@ import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.os.Environment;
 import android.telephony.TelephonyManager;
-import android.util.DisplayMetrics;
-import android.util.FloatMath;
 import android.util.Log;
-import android.view.Display;
 import android.view.InputDevice;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -55,11 +47,8 @@ import java.security.Provider;
 import java.security.Security;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 
 import javax.microedition.khronos.egl.EGL10;
@@ -188,6 +177,8 @@ public class SystemInfoMain extends Activity {
 
     private AndroidInfoProvider mAndroidProvider;
     private SystemInfoProvider mSystemProvider;
+    private ScreenInfoProvider mScreenProvider;
+    private MemoryInfoProvider mMemoryProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -200,6 +191,8 @@ public class SystemInfoMain extends Activity {
 
         mAndroidProvider = new AndroidInfoProvider(this);
         mSystemProvider = new SystemInfoProvider(this);
+        mScreenProvider = new ScreenInfoProvider(this);
+        mMemoryProvider = new MemoryInfoProvider(this);
 
         setItemSelected(R.id.item_android);
         if (Build.VERSION_CODES.JELLY_BEAN_MR1 <= Build.VERSION.SDK_INT) {
@@ -215,8 +208,7 @@ public class SystemInfoMain extends Activity {
         mGLHelper.onDestroy();
         super.onDestroy();
     }
-    ArrayList<InfoItem> mScreenContent;
-    ArrayList<InfoItem> mMemoryContent;
+
     ArrayList<InfoItem> mStorageContent;
     ArrayList<InfoItem> mPhoneContent;
     ArrayList<InfoItem> mSensorContent;
@@ -232,246 +224,6 @@ public class SystemInfoMain extends Activity {
     ArrayList<InfoItem> mCodecContent;
     ArrayList<InfoItem> mSecurityContent;
 
-
-    private String formatSize(int w, int h) {
-        return String.format("%d x %d", w, h);
-    }
-    private String formatSize(float w, float h) {
-        return String.format("%f x %f", w, h);
-    }
-    private String formatSize(Point p) {
-        return String.format("%d x %d", p.x, p.y);
-    }
-    private String formatSize(int[] size) {
-        return String.format("%d x %d", size[0], size[1]);
-    }
-    private String formatDpi(int dpi) {
-        String vn;
-        switch (dpi) {
-            case DisplayMetrics.DENSITY_LOW:
-                vn = "ldpi";
-                break;
-            case DisplayMetrics.DENSITY_MEDIUM:
-                vn = "mdpi";
-                break;
-            case DisplayMetrics.DENSITY_HIGH:
-                vn = "hdpi";
-                break;
-            case DisplayMetrics.DENSITY_XHIGH:
-                vn = "xhdpi";
-                break;
-            case DisplayMetrics.DENSITY_XXHIGH:
-                vn = "xxhdpi";
-                break;
-            case DisplayMetrics.DENSITY_XXXHIGH:
-                vn = "xxxhdpi";
-                break;
-            case DisplayMetrics.DENSITY_TV:
-                vn = "tvdpi";
-                break;
-            default:
-                vn = getString(R.string.unknown);
-        }
-        return String.format("%d dpi (%s)", dpi, vn);
-    }
-    @SuppressWarnings("deprecation")
-    private String formatPixelFormat(int format) {
-        String name;
-        switch (format) {
-            case PixelFormat.A_8:
-                name = "A_8";
-                break;
-            case PixelFormat.LA_88:
-                name = "LA_88";
-                break;
-            case PixelFormat.L_8:
-                name = "L_8";
-                break;
-            case PixelFormat.RGBA_4444:
-                name = "RGBA_4444";
-                break;
-            case PixelFormat.RGBA_5551:
-                name = "RGBA_5551";
-                break;
-            case PixelFormat.RGBA_8888:
-                name = "RGBA_8888";
-                break;
-            case PixelFormat.RGBX_8888:
-                name = "RGBX_8888";
-                break;
-            case PixelFormat.RGB_332:
-                name = "RGB_332";
-                break;
-            case PixelFormat.OPAQUE:
-                name = "OPAQUE";
-                break;
-            case PixelFormat.RGB_565:
-                name = "RGB_565";
-                break;
-            case PixelFormat.RGB_888:
-                name = "RGB_888";
-                break;
-            case PixelFormat.TRANSLUCENT:
-                name = "TRANSLUCENT";
-                break;
-            case PixelFormat.TRANSPARENT:
-                name = "TRANSPARENT";
-                break;
-            default:
-                name = getString(R.string.unknown);
-                break;
-        }
-        return String.format("%s (%d)", name, format);
-    }
-    private Point mTmpPoint = new Point();
-    private String formatSizeDp(Display disp, DisplayMetrics dm) {
-        getDisplaySize(mTmpPoint, disp);
-        final float w = mTmpPoint.x / dm.density;
-        final float h = mTmpPoint.y / dm.density;
-        return String.format("%.2f x %.2f dp", w, h);
-    }
-    private String formatSizeInch(Display disp, DisplayMetrics dm) {
-        getDisplaySize(mTmpPoint, disp);
-        final float w = mTmpPoint.x / dm.xdpi;
-        final float h = mTmpPoint.y / dm.ydpi;
-        final double d = Math.sqrt(w * w + h * h);
-        return String.format("%.2f x %.2f (%.2f inch)", w, h, d);
-    }
-    private void getDisplaySize(Point outPoint, Display disp) {
-        try {
-            disp.getRealSize(outPoint);
-        } catch (Error e) {
-            Log.i(TAG, e.toString());
-            outPoint.x = disp.getWidth();
-            outPoint.y = disp.getHeight();
-        }
-    }
-
-    private String formatFloatArray(float[] array) {
-        StringBuffer sb = new StringBuffer();
-        if (null != array && 0 < array.length) {
-            sb.append(String.valueOf(array[0]));
-            for (int idx = 1; idx < array.length; ++idx) {
-                sb.append('\n').append(String.valueOf(array[idx]));
-            }
-        } else {
-            sb.append(getString(R.string.none));
-        }
-        return sb.toString();
-    }
-
-    @SuppressLint("NewApi")
-    private InfoItem getScreenItem(int titleId, Display disp, DisplayMetrics dm) {
-        String title = getString(titleId);
-        String value;
-        try {
-            switch (titleId) {
-                case R.string.screen_logical_size: value = getString(R.string.screen_logical_size_value); break;
-                case R.string.screen_dpi: value = formatDpi(dm.densityDpi); break;
-                case R.string.screen_available_size: disp.getSize(mTmpPoint); value = formatSize(mTmpPoint); break;
-                case R.string.screen_real_size: getDisplaySize(mTmpPoint, disp); value = formatSize(mTmpPoint); break;
-                case R.string.screen_logical_size_in_dp: value = formatSizeDp(disp, dm); break;
-                case R.string.screen_physical_size_in_inch: value = formatSizeInch(disp, dm); break;
-                case R.string.screen_pixel_format: value = formatPixelFormat(disp.getPixelFormat()); break;
-                case R.string.screen_physical_dpi: value = formatSize(dm.xdpi, dm.ydpi); break;
-                case R.string.screen_logical_density: value = String.valueOf(dm.density); break;
-                case R.string.screen_scaled_density: value = String.valueOf(dm.scaledDensity); break;
-                case R.string.screen_id: value = String.valueOf(disp.getDisplayId()); break;
-                case R.string.screen_name: value = disp.getName(); break;
-                case R.string.screen_rotation: value = String.valueOf(disp.getRotation()); break;
-                case R.string.screen_refresh_rate: value = String.valueOf(disp.getRefreshRate()); break;
-                case R.string.screen_supported_refresh_rates: value = formatFloatArray(disp.getSupportedRefreshRates()); break;
-                case R.string.screen_app_vsync_offset: value = String.valueOf(disp.getAppVsyncOffsetNanos()); break;
-                case R.string.screen_presentation_deadline: value = String.valueOf(disp.getPresentationDeadlineNanos()); break;
-                default: value = getString(R.string.invalid_item);
-            }
-        } catch (Error e) {
-            Log.e(TAG, e.toString());
-            value = getString(R.string.unsupported);
-        }
-        return new InfoItem(title, value);
-    }
-    private ArrayList<InfoItem> getScreenContent() {
-        if (null == mScreenContent) {
-            mScreenContent = new ArrayList<InfoItem>();
-        }
-
-        mScreenContent.clear();
-        WindowManager wm = (WindowManager) getSystemService(WINDOW_SERVICE);
-        Display disp = wm.getDefaultDisplay();
-        DisplayMetrics dm = new DisplayMetrics();
-        try {
-            disp.getRealMetrics(dm);
-        } catch (Error e) {
-            Log.i(TAG, e.toString());
-            disp.getMetrics(dm);
-        }
-
-        mScreenContent.add(getScreenItem(R.string.screen_logical_size, disp, dm));
-        mScreenContent.add(getScreenItem(R.string.screen_dpi, disp, dm));
-        mScreenContent.add(getScreenItem(R.string.screen_available_size, disp, dm));
-        mScreenContent.add(getScreenItem(R.string.screen_real_size, disp, dm));
-        mScreenContent.add(getScreenItem(R.string.screen_logical_size_in_dp, disp, dm));
-        mScreenContent.add(getScreenItem(R.string.screen_physical_size_in_inch, disp, dm));
-        mScreenContent.add(getScreenItem(R.string.screen_pixel_format, disp, dm));
-        mScreenContent.add(getScreenItem(R.string.screen_physical_dpi, disp, dm));
-        mScreenContent.add(getScreenItem(R.string.screen_logical_density, disp, dm));
-        mScreenContent.add(getScreenItem(R.string.screen_scaled_density, disp, dm));
-        mScreenContent.add(getScreenItem(R.string.screen_id, disp, dm));
-        mScreenContent.add(getScreenItem(R.string.screen_name, disp, dm));
-        mScreenContent.add(getScreenItem(R.string.screen_rotation, disp, dm));
-        mScreenContent.add(getScreenItem(R.string.screen_refresh_rate, disp, dm));
-        if (Build.VERSION_CODES.LOLLIPOP <= Build.VERSION.SDK_INT) {
-            mScreenContent.add(getScreenItem(R.string.screen_supported_refresh_rates, disp, dm));
-            mScreenContent.add(getScreenItem(R.string.screen_app_vsync_offset, disp, dm));
-            mScreenContent.add(getScreenItem(R.string.screen_presentation_deadline, disp, dm));
-        }
-        return mScreenContent;
-    }
-
-    private InfoItem getMemoryItem(int titleId, ActivityManager.MemoryInfo am, Runtime rt) {
-        String title = "";
-        String value;
-
-        try {
-            title = getString(titleId);
-            switch (titleId) {
-                case R.string.memory_available: value = formatFileSize(am.availMem); break;
-                case R.string.memory_total: {
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                        value = getString(R.string.sdk_version_required, Build.VERSION_CODES.JELLY_BEAN);
-                    } else {
-                        value = formatFileSize(am.totalMem);
-                    }
-                } break;
-                case R.string.memory_threshold: value = formatFileSize(am.threshold); break;
-                case R.string.memory_runtime_free: value = formatFileSize(rt.freeMemory()); break;
-                case R.string.memory_runtime_max: value = formatFileSize(rt.maxMemory()); break;
-                case R.string.memory_runtime_total: value = formatFileSize(rt.totalMemory()); break;
-                default: value = getString(R.string.invalid_item);
-            }
-        } catch (Error e) {
-            Log.e(TAG, e.toString());
-            value = getString(R.string.unsupported);
-        }
-        return new InfoItem(title, value);
-    }
-    private ArrayList<InfoItem> getMemoryContent() {
-        if (null == mMemoryContent) {
-            mMemoryContent = new ArrayList<InfoItem>();
-        }
-        ActivityManager.MemoryInfo aMeminfo = new MemoryInfo();
-        ((ActivityManager)getSystemService(ACTIVITY_SERVICE)).getMemoryInfo(aMeminfo);
-        Runtime runtime = Runtime.getRuntime();
-        mMemoryContent.clear();
-        mMemoryContent.add(getMemoryItem(R.string.memory_total, aMeminfo, runtime));
-        mMemoryContent.add(getMemoryItem(R.string.memory_available, aMeminfo, runtime));
-        mMemoryContent.add(getMemoryItem(R.string.memory_threshold, aMeminfo, runtime));
-        mMemoryContent.add(getMemoryItem(R.string.memory_runtime_free, aMeminfo, runtime));
-        mMemoryContent.add(getMemoryItem(R.string.memory_runtime_max, aMeminfo, runtime));
-        mMemoryContent.add(getMemoryItem(R.string.memory_runtime_total, aMeminfo, runtime));
-        return mMemoryContent;
-    }
 
 
     private static final String[] sUNIT = {
@@ -1366,6 +1118,10 @@ public class SystemInfoMain extends Activity {
         }
         return sb.toString();
     }
+    private String formatSize(int[] size) {
+        return String.format("%d x %d", size[0], size[1]);
+    }
+
     private int mGLValues[] = new int[2];
     private static final int MAGIC_NUMBER = -7151;
     private InfoItem getOpenGLItem(int id) {
@@ -1729,10 +1485,10 @@ public class SystemInfoMain extends Activity {
                 items = mSystemProvider.getItems();
                 break;
             case R.id.item_screen:
-                items = getScreenContent();
+                items = mScreenProvider.getItems();
                 break;
             case R.id.item_memory:
-                items = getMemoryContent();
+                items = mMemoryProvider.getItems();
                 break;
             case R.id.item_storage:
                 items = getStorageContent();

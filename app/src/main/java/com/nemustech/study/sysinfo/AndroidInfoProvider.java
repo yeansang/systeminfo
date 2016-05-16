@@ -1,6 +1,5 @@
 package com.nemustech.study.sysinfo;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.provider.Settings;
@@ -117,7 +116,7 @@ public class AndroidInfoProvider extends InfoProvider {
         return new InfoItem(title, value);
     }
 
-    private static final InfoSpec[] itemSpecs = {
+    private static final InfoSpec[] sItemSpecs = {
         new InfoSpec(R.string.android_release, 1),
         new InfoSpec(R.string.android_sdk, 4),
         new InfoSpec(R.string.android_time, 1),
@@ -151,8 +150,8 @@ public class AndroidInfoProvider extends InfoProvider {
     ArrayList<InfoItem> getItems() {
         if (null == sAndroidContent) {
             sAndroidContent = new ArrayList<>();
-            for (int idx = 0; idx < itemSpecs.length; ++idx) {
-                InfoItem item = getItem(itemSpecs[idx]);
+            for (int idx = 0; idx < sItemSpecs.length; ++idx) {
+                InfoItem item = getItem(sItemSpecs[idx]);
                 if (null != item) {
                     sAndroidContent.add(item);
                 }

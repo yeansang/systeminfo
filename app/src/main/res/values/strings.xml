@@ -51,7 +51,8 @@
     <string name="android_preview_sdk">Preview SDK version</string>
 
     <string name="system_processors">Available processors</string>
-    
+
+    <string name="screen_count">Number of display</string>
     <string name="screen_logical_density">Logical density</string>
     <string name="screen_dpi">Density (dpi)</string>
     <string name="screen_physical_dpi">Physical DPI</string>
@@ -64,13 +65,37 @@
     <string name="screen_refresh_rate">Refresh rate</string>
     <string name="screen_rotation">Rotation</string>
     <string name="screen_logical_size">Logical size</string>
-    <string name="screen_logical_size_value">@string/unknown</string>
     <string name="screen_logical_size_in_dp">Physical size (dp)</string>
     <string name="screen_physical_size_in_inch">Physical size (Inch)</string>
     <string name="screen_app_vsync_offset">Application VSYNC offset (ns)</string>
     <string name="screen_presentation_deadline">Presentation deadline (ns)</string>
     <string name="screen_supported_refresh_rates">Supported refresh rates</string>
-    
+    <string name="screen_smallest_width_dp">Smallest width (dp)</string>
+    <string name="screen_ui_mode">UI mode</string>
+    <string name="screen_layout_direction">Layout direction</string>
+    <string name="screen_size_small">Small (%1$d)</string>
+    <string name="screen_size_normal">Normal (%1$d)</string>
+    <string name="screen_size_large">Large (%1$d)</string>
+    <string name="screen_size_xlarge">X-Large (%1$d)</string>
+    <string name="screen_size_undefined">Undefined (%1$d)</string>
+    <string name="screen_mode_type_appliance">Appliance (%1$d)</string>
+    <string name="screen_mode_type_car">Car (%1$d)</string>
+    <string name="screen_mode_type_desk">Appliance (%1$d)</string>
+    <string name="screen_mode_type_normal">Normal (%1$d)</string>
+    <string name="screen_mode_type_television">Television (%1$d)</string>
+    <string name="screen_mode_type_watch">Watch (%1$d)</string>
+    <string name="screen_mode_type_undefined">Undefined (%1$d)</string>
+    <string name="screen_night_no">NOT night (%1$x)</string>
+    <string name="screen_night_yes">Night mode (%1$x)</string>
+    <string name="screen_night_undefined">Undefined night mode (%1$x)</string>
+    <string name="screen_layout_ltr">Left to right (%1$x)</string>
+    <string name="screen_layout_rtl">Right to left (%1$x)</string>
+    <string name="screen_state">State</string>
+    <string name="screen_size_range">Size range</string>
+    <string name="screen_other_features">Other features</string>
+
+
+
     <string name="memory_available">Available</string>
     <string name="memory_total">Total</string>
     <string name="memory_threshold">Low threshold</string>
@@ -236,6 +261,8 @@
 <!--     <string name="phone_"></string> -->
 <!--     <string name="android_"></string> -->
     <string name="unknown">* Unknown</string>
+    <string name="unknown_int_value">* Unknown value: %1$d (0x%1$X)</string>
+    <string name="unknown_float_value">* Unknown value: %.2f</string>
     <string name="unsupported">* Unsupported or error</string>
     <string name="invalid_item">* Invalid item</string>
     <string name="no_iso3">* No ISO3 info</string>
