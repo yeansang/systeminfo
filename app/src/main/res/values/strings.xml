@@ -120,11 +120,11 @@
     <string name="storage_emulated">&#160;(Emulated)</string>
     <string name="storage_removable">Removable</string>
     <string name="storage_non_removable">Fixed</string>
-    <string name="storage_absolute_path">%1$s: Absolute path</string>
-    <string name="storage_total_space">%1$s: Total space</string>
-    <string name="storage_free_space">%1$s: Free space</string>
-    <string name="storage_usable_space">%1$s: Usable space</string>
-    <string name="storage_state">%1$s: State</string>
+    <string name="storage_absolute_path">Absolute path</string>
+    <string name="storage_total_space">Total space</string>
+    <string name="storage_free_space">Free space</string>
+    <string name="storage_usable_space">Usable space</string>
+    <string name="storage_state">State</string>
 
     <string name="phone_none">No telephone capability</string>
     <string name="phone_device_id">Device ID</string>

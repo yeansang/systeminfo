@@ -9,6 +9,7 @@ import java.util.Date;
 
 /**
  * Created by cheolgyoon on 2016. 5. 11..
+ *
  */
 public abstract class InfoProvider {
     @SuppressWarnings("unused")
@@ -48,7 +49,7 @@ public abstract class InfoProvider {
     }
 
     String formatStringArray(String... array) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         if (null != array && 0 < array.length) {
             sb.append(array[0]);
             for (int idx = 1; idx < array.length; ++idx) {
@@ -61,7 +62,7 @@ public abstract class InfoProvider {
     }
 
     String formatFloatArray(float[] array) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         if (null != array && 0 < array.length) {
             sb.append(String.valueOf(array[0]));
             for (int idx = 1; idx < array.length; ++idx) {

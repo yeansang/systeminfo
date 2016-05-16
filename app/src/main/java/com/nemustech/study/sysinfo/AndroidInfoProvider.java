@@ -156,33 +156,6 @@ public class AndroidInfoProvider extends InfoProvider {
                     sAndroidContent.add(item);
                 }
             }
-//            sAndroidContent.add(getItem(R.string.android_release));
-//            sAndroidContent.add(getItem(R.string.android_sdk));
-//            sAndroidContent.add(getItem(R.string.android_time));
-//            sAndroidContent.add(getItem(R.string.android_tags));
-//            sAndroidContent.add(getItem(R.string.android_type));
-//            sAndroidContent.add(getItem(R.string.android_codename));
-//            sAndroidContent.add(getItem(R.string.android_display));
-//            sAndroidContent.add(getItem(R.string.android_id));
-//            sAndroidContent.add(getItem(R.string.android_fingerprint));
-//            sAndroidContent.add(getItem(R.string.android_manufacturer));
-//            sAndroidContent.add(getItem(R.string.android_brand));
-//            sAndroidContent.add(getItem(R.string.android_product));
-//            sAndroidContent.add(getItem(R.string.android_device));
-//            sAndroidContent.add(getItem(R.string.android_model));
-//            sAndroidContent.add(getItem(R.string.android_hardware));
-//            sAndroidContent.add(getItem(R.string.android_serial));
-//            sAndroidContent.add(getItem(R.string.android_board));
-//            sAndroidContent.add(getItem(R.string.android_bootloader));
-//            sAndroidContent.add(getItem(R.string.android_radio));
-//            sAndroidContent.add(getItem(R.string.android_incremental));
-//            if (Build.VERSION_CODES.LOLLIPOP <= Build.VERSION.SDK_INT) {
-//                sAndroidContent.add(getItem(R.string.android_supported_abis));
-//                sAndroidContent.add(getItem(R.string.android_supported_32bit_abis));
-//                sAndroidContent.add(getItem(R.string.android_supported_64bit_abis));
-//            }
-//            sAndroidContent.add(getItem(R.string.android_host));
-//            sAndroidContent.add(getItem(R.string.android_secure_id));
         }
         return sAndroidContent;
     }

@@ -30,7 +30,6 @@ import android.opengl.GLES10;
 import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Bundle;
-import android.os.Environment;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.InputDevice;
@@ -39,7 +38,6 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import java.io.File;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -179,6 +177,7 @@ public class SystemInfoMain extends Activity {
     private SystemInfoProvider mSystemProvider;
     private ScreenInfoProvider mScreenProvider;
     private MemoryInfoProvider mMemoryProvider;
+    private StorageInfoProvider mStorageProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -193,6 +192,7 @@ public class SystemInfoMain extends Activity {
         mSystemProvider = new SystemInfoProvider(this);
         mScreenProvider = new ScreenInfoProvider(this);
         mMemoryProvider = new MemoryInfoProvider(this);
+        mStorageProvider = new StorageInfoProvider(this);
 
         setItemSelected(R.id.item_android);
         if (Build.VERSION_CODES.JELLY_BEAN_MR1 <= Build.VERSION.SDK_INT) {
@@ -209,7 +209,6 @@ public class SystemInfoMain extends Activity {
         super.onDestroy();
     }
 
-    ArrayList<InfoItem> mStorageContent;
     ArrayList<InfoItem> mPhoneContent;
     ArrayList<InfoItem> mSensorContent;
     ArrayList<InfoItem> mInputContent;
@@ -229,104 +228,6 @@ public class SystemInfoMain extends Activity {
     private static final String[] sUNIT = {
         "", "K", "M", "G", "T", "P", "E", "*"
     };
-
-    private String formatFileSize(long size) {
-        int kidx = 0;
-        long tmp = size;
-        long div = 1;
-        while (tmp > 1024) {
-            ++kidx;
-            tmp /= 1024;
-            div *= 1024;
-        }
-        float v = (float)size / (float)div;
-        if (sUNIT.length <= kidx) {
-            kidx = sUNIT.length - 1;
-        }
-        return String.format("%.1f %s (%,d)", v, sUNIT[kidx], size);
-    }
-
-    private InfoItem getFileItem(int titleId, File file, String name) {
-        String title = getString(titleId, name);
-        String value;
-        try {
-            switch (titleId) {
-                case R.string.storage_absolute_path: value = file.getAbsolutePath(); break;
-                case R.string.storage_total_space: value = formatFileSize(file.getTotalSpace()); break;
-                case R.string.storage_free_space: value = formatFileSize(file.getFreeSpace()); break;
-                case R.string.storage_usable_space: value = formatFileSize(file.getUsableSpace()); break;
-                case R.string.storage_state: {
-                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-                        value = getString(R.string.sdk_version_required, Build.VERSION_CODES.KITKAT);
-                    } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                        value = Environment.getStorageState(file);
-                    } else {
-                        value = Environment.getExternalStorageState(file);
-                    }
-                } break;
-                default: value = getString(R.string.invalid_item);
-            }
-        } catch (Error e) {
-            Log.e(TAG, e.toString());
-            value = getString(R.string.unsupported);
-        }
-        return new InfoItem(title, value);
-    }
-    private void addFileItems(ArrayList<InfoItem> items, File file, String name) {
-        items.add(getFileItem(R.string.storage_absolute_path, file, name));
-        items.add(getFileItem(R.string.storage_total_space, file, name));
-        items.add(getFileItem(R.string.storage_free_space, file, name));
-        items.add(getFileItem(R.string.storage_usable_space, file, name));
-        items.add(getFileItem(R.string.storage_state, file, name));
-    }
-    private String formatStorageEnvironment() {
-        boolean em;
-        try {
-            em = Environment.isExternalStorageEmulated();
-        } catch (Error e) {
-            Log.i(TAG, e.toString());
-            em = false;
-        }
-        boolean rm = Environment.isExternalStorageRemovable();
-        StringBuffer sb = new StringBuffer();
-        sb.append(Environment.getExternalStorageState()).append(", ");
-        if (rm) {
-            sb.append(getString(R.string.storage_removable));
-        } else {
-            sb.append(getString(R.string.storage_non_removable));
-        }
-        if (em) {
-            sb.append(getString(R.string.storage_emulated));
-        }
-        return sb.toString();
-    }
-    private boolean isExternalStorageAccessible() {
-        if (!Environment.isExternalStorageRemovable()) {
-            return true;
-        }
-        final String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            return true;
-        }
-        if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-            return true;
-        }
-        return false;
-    }
-    private ArrayList<InfoItem> getStorageContent() {
-        if (null == mStorageContent) {
-            mStorageContent = new ArrayList<InfoItem>();
-
-            addFileItems(mStorageContent, Environment.getRootDirectory(), "System");
-            addFileItems(mStorageContent, Environment.getDataDirectory(), "Data");
-            addFileItems(mStorageContent, Environment.getDownloadCacheDirectory(), "Cache");
-            mStorageContent.add(new InfoItem(getString(R.string.storage_external_description), formatStorageEnvironment()));
-            if (isExternalStorageAccessible()) {
-                addFileItems(mStorageContent, Environment.getExternalStorageDirectory(), "External");
-            }
-        }
-        return mStorageContent;
-    }
 
     private String formatPhoneType(int phoneType) {
         String name;
@@ -1491,7 +1392,7 @@ public class SystemInfoMain extends Activity {
                 items = mMemoryProvider.getItems();
                 break;
             case R.id.item_storage:
-                items = getStorageContent();
+                items = mStorageProvider.getItems();
                 break;
             case R.id.item_phone:
                 items = getPhoneContent();
