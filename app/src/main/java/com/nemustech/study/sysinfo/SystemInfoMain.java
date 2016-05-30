@@ -30,7 +30,6 @@ import android.opengl.GLES10;
 import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.InputDevice;
 import android.view.View;
@@ -178,6 +177,7 @@ public class SystemInfoMain extends Activity {
     private ScreenInfoProvider mScreenProvider;
     private MemoryInfoProvider mMemoryProvider;
     private StorageInfoProvider mStorageProvider;
+    private TelephoneInfoProvider mTelephoneProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -193,6 +193,7 @@ public class SystemInfoMain extends Activity {
         mScreenProvider = new ScreenInfoProvider(this);
         mMemoryProvider = new MemoryInfoProvider(this);
         mStorageProvider = new StorageInfoProvider(this);
+        mTelephoneProvider = new TelephoneInfoProvider(this);
 
         setItemSelected(R.id.item_android);
         if (Build.VERSION_CODES.JELLY_BEAN_MR1 <= Build.VERSION.SDK_INT) {
@@ -209,7 +210,6 @@ public class SystemInfoMain extends Activity {
         super.onDestroy();
     }
 
-    ArrayList<InfoItem> mPhoneContent;
     ArrayList<InfoItem> mSensorContent;
     ArrayList<InfoItem> mInputContent;
     ArrayList<InfoItem> mConnectivityContent;
@@ -228,169 +228,6 @@ public class SystemInfoMain extends Activity {
     private static final String[] sUNIT = {
         "", "K", "M", "G", "T", "P", "E", "*"
     };
-
-    private String formatPhoneType(int phoneType) {
-        String name;
-        switch (phoneType) {
-            case TelephonyManager.PHONE_TYPE_CDMA:
-                name = "CDMA";
-                break;
-            case TelephonyManager.PHONE_TYPE_GSM:
-                name = "GSM";
-                break;
-            case TelephonyManager.PHONE_TYPE_SIP:
-                name = "SIP";
-                break;
-            case TelephonyManager.PHONE_TYPE_NONE:
-            default:
-                name = getString(R.string.unknown);
-                break;
-        }
-        return String.format("%s (%d)", name, phoneType);
-    }
-    private String formatNetworkType(int networkType) {
-        String name;
-        switch (networkType) {
-            case TelephonyManager.NETWORK_TYPE_1xRTT:
-                name = "1xRTT";
-                break;
-            case TelephonyManager.NETWORK_TYPE_CDMA:
-                name = "CDMA";
-                break;
-            case TelephonyManager.NETWORK_TYPE_EDGE:
-                name = "EDGE";
-                break;
-            case TelephonyManager.NETWORK_TYPE_EHRPD:
-                name = "EHRPD";
-                break;
-            case TelephonyManager.NETWORK_TYPE_EVDO_0:
-                name = "EVDO_0";
-                break;
-            case TelephonyManager.NETWORK_TYPE_EVDO_A:
-                name = "EVDO_A";
-                break;
-            case TelephonyManager.NETWORK_TYPE_EVDO_B:
-                name = "EVDO_B";
-                break;
-            case TelephonyManager.NETWORK_TYPE_GPRS:
-                name = "GPRS";
-                break;
-            case TelephonyManager.NETWORK_TYPE_HSDPA:
-                name = "HSDPA";
-                break;
-            case TelephonyManager.NETWORK_TYPE_HSPA:
-                name = "HSPA";
-                break;
-            case TelephonyManager.NETWORK_TYPE_HSPAP:
-                name = "HSPAP";
-                break;
-            case TelephonyManager.NETWORK_TYPE_HSUPA:
-                name = "HSUPA";
-                break;
-            case TelephonyManager.NETWORK_TYPE_IDEN:
-                name = "IDEN";
-                break;
-            case TelephonyManager.NETWORK_TYPE_LTE:
-                name = "LTE";
-                break;
-            case TelephonyManager.NETWORK_TYPE_UMTS:
-                name = "UMTS";
-                break;
-            case TelephonyManager.NETWORK_TYPE_UNKNOWN:
-            default:
-                name = getString(R.string.unknown);
-                break;
-        }
-        return String.format("%s (%d)", name, networkType);
-    }
-    private String formatSimState(int simState) {
-        String name;
-        switch (simState) {
-            case TelephonyManager.SIM_STATE_ABSENT:
-                name = "Absent";
-                break;
-            case TelephonyManager.SIM_STATE_NETWORK_LOCKED:
-                name = "Network locked";
-                break;
-            case TelephonyManager.SIM_STATE_PIN_REQUIRED:
-                name = "PIN required";
-                break;
-            case TelephonyManager.SIM_STATE_PUK_REQUIRED:
-                name = "PUK required";
-                break;
-            case TelephonyManager.SIM_STATE_READY:
-                name = "Ready";
-                break;
-            case TelephonyManager.SIM_STATE_UNKNOWN:
-            default:
-                name = getString(R.string.unknown);
-                break;
-        }
-        return String.format("%s (%d)", name, simState);
-    }
-    private InfoItem getPhoneItem(int titleId, TelephonyManager tm) {
-        String title = getString(titleId);
-        String value;
-        try {
-            switch (titleId) {
-                case R.string.phone_phone_type: value = formatPhoneType(tm.getPhoneType()); break;
-                case R.string.phone_device_id: value = tm.getDeviceId(); break;
-                case R.string.phone_subscriber_id: value = tm.getSubscriberId(); break;
-                case R.string.phone_device_software_version: value = tm.getDeviceSoftwareVersion(); break;
-                case R.string.phone_group_id_l1: value = tm.getGroupIdLevel1(); break;
-                case R.string.phone_line1_number: value = tm.getLine1Number(); break;
-                case R.string.phone_network_country_iso: value = tm.getNetworkCountryIso(); break;
-                case R.string.phone_network_operator: value = tm.getNetworkOperator(); break;
-                case R.string.phone_network_operator_name: value = tm.getNetworkOperatorName(); break;
-                case R.string.phone_network_type: value = formatNetworkType(tm.getNetworkType()); break;
-                case R.string.phone_sim_state: value = formatSimState(tm.getSimState()); break;
-                case R.string.phone_sim_country_iso: value = tm.getSimCountryIso(); break;
-                case R.string.phone_sim_operator: value = tm.getSimOperator(); break;
-                case R.string.phone_sim_operator_name: value = tm.getSimOperatorName(); break;
-                case R.string.phone_sim_serial: value = tm.getSimSerialNumber(); break;
-                case R.string.phone_voice_mail_tag: value = tm.getVoiceMailAlphaTag(); break;
-                case R.string.phone_voice_mail_number: value = tm.getVoiceMailNumber(); break;
-                default: value = getString(R.string.invalid_item);
-            }
-        } catch (Error e) {
-            Log.e(TAG, e.toString());
-            value = getString(R.string.unsupported);
-        }
-        return new InfoItem(title, value);
-    }
-    private ArrayList<InfoItem> getPhoneContent() {
-        if (null == mPhoneContent) {
-            mPhoneContent = new ArrayList<InfoItem>();
-
-            TelephonyManager tm = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
-            if (null == tm || tm.getPhoneType() == TelephonyManager.PHONE_TYPE_NONE) {
-                mPhoneContent.add(new InfoItem(getString(R.string.phone_phone_type), getString(R.string.phone_none)));
-            } else {
-                mPhoneContent.add(getPhoneItem(R.string.phone_phone_type, tm));
-                mPhoneContent.add(getPhoneItem(R.string.phone_device_id, tm));
-                mPhoneContent.add(getPhoneItem(R.string.phone_subscriber_id, tm));
-                mPhoneContent.add(getPhoneItem(R.string.phone_device_software_version, tm));
-                if (tm.getPhoneType() == TelephonyManager.PHONE_TYPE_GSM) {
-                    mPhoneContent.add(getPhoneItem(R.string.phone_group_id_l1, tm));
-                }
-                mPhoneContent.add(getPhoneItem(R.string.phone_line1_number, tm));
-                mPhoneContent.add(getPhoneItem(R.string.phone_network_country_iso, tm));
-                mPhoneContent.add(getPhoneItem(R.string.phone_network_operator, tm));
-                mPhoneContent.add(getPhoneItem(R.string.phone_network_operator_name, tm));
-                mPhoneContent.add(getPhoneItem(R.string.phone_network_type, tm));
-                mPhoneContent.add(getPhoneItem(R.string.phone_sim_state, tm));
-                if (tm.getSimState() == TelephonyManager.SIM_STATE_READY) {
-                    mPhoneContent.add(getPhoneItem(R.string.phone_sim_country_iso, tm));
-                    mPhoneContent.add(getPhoneItem(R.string.phone_sim_operator, tm));
-                    mPhoneContent.add(getPhoneItem(R.string.phone_sim_operator_name, tm));
-                    mPhoneContent.add(getPhoneItem(R.string.phone_sim_serial, tm));
-                }
-                mPhoneContent.add(getPhoneItem(R.string.phone_voice_mail_tag, tm));
-                mPhoneContent.add(getPhoneItem(R.string.phone_voice_mail_number, tm));
-            }
-        }
-        return mPhoneContent;
-    }
 
     private String formatSensorType(int type) {
         String name;
@@ -1395,7 +1232,7 @@ public class SystemInfoMain extends Activity {
                 items = mStorageProvider.getItems();
                 break;
             case R.id.item_phone:
-                items = getPhoneContent();
+                items = mTelephoneProvider.getItems();
                 break;
             case R.id.item_sensor:
                 items = getSensorContent();

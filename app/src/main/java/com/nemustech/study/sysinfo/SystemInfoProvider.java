@@ -70,7 +70,11 @@ public class SystemInfoProvider extends InfoProvider {
     }
 
     @Override
-    protected InfoItem getItem(int infoId) {
+    protected Object[] getInfoParams() {
+        return null;
+    }
+    @Override
+    protected InfoItem getItem(int infoId, Object... params) {
         return null;
     }
 }

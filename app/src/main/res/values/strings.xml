@@ -129,7 +129,7 @@
     <string name="phone_none">No telephone capability</string>
     <string name="phone_device_id">Device ID</string>
     <string name="phone_device_software_version">Device software version</string>
-    <string name="phone_group_id_l1">Group Id Level-1</string>
+    <string name="phone_group_id_l1">GSM Group Id Level-1</string>
     <string name="phone_line1_number">Phone number</string>
     <string name="phone_network_country_iso">Network country code</string>
     <string name="phone_network_operator">Network operator</string>
@@ -144,6 +144,10 @@
     <string name="phone_subscriber_id">Subscriber ID</string>
     <string name="phone_voice_mail_tag">Voice mail tag</string>
     <string name="phone_voice_mail_number">Voice mail number</string>
+    <string name="phone_mms_ua">MMS User Agent</string>
+    <string name="phone_mms_ua_prof_url">MMS user agent profile URL</string>
+    <string name="phone_phone_count">Number of phones</string>
+    <string name="phone_features">Features</string>
 
     <string name="sensor_none">No sensor available!</string>
     <string name="sensor_name">Name</string>

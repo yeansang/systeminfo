@@ -22,18 +22,28 @@ public abstract class InfoProvider {
     Context mContext;
 
     abstract ArrayList<InfoItem> getItems();
-    abstract protected InfoItem getItem(int infoId);
+    abstract protected InfoItem getItem(int infoId, Object... params);
+    abstract protected Object[] getInfoParams();
 
     protected final InfoItem getItem(InfoSpec spec) {
         if (Build.VERSION.SDK_INT < spec.minSdk) {
             return null;
             //new InfoItem(getString(spec.titleId), mContext.getString(R.string.sdk_version_required, spec.minSdk));
         }
-        InfoItem item = getItem(spec.titleId);
+        InfoItem item = getItem(spec.titleId, getInfoParams());
         if (null == item) {
             item = new InfoItem(getString(spec.titleId), getString(R.string.unsupported));
         }
         return item;
+    }
+
+    protected void addItems(ArrayList<InfoItem> list, InfoSpec[] specs) {
+        for (InfoSpec spec: specs) {
+            InfoItem item = getItem(spec);
+            if (null != item) {
+                list.add(item);
+            }
+        }
     }
 
     InfoProvider(Context context) {

@@ -1,5 +1,6 @@
 package com.nemustech.study.sysinfo;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
@@ -22,7 +23,8 @@ public class ScreenInfoProvider extends InfoProvider {
     @SuppressWarnings("unused")
     private static final String TAG = ScreenInfoProvider.class.getSimpleName();
 
-    private static ArrayList<InfoItem> mScreenContent;
+    private ArrayList<InfoItem> mScreenContent;
+    private Object[] mParams;
 
     ScreenInfoProvider(Context context) {
         super(context);
@@ -131,6 +133,9 @@ public class ScreenInfoProvider extends InfoProvider {
         final double d = Math.sqrt(w * w + h * h);
         return String.format("%.2f x %.2f (%.2f inch)", w, h, d);
     }
+
+    @SuppressWarnings("deprecation")
+    @SuppressLint("NewApi")
     private void getDisplaySize(Point outPoint, Display disp) {
         try {
             if (Build.VERSION_CODES.JELLY_BEAN_MR1 <= Build.VERSION.SDK_INT) {
@@ -156,12 +161,14 @@ public class ScreenInfoProvider extends InfoProvider {
         return getString(R.string.unknown_int_value, state);
     }
 
+    @SuppressLint("NewApi")
     private String getSizeRange(Display disp) {
         Point largest = new Point();
         disp.getCurrentSizeRange(mTmpPoint, largest);
         return String.format("%4d x%5d - %4d x%5d", mTmpPoint.x, mTmpPoint.y, largest.x, largest.y);
     }
 
+    @SuppressLint("InlinedApi")
     private String formatFlags(int flags) {
         StringBuilder sb = new StringBuilder();
 
@@ -193,81 +200,6 @@ public class ScreenInfoProvider extends InfoProvider {
         return sb.toString();
     }
 
-    private InfoItem getDisplayItem(int titleId, Display disp, DisplayMetrics dm) {
-        String value;
-        try {
-            switch (titleId) {
-                case R.string.screen_dpi: value = formatDpi(dm.densityDpi); break;
-                case R.string.screen_available_size: disp.getSize(mTmpPoint); value = formatSize(mTmpPoint); break;
-                case R.string.screen_real_size: getDisplaySize(mTmpPoint, disp); value = formatSize(mTmpPoint); break;
-                case R.string.screen_logical_size_in_dp: value = formatSizeDp(disp, dm); break;
-                case R.string.screen_physical_size_in_inch: value = formatSizeInch(disp, dm); break;
-                case R.string.screen_pixel_format: value = formatPixelFormat(disp.getPixelFormat()); break;
-                case R.string.screen_physical_dpi: value = formatSize(dm.xdpi, dm.ydpi); break;
-                case R.string.screen_logical_density: value = String.valueOf(dm.density); break;
-                case R.string.screen_scaled_density: value = String.valueOf(dm.scaledDensity); break;
-                case R.string.screen_id: value = String.valueOf(disp.getDisplayId()); break;
-                case R.string.screen_name: value = disp.getName(); break;
-                case R.string.screen_rotation: value = String.valueOf(disp.getRotation()); break;
-                case R.string.screen_refresh_rate: value = String.valueOf(disp.getRefreshRate()); break;
-                case R.string.screen_supported_refresh_rates: value = formatFloatArray(disp.getSupportedRefreshRates()); break;
-                case R.string.screen_app_vsync_offset: value = String.valueOf(disp.getAppVsyncOffsetNanos()); break;
-                case R.string.screen_presentation_deadline: value = String.valueOf(disp.getPresentationDeadlineNanos()); break;
-                case R.string.screen_state: value = formatDisplayState(disp.getState()); break;
-                case R.string.screen_size_range: value = getSizeRange(disp); break;
-                case R.string.screen_other_features: value = formatFlags(disp.getFlags()); break;
-                default: value = getString(R.string.invalid_item);
-            }
-        } catch (Error e) {
-            Log.e(TAG, e.toString());
-            value = getString(R.string.unsupported);
-        }
-        String title = String.format("Screen %d: %s", disp.getDisplayId(), getString(titleId));
-        return new InfoItem(title, value);
-    }
-
-    private static final InfoSpec[] sDisplaySpecs = {
-        new InfoSpec(R.string.screen_id, 1),
-        new InfoSpec(R.string.screen_dpi, 4),
-        new InfoSpec(R.string.screen_available_size, 13),
-        new InfoSpec(R.string.screen_real_size, 17),
-        new InfoSpec(R.string.screen_size_range, 16),
-        new InfoSpec(R.string.screen_logical_size_in_dp, 1),
-        new InfoSpec(R.string.screen_physical_size_in_inch, 1),
-        new InfoSpec(R.string.screen_pixel_format, 1),
-        new InfoSpec(R.string.screen_physical_dpi, 1),
-        new InfoSpec(R.string.screen_logical_density, 1),
-        new InfoSpec(R.string.screen_scaled_density, 1),
-        new InfoSpec(R.string.screen_name, 17),
-        new InfoSpec(R.string.screen_rotation, 8),
-        new InfoSpec(R.string.screen_refresh_rate, 1),
-        new InfoSpec(R.string.screen_supported_refresh_rates, 21),
-        new InfoSpec(R.string.screen_app_vsync_offset, 21),
-        new InfoSpec(R.string.screen_presentation_deadline, 17),
-        new InfoSpec(R.string.screen_state, 20),
-        new InfoSpec(R.string.screen_other_features, 17),
-    };
-
-    private void addDisplayItems(Display disp) {
-        DisplayMetrics dm = new DisplayMetrics();
-        try {
-            disp.getRealMetrics(dm);
-        } catch (Error e) {
-            Log.i(TAG, e.toString());
-            disp.getMetrics(dm);
-        }
-
-        for (int idx = 0; idx < sDisplaySpecs.length; ++idx) {
-            InfoSpec spec = sDisplaySpecs[idx];
-            if (spec.minSdk <= Build.VERSION.SDK_INT) {
-                InfoItem item = getDisplayItem(sDisplaySpecs[idx].titleId, disp, dm);
-                if (null != item) {
-                    mScreenContent.add(item);
-                }
-            }
-        }
-    }
-
     private Display[] getDisplays() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
             WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
@@ -277,37 +209,6 @@ public class ScreenInfoProvider extends InfoProvider {
             return dm.getDisplays();
         }
     }
-
-    @Override
-    ArrayList<InfoItem> getItems() {
-        if (null == mScreenContent) {
-            mScreenContent = new ArrayList<>();
-        }
-
-        mScreenContent.clear();
-        for (int idx = 0; idx < sConfigSpecs.length; ++idx) {
-            InfoItem item = getItem(sConfigSpecs[idx]);
-            if (null != item) {
-                mScreenContent.add(item);
-            }
-        }
-
-        Display[] displays = getDisplays();
-        mScreenContent.add(new InfoItem(getString(R.string.screen_count), String.valueOf(displays.length)));
-
-        for (Display display: displays) {
-            addDisplayItems(display);
-        }
-
-        return mScreenContent;
-    }
-
-    private static final InfoSpec[] sConfigSpecs = {
-        new InfoSpec(R.string.screen_logical_size, 4),
-        new InfoSpec(R.string.screen_smallest_width_dp, 13),
-        new InfoSpec(R.string.screen_ui_mode, 8),
-        new InfoSpec(R.string.screen_layout_direction, 17),
-    };
 
     private String formatLogicalSize(int layout) {
         int layoutSize = layout & Configuration.SCREENLAYOUT_SIZE_MASK;
@@ -377,23 +278,122 @@ public class ScreenInfoProvider extends InfoProvider {
         return getString(R.string.unknown_int_value, direction);
     }
 
+    @SuppressLint("NewApi")
+    private void setParamsForDisplay(Display display) {
+        DisplayMetrics metrics = new DisplayMetrics();
+        try {
+            display.getRealMetrics(metrics);
+        } catch (Error e) {
+            Log.i(TAG, e.toString());
+            display.getMetrics(metrics);
+        }
+        mParams = new Object[] { display, metrics };
+    }
+
     @Override
-    protected InfoItem getItem(int titleId) {
+    protected Object[] getInfoParams() {
+        return mParams;
+    }
+
+    @SuppressWarnings("deprecation")
+    @SuppressLint("NewApi")
+    @Override
+    protected InfoItem getItem(int titleId, Object... params) {
         Configuration config = mContext.getResources().getConfiguration();
-        String title = getString(titleId);
         String value;
+        Display display = null;
+        DisplayMetrics metrics;
+
         try {
             switch (titleId) {
                 case R.string.screen_logical_size: value = formatLogicalSize(config.screenLayout); break;
                 case R.string.screen_smallest_width_dp: value = String.format("%d", config.smallestScreenWidthDp); break;
                 case R.string.screen_ui_mode: value = formatUiMode(config.uiMode); break;
                 case R.string.screen_layout_direction: value = formatLayoutDirection(config.getLayoutDirection()); break;
-                default: value = getString(R.string.invalid_item);
+                default:
+                    display = (params[0] instanceof Display)? (Display)params[0]: null;
+                    assert display != null;
+                    metrics = (params[1] instanceof DisplayMetrics)? (DisplayMetrics)params[1]: null;
+                    assert metrics != null;
+                    switch (titleId) {
+                        case R.string.screen_dpi: value = formatDpi(metrics.densityDpi); break;
+                        case R.string.screen_available_size: display.getSize(mTmpPoint); value = formatSize(mTmpPoint); break;
+                        case R.string.screen_real_size: getDisplaySize(mTmpPoint, display); value = formatSize(mTmpPoint); break;
+                        case R.string.screen_logical_size_in_dp: value = formatSizeDp(display, metrics); break;
+                        case R.string.screen_physical_size_in_inch: value = formatSizeInch(display, metrics); break;
+                        case R.string.screen_pixel_format: value = formatPixelFormat(display.getPixelFormat()); break;
+                        case R.string.screen_physical_dpi: value = formatSize(metrics.xdpi, metrics.ydpi); break;
+                        case R.string.screen_logical_density: value = String.valueOf(metrics.density); break;
+                        case R.string.screen_scaled_density: value = String.valueOf(metrics.scaledDensity); break;
+                        case R.string.screen_id: value = String.valueOf(display.getDisplayId()); break;
+                        case R.string.screen_name: value = display.getName(); break;
+                        case R.string.screen_rotation: value = String.valueOf(display.getRotation()); break;
+                        case R.string.screen_refresh_rate: value = String.valueOf(display.getRefreshRate()); break;
+                        case R.string.screen_supported_refresh_rates: value = formatFloatArray(display.getSupportedRefreshRates()); break;
+                        case R.string.screen_app_vsync_offset: value = String.valueOf(display.getAppVsyncOffsetNanos()); break;
+                        case R.string.screen_presentation_deadline: value = String.valueOf(display.getPresentationDeadlineNanos()); break;
+                        case R.string.screen_state: value = formatDisplayState(display.getState()); break;
+                        case R.string.screen_size_range: value = getSizeRange(display); break;
+                        case R.string.screen_other_features: value = formatFlags(display.getFlags()); break;
+                        default: value = getString(R.string.invalid_item);
+                    }
             }
-        }catch (Error e) {
+        } catch (Error e) {
             Log.e(TAG, e.toString());
             value = getString(R.string.unsupported);
         }
+
+        String title = (null == display)? getString(titleId): String.format("Screen %d: %s", display.getDisplayId(), getString(titleId));
         return new InfoItem(title, value);
+    }
+
+    private static final InfoSpec[] sConfigSpecs = {
+            new InfoSpec(R.string.screen_logical_size, 4),
+            new InfoSpec(R.string.screen_smallest_width_dp, 13),
+            new InfoSpec(R.string.screen_ui_mode, 8),
+            new InfoSpec(R.string.screen_layout_direction, 17),
+    };
+
+    private static final InfoSpec[] sDisplaySpecs = {
+            new InfoSpec(R.string.screen_id, 1),
+            new InfoSpec(R.string.screen_dpi, 4),
+            new InfoSpec(R.string.screen_available_size, 13),
+            new InfoSpec(R.string.screen_real_size, 17),
+            new InfoSpec(R.string.screen_size_range, 16),
+            new InfoSpec(R.string.screen_logical_size_in_dp, 1),
+            new InfoSpec(R.string.screen_physical_size_in_inch, 1),
+            new InfoSpec(R.string.screen_pixel_format, 1),
+            new InfoSpec(R.string.screen_physical_dpi, 1),
+            new InfoSpec(R.string.screen_logical_density, 1),
+            new InfoSpec(R.string.screen_scaled_density, 1),
+            new InfoSpec(R.string.screen_name, 17),
+            new InfoSpec(R.string.screen_rotation, 8),
+            new InfoSpec(R.string.screen_refresh_rate, 1),
+            new InfoSpec(R.string.screen_supported_refresh_rates, 21),
+            new InfoSpec(R.string.screen_app_vsync_offset, 21),
+            new InfoSpec(R.string.screen_presentation_deadline, 17),
+            new InfoSpec(R.string.screen_state, 20),
+            new InfoSpec(R.string.screen_other_features, 17),
+    };
+
+    @Override
+    ArrayList<InfoItem> getItems() {
+        if (null == mScreenContent) {
+            mScreenContent = new ArrayList<>();
+        }
+
+        mScreenContent.clear();
+
+        addItems(mScreenContent, sConfigSpecs);
+
+        Display[] displays = getDisplays();
+        mScreenContent.add(new InfoItem(getString(R.string.screen_count), String.valueOf(displays.length)));
+
+        for (Display display: displays) {
+            setParamsForDisplay(display);
+            addItems(mScreenContent, sDisplaySpecs);
+        }
+
+        return mScreenContent;
     }
 }

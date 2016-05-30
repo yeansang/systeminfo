@@ -1,5 +1,6 @@
 package com.nemustech.study.sysinfo;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.provider.Settings;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 
 /**
  * Created by cheolgyoon on 2016. 5. 11..
+ *
  */
 public class AndroidInfoProvider extends InfoProvider {
     @SuppressWarnings("unused")
@@ -60,7 +62,14 @@ public class AndroidInfoProvider extends InfoProvider {
     }
 
     @Override
-    protected InfoItem getItem(int titleId) {
+    protected Object[] getInfoParams() {
+        return null;
+    }
+
+    @SuppressLint("NewApi")
+    @SuppressWarnings("deprecation")
+    @Override
+    protected InfoItem getItem(int titleId, Object... params) {
         String title = getString(titleId);
         String value;
         try {
@@ -150,8 +159,8 @@ public class AndroidInfoProvider extends InfoProvider {
     ArrayList<InfoItem> getItems() {
         if (null == sAndroidContent) {
             sAndroidContent = new ArrayList<>();
-            for (int idx = 0; idx < sItemSpecs.length; ++idx) {
-                InfoItem item = getItem(sItemSpecs[idx]);
+            for (InfoSpec spec: sItemSpecs) {
+                InfoItem item = getItem(spec);
                 if (null != item) {
                     sAndroidContent.add(item);
                 }
