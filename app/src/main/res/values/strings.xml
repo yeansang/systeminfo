@@ -157,7 +157,11 @@
     <string name="sensor_power">Power consumtion</string>
     <string name="sensor_resolution">Resolution</string>
     <string name="sensor_max_range">Maximum range</string>
-    <string name="sensor_min_delay">Minimum delay in ms</string>
+    <string name="sensor_delay">Delay in microsecond</string>
+    <string name="sensor_batch_fifo_size">Batch FIFO size</string>
+    <string name="sensor_reporting_mode">Reporting mode</string>
+    <string name="sensor_batch_not_supported">Batch mode not supported</string>
+
 
     <string name="input_none">No input device!</string>
     <string name="input_descriptor">Descriptor</string>

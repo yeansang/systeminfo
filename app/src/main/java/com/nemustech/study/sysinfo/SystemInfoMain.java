@@ -15,8 +15,6 @@ import android.drm.DrmManagerClient;
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
 import android.hardware.input.InputManager;
 import android.location.Criteria;
 import android.location.LocationManager;
@@ -178,6 +176,7 @@ public class SystemInfoMain extends Activity {
     private MemoryInfoProvider mMemoryProvider;
     private StorageInfoProvider mStorageProvider;
     private TelephoneInfoProvider mTelephoneProvider;
+    private SensorInfoProvider mSensorProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,6 +193,7 @@ public class SystemInfoMain extends Activity {
         mMemoryProvider = new MemoryInfoProvider(this);
         mStorageProvider = new StorageInfoProvider(this);
         mTelephoneProvider = new TelephoneInfoProvider(this);
+        mSensorProvider = new SensorInfoProvider(this);
 
         setItemSelected(R.id.item_android);
         if (Build.VERSION_CODES.JELLY_BEAN_MR1 <= Build.VERSION.SDK_INT) {
@@ -210,7 +210,6 @@ public class SystemInfoMain extends Activity {
         super.onDestroy();
     }
 
-    ArrayList<InfoItem> mSensorContent;
     ArrayList<InfoItem> mInputContent;
     ArrayList<InfoItem> mConnectivityContent;
     ArrayList<InfoItem> mNetworkContent;
@@ -223,90 +222,9 @@ public class SystemInfoMain extends Activity {
     ArrayList<InfoItem> mCodecContent;
     ArrayList<InfoItem> mSecurityContent;
 
-
-
     private static final String[] sUNIT = {
         "", "K", "M", "G", "T", "P", "E", "*"
     };
-
-    private String formatSensorType(int type) {
-        String name;
-        switch (type) {
-            case Sensor.TYPE_ACCELEROMETER: name = "Accelerometer"; break;
-            case Sensor.TYPE_ALL: name = "All"; break;
-            case Sensor.TYPE_AMBIENT_TEMPERATURE: name = "Ambient temperature"; break;
-            case Sensor.TYPE_GAME_ROTATION_VECTOR: name = "Rotation vector"; break;
-            case Sensor.TYPE_GEOMAGNETIC_ROTATION_VECTOR: name = "Geomagnetic rotation vector"; break;
-            case Sensor.TYPE_GRAVITY: name = "Gravity"; break;
-            case Sensor.TYPE_GYROSCOPE: name = "Gyroscope"; break;
-            case Sensor.TYPE_GYROSCOPE_UNCALIBRATED: name = "Gyroscope (uncalibrated)"; break;
-            case Sensor.TYPE_LIGHT: name = "Light"; break;
-            case Sensor.TYPE_LINEAR_ACCELERATION: name = "Linear acceleration"; break;
-            case Sensor.TYPE_MAGNETIC_FIELD: name = "Magnetic field"; break;
-            case Sensor.TYPE_MAGNETIC_FIELD_UNCALIBRATED: name = "Magnetic field (uncalibrated)"; break;
-            case Sensor.TYPE_ORIENTATION: name = "Orientation"; break;
-            case Sensor.TYPE_PRESSURE: name = "Pressure"; break;
-            case Sensor.TYPE_PROXIMITY: name = "Proximity"; break;
-            case Sensor.TYPE_RELATIVE_HUMIDITY: name = "Relative humidity"; break;
-            case Sensor.TYPE_ROTATION_VECTOR: name = "Rotation vector"; break;
-            case Sensor.TYPE_SIGNIFICANT_MOTION: name = "Significant motion"; break;
-            case Sensor.TYPE_STEP_COUNTER: name = "Step counter"; break;
-            case Sensor.TYPE_STEP_DETECTOR: name = "Step detector"; break;
-            case Sensor.TYPE_TEMPERATURE: name = "Temperature"; break;
-            default:  name = getString(R.string.unknown);
-        }
-        return String.format("%s (%d)", name, type);
-    }
-    private void appendSensorProperty(StringBuffer sb, int id, Sensor sensor) {
-        String title = getString(id);
-        String value;
-        try {
-            switch (id) {
-//                case R.string.sensor_name: value = sensor.getName(); break;
-                case R.string.sensor_type: value = formatSensorType(sensor.getType()); break;
-                case R.string.sensor_vendor: value = sensor.getVendor(); break;
-                case R.string.sensor_version: value = String.valueOf(sensor.getVersion()); break;
-                case R.string.sensor_power: value = String.valueOf(sensor.getPower()); break;
-                case R.string.sensor_resolution: value = String.valueOf(sensor.getResolution()); break;
-                case R.string.sensor_max_range: value = String.valueOf(sensor.getMaximumRange()); break;
-                case R.string.sensor_min_delay: value = String.valueOf(sensor.getMinDelay()); break;
-                default: value = getString(R.string.invalid_item);
-            }
-        } catch (Error e) {
-            Log.e(TAG, e.toString());
-            value = getString(R.string.unsupported);
-        }
-        sb.append(title).append(": ").append(value).append('\n');
-    }
-    private InfoItem getSensorItem(Sensor sensor) {
-        String name = sensor.getName();
-        StringBuffer sb = new StringBuffer();
-//        appendSensorProperty(sb, R.string.sensor_name, sensor);
-        appendSensorProperty(sb, R.string.sensor_type, sensor);
-        appendSensorProperty(sb, R.string.sensor_vendor, sensor);
-        appendSensorProperty(sb, R.string.sensor_version, sensor);
-        appendSensorProperty(sb, R.string.sensor_power, sensor);
-        appendSensorProperty(sb, R.string.sensor_resolution, sensor);
-        appendSensorProperty(sb, R.string.sensor_max_range, sensor);
-        appendSensorProperty(sb, R.string.sensor_min_delay, sensor);
-        sb.deleteCharAt(sb.length() - 1);
-        return new InfoItem(name, sb.toString());
-    }
-    private ArrayList<InfoItem> getSensorContent() {
-        if (null == mSensorContent) {
-            mSensorContent = new ArrayList<InfoItem>();
-            SensorManager sm = (SensorManager)getSystemService(SENSOR_SERVICE);
-            List<Sensor> sensors = sm.getSensorList(Sensor.TYPE_ALL);
-            if (null == sensors || 0 == sensors.size()) {
-                mSensorContent.add(new InfoItem(getString(R.string.item_sensor), getString(R.string.sensor_none)));
-            } else {
-                for (Sensor sensor: sensors) {
-                    mSensorContent.add(getSensorItem(sensor));
-                }
-            }
-        }
-        return mSensorContent;
-    }
 
     private boolean bitsSet(int opl, int opr) {
         return (opl & opr) == opr;
@@ -1235,7 +1153,7 @@ public class SystemInfoMain extends Activity {
                 items = mTelephoneProvider.getItems();
                 break;
             case R.id.item_sensor:
-                items = getSensorContent();
+                items = mSensorProvider.getItems();
                 break;
             case R.id.item_input:
                 items = getInputContent();

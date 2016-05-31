@@ -331,7 +331,7 @@ public class ScreenInfoProvider extends InfoProvider {
                         case R.string.screen_refresh_rate: value = String.valueOf(display.getRefreshRate()); break;
                         case R.string.screen_supported_refresh_rates: value = formatFloatArray(display.getSupportedRefreshRates()); break;
                         case R.string.screen_app_vsync_offset: value = String.valueOf(display.getAppVsyncOffsetNanos()); break;
-                        case R.string.screen_presentation_deadline: value = String.valueOf(display.getPresentationDeadlineNanos()); break;
+                        case R.string.screen_presentation_deadline: value = String.format("%,d", display.getPresentationDeadlineNanos()); break;
                         case R.string.screen_state: value = formatDisplayState(display.getState()); break;
                         case R.string.screen_size_range: value = getSizeRange(display); break;
                         case R.string.screen_other_features: value = formatFlags(display.getFlags()); break;
