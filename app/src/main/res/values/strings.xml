@@ -94,8 +94,6 @@
     <string name="screen_size_range">Size range</string>
     <string name="screen_other_features">Other features</string>
 
-
-
     <string name="memory_available">Available</string>
     <string name="memory_total">Total</string>
     <string name="memory_threshold">Low threshold</string>
@@ -114,8 +112,7 @@
     <string name="memory_runtime_free">Free in current heap</string>
     <string name="memory_runtime_max">Max heap</string>
     <string name="memory_runtime_total">Current heap</string>
-    
-    
+
     <string name="storage_external_description">External storage property</string>
     <string name="storage_emulated">&#160;(Emulated)</string>
     <string name="storage_removable">Removable</string>
@@ -174,7 +171,8 @@
     <string name="input_other_features">Other features</string>
 
     <string name="connectivity_none">No connectivity!</string>
-    <string name="connectivity_state">State:&#160;</string>
+    <string name="connectivity_state">State</string>
+    <string name="connectivity_extra_info">Extra information</string>
     <string name="connectivity_roaming">(roaming)</string>
     <string name="connectivity_unavailable">(unavailable)</string>
     

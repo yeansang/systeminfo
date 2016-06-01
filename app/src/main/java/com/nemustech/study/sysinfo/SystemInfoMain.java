@@ -176,6 +176,7 @@ public class SystemInfoMain extends Activity {
     private TelephoneInfoProvider mTelephoneProvider;
     private SensorInfoProvider mSensorProvider;
     private InputInfoProvider mInputProvider;
+    private ConnectivityInfoProvider mConnectivityProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,6 +195,7 @@ public class SystemInfoMain extends Activity {
         mTelephoneProvider = new TelephoneInfoProvider(this);
         mSensorProvider = new SensorInfoProvider(this);
         mInputProvider = new InputInfoProvider(this);
+        mConnectivityProvider = new ConnectivityInfoProvider(this);
 
         setItemSelected(R.id.item_android);
         if (Build.VERSION_CODES.JELLY_BEAN_MR1 <= Build.VERSION.SDK_INT) {
@@ -210,7 +212,6 @@ public class SystemInfoMain extends Activity {
         super.onDestroy();
     }
 
-    ArrayList<InfoItem> mConnectivityContent;
     ArrayList<InfoItem> mNetworkContent;
     ArrayList<InfoItem> mLocationContent;
     ArrayList<InfoItem> mCameraContent;
@@ -224,46 +225,6 @@ public class SystemInfoMain extends Activity {
     private static final String[] sUNIT = {
         "", "K", "M", "G", "T", "P", "E", "*"
     };
-
-    private void addConnectivityItems(ArrayList<InfoItem> list, NetworkInfo network) {
-        String subtype = network.getSubtypeName();
-        String name;
-        if (null == subtype || 0 == subtype.length()) {
-            name = network.getTypeName();
-        } else {
-            name = String.format("%s (%s)", network.getTypeName(), network.getSubtypeName());
-        }
-        StringBuffer sb = new StringBuffer();
-        sb.append(getString(R.string.connectivity_state)).append(network.getState()).append('(').append(network.getDetailedState()).append(')');
-        String extra = network.getExtraInfo();
-        if (null != extra && 0 < extra.length()) {
-            sb.append('\n').append(extra);
-        }
-        if (!network.isAvailable()) {
-            sb.append('\n').append(getString(R.string.connectivity_unavailable));
-        }
-        if (network.isRoaming()) {
-            sb.append('\n').append(getString(R.string.connectivity_roaming));
-        }
-        list.add(new InfoItem(name, sb.toString()));
-    }
-    private ArrayList<InfoItem> getConnectivityContent() {
-        if (null == mConnectivityContent) {
-            mConnectivityContent = new ArrayList<InfoItem>();
-
-            ConnectivityManager cm = (ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
-            NetworkInfo[] networks = cm.getAllNetworkInfo();
-
-            if (null == networks || 0 == networks.length) {
-                mConnectivityContent.add(new InfoItem(getString(R.string.item_connectivity), getString(R.string.connectivity_none)));
-            } else {
-                for (NetworkInfo network: networks) {
-                    addConnectivityItems(mConnectivityContent, network);
-                }
-            }
-        }
-        return mConnectivityContent;
-    }
 
     private String formatHardwareAddress(byte[] address) {
         if (null == address || 0 == address.length) {
@@ -1052,7 +1013,7 @@ public class SystemInfoMain extends Activity {
                 items = mInputProvider.getItems();
                 break;
             case R.id.item_connectivity:
-                items = getConnectivityContent();
+                items = mConnectivityProvider.getItems();
                 break;
             case R.id.item_network:
                 items = getNetworkContent();
