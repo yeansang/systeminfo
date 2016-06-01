@@ -162,11 +162,16 @@
     <string name="sensor_reporting_mode">Reporting mode</string>
     <string name="sensor_batch_not_supported">Batch mode not supported</string>
 
-
     <string name="input_none">No input device!</string>
-    <string name="input_descriptor">Descriptor</string>
-    <string name="input_source">Sources</string>
     <string name="input_virtual">(Virtual)</string>
+    <string name="input_source">Sources</string>
+    <string name="input_controller_number">Assigned controller number</string>
+    <string name="input_descriptor">Descriptor</string>
+    <string name="input_id">ID</string>
+    <string name="input_motion_ranges">Motion ranges</string>
+    <string name="input_product_id">Product ID</string>
+    <string name="input_vendor_id">Vendor ID</string>
+    <string name="input_other_features">Other features</string>
 
     <string name="connectivity_none">No connectivity!</string>
     <string name="connectivity_state">State:&#160;</string>

@@ -15,7 +15,6 @@ import android.drm.DrmManagerClient;
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
-import android.hardware.input.InputManager;
 import android.location.Criteria;
 import android.location.LocationManager;
 import android.location.LocationProvider;
@@ -29,7 +28,6 @@ import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.InputDevice;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
@@ -177,6 +175,7 @@ public class SystemInfoMain extends Activity {
     private StorageInfoProvider mStorageProvider;
     private TelephoneInfoProvider mTelephoneProvider;
     private SensorInfoProvider mSensorProvider;
+    private InputInfoProvider mInputProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,6 +193,7 @@ public class SystemInfoMain extends Activity {
         mStorageProvider = new StorageInfoProvider(this);
         mTelephoneProvider = new TelephoneInfoProvider(this);
         mSensorProvider = new SensorInfoProvider(this);
+        mInputProvider = new InputInfoProvider(this);
 
         setItemSelected(R.id.item_android);
         if (Build.VERSION_CODES.JELLY_BEAN_MR1 <= Build.VERSION.SDK_INT) {
@@ -210,7 +210,6 @@ public class SystemInfoMain extends Activity {
         super.onDestroy();
     }
 
-    ArrayList<InfoItem> mInputContent;
     ArrayList<InfoItem> mConnectivityContent;
     ArrayList<InfoItem> mNetworkContent;
     ArrayList<InfoItem> mLocationContent;
@@ -225,112 +224,6 @@ public class SystemInfoMain extends Activity {
     private static final String[] sUNIT = {
         "", "K", "M", "G", "T", "P", "E", "*"
     };
-
-    private boolean bitsSet(int opl, int opr) {
-        return (opl & opr) == opr;
-    }
-    private String formatSources(int source) {
-        StringBuffer sb = new StringBuffer();
-
-        if (bitsSet(source, InputDevice.SOURCE_DPAD)) {
-            sb.append("\nDpad");
-        }
-        if (bitsSet(source, InputDevice.SOURCE_GAMEPAD)) {
-            sb.append("\nGame pad");
-        }
-        if (bitsSet(source, InputDevice.SOURCE_JOYSTICK)) {
-            sb.append("\nJoystick");
-        }
-        if (bitsSet(source, InputDevice.SOURCE_KEYBOARD)) {
-            sb.append("\nKeyboard");
-        }
-        if (bitsSet(source, InputDevice.SOURCE_MOUSE)) {
-            sb.append("\nMouse");
-        }
-        if (bitsSet(source, InputDevice.SOURCE_STYLUS)) {
-            sb.append("\nStylus");
-        }
-        if (bitsSet(source, InputDevice.SOURCE_TOUCH_NAVIGATION)) {
-            sb.append("\nTouch navigation");
-        }
-        if (bitsSet(source, InputDevice.SOURCE_TOUCHPAD)) {
-            sb.append("\nTouchpad");
-        }
-        if (bitsSet(source, InputDevice.SOURCE_TOUCHSCREEN)) {
-            sb.append("\nTouch screen");
-        }
-        if (bitsSet(source, InputDevice.SOURCE_TRACKBALL)) {
-            sb.append("\nTrackball");
-        }
-        if (0 == sb.length()) {
-            sb.append('\n').append(getString(R.string.unknown));
-        }
-        return sb.toString();
-    }
-    private void appendSourceClass(StringBuffer sb, int source) {
-        int sClass = source & InputDevice.SOURCE_CLASS_MASK;
-        if (bitsSet(sClass, InputDevice.SOURCE_CLASS_BUTTON)) {
-            sb.append("- Button class");
-        }
-        if (bitsSet(sClass, InputDevice.SOURCE_CLASS_JOYSTICK)) {
-            sb.append("- Joystick class");
-        }
-        if (bitsSet(sClass, InputDevice.SOURCE_CLASS_POINTER)) {
-            sb.append("- Pointer class");
-        }
-        if (bitsSet(sClass, InputDevice.SOURCE_CLASS_POSITION)) {
-            sb.append("- Position class");
-        }
-        if (bitsSet(sClass, InputDevice.SOURCE_CLASS_TRACKBALL)) {
-            sb.append("- Trackball class");
-        }
-        if (sClass == InputDevice.SOURCE_CLASS_NONE) {
-            sb.append("- No class");
-        }
-    }
-    private StringBuffer appendSource(StringBuffer sb, int source) {
-        sb.append("\nSource: ").append(String.format("x%08x", source));
-        sb.append(String.format(" (class x%02x)\n", (source & InputDevice.SOURCE_CLASS_MASK)));
-        appendSourceClass(sb, source);
-        sb.append(formatSources(source));
-        return sb;
-    }
-    private InfoItem getInputItem(int deviceId) {
-        InputDevice device = InputDevice.getDevice(deviceId);
-        String name;
-        StringBuffer sb = new StringBuffer();
-        if (null == device) {
-            name = String.format("ID: %d", deviceId);
-            sb.append(getString(R.string.unknown));
-        } else {
-            name = device.getName();
-            sb.append("ID: ").append(String.valueOf(deviceId));
-            appendSource(sb, device.getSources());
-            if (device.isVirtual()) {
-                sb.append('\n').append(getString(R.string.input_virtual));
-            }
-        }
-        return new InfoItem(name, sb.toString());
-    }
-    private ArrayList<InfoItem> getInputContent() {
-        if (null == mInputContent) {
-            mInputContent = new ArrayList<InfoItem>();
-            if (VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                mInputContent.add(new InfoItem(getString(R.string.item_input), getString(R.string.sdk_version_required, Build.VERSION_CODES.JELLY_BEAN)));
-            } else {
-                InputManager im = (InputManager)getSystemService(INPUT_SERVICE);
-                int[] ids = im.getInputDeviceIds();
-                if (null == ids || 0 == ids.length) {
-                    mInputContent.add(new InfoItem(getString(R.string.item_input), getString(R.string.input_none)));
-                } else {
-                    for (int id : ids) {
-                        mInputContent.add(getInputItem(id));
-                    }
-                }
-            }
-        }
-        return mInputContent;
-    }
 
     private void addConnectivityItems(ArrayList<InfoItem> list, NetworkInfo network) {
         String subtype = network.getSubtypeName();
@@ -900,7 +793,7 @@ public class SystemInfoMain extends Activity {
             mDrmContent = new ArrayList<InfoItem>();
 
             if (VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-                mDrmContent.add(new InfoItem(getString(R.string.item_input), getString(R.string.sdk_version_required, Build.VERSION_CODES.HONEYCOMB)));
+                mDrmContent.add(new InfoItem(getString(R.string.item_drm), getString(R.string.sdk_version_required, Build.VERSION_CODES.HONEYCOMB)));
             } else {
                 DrmManagerClient dcm = new DrmManagerClient(this);
                 String[] engines = dcm.getAvailableDrmEngines();
@@ -1156,7 +1049,7 @@ public class SystemInfoMain extends Activity {
                 items = mSensorProvider.getItems();
                 break;
             case R.id.item_input:
-                items = getInputContent();
+                items = mInputProvider.getItems();
                 break;
             case R.id.item_connectivity:
                 items = getConnectivityContent();
