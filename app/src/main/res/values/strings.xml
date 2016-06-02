@@ -194,10 +194,6 @@
     <string name="location_req_cell">&#160;cell</string>
     <string name="location_req_network">&#160;network</string>
     <string name="location_req_satellite">&#160;satellite</string>
-    <string name="location_supports">Supports</string>
-    <string name="location_sup_altitude">&#160;altitude</string>
-    <string name="location_sup_bearing">&#160;bearing</string>
-    <string name="location_sup_speed">&#160;speed</string>
 
     <string name="camera_none">No camera!</string>
     <string name="camera_count">Number of cameras</string>

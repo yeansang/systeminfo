@@ -85,7 +85,7 @@ public abstract class InfoProvider {
         return sb.toString();
     }
 
-    private static final String[] sUNIT = {
+    protected static final String[] sUNIT = {
             "", "K", "M", "G", "T", "P", "E", "*"
     };
 
