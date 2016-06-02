@@ -20,8 +20,6 @@ import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.media.MediaCodecInfo;
 import android.media.MediaCodecList;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.opengl.EGL14;
 import android.opengl.GLES10;
 import android.os.Build;
@@ -33,13 +31,9 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
 import java.security.Provider;
 import java.security.Security;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -177,6 +171,7 @@ public class SystemInfoMain extends Activity {
     private SensorInfoProvider mSensorProvider;
     private InputInfoProvider mInputProvider;
     private ConnectivityInfoProvider mConnectivityProvider;
+    private NetworkInfoProvider mNetworkProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -196,6 +191,7 @@ public class SystemInfoMain extends Activity {
         mSensorProvider = new SensorInfoProvider(this);
         mInputProvider = new InputInfoProvider(this);
         mConnectivityProvider = new ConnectivityInfoProvider(this);
+        mNetworkProvider = new NetworkInfoProvider(this);
 
         setItemSelected(R.id.item_android);
         if (Build.VERSION_CODES.JELLY_BEAN_MR1 <= Build.VERSION.SDK_INT) {
@@ -212,7 +208,6 @@ public class SystemInfoMain extends Activity {
         super.onDestroy();
     }
 
-    ArrayList<InfoItem> mNetworkContent;
     ArrayList<InfoItem> mLocationContent;
     ArrayList<InfoItem> mCameraContent;
     ArrayList<InfoItem> mOpenGLContent;
@@ -225,88 +220,6 @@ public class SystemInfoMain extends Activity {
     private static final String[] sUNIT = {
         "", "K", "M", "G", "T", "P", "E", "*"
     };
-
-    private String formatHardwareAddress(byte[] address) {
-        if (null == address || 0 == address.length) {
-            return getString(R.string.unknown);
-        }
-        StringBuffer sb = new StringBuffer();
-        sb.append(String.format("%02x", address[0]));
-        for (int idx = 1; idx < address.length; ++idx) {
-            sb.append('-').append(String.format("%02x", address[idx]));
-        }
-        return sb.toString();
-    }
-    private void addNetworkItems(ArrayList<InfoItem> list, NetworkInterface network) {
-        String name = network.getDisplayName();
-        StringBuffer sb = new StringBuffer();
-        sb.append(getString(R.string.network_name)).append(network.getName());
-        sb.append('\n').append(getString(R.string.network_hardware_address));
-        try {
-            sb.append(formatHardwareAddress(network.getHardwareAddress()));
-        } catch (SocketException e1) {
-            e1.printStackTrace();
-            sb.append(formatHardwareAddress(null));
-        }
-        try {
-            sb.append('\n').append(getString(R.string.network_mtu)).append(String.valueOf(network.getMTU()));
-        } catch (SocketException e1) {
-            e1.printStackTrace();
-        }
-        try {
-            sb.append('\n').append(getString(network.isUp()? R.string.network_up: R.string.network_down));
-        } catch (SocketException e) {
-            e.printStackTrace();
-        }
-        ArrayList<InetAddress> aList = Collections.list(network.getInetAddresses());
-        for (InetAddress ia: aList) {
-            String hostName = ia.getHostName();
-            String hostAddress = ia.getHostAddress();
-            sb.append('\n').append(hostName);
-            if (!hostName.equals(hostAddress)) {
-                sb.append('(').append(ia.getHostAddress()).append(')');
-            }
-        }
-        ArrayList<NetworkInterface> nList = Collections.list(network.getSubInterfaces());
-        if (0 < nList.size()) {
-            sb.append('\n').append(getString(R.string.network_subinterface)).append(String.valueOf(nList.size()));
-        }
-        list.add(new InfoItem(name, sb.toString()));
-        for (NetworkInterface subnet: nList) {
-            addNetworkItems(list, subnet);
-        }
-    }
-    private ArrayList<InfoItem> getNetworkContent() {
-        if (null == mNetworkContent) {
-            mNetworkContent = new ArrayList<InfoItem>();
-
-            ArrayList<NetworkInterface> nList = null;
-            try {
-                nList = Collections.list(NetworkInterface.getNetworkInterfaces());
-            } catch (SocketException e) {
-                e.printStackTrace();
-            }
-
-            if (null == nList || 0 == nList.size()) {
-                mNetworkContent.add(new InfoItem(getString(R.string.item_network), getString(R.string.network_none)));
-            } else {
-                final ArrayList<NetworkInterface> fList = nList;
-                new Thread(new Runnable() {
-                    public void run() {
-                        for (NetworkInterface network: fList) {
-                            addNetworkItems(mNetworkContent, network);
-                        }
-                        runOnUiThread(new Runnable() {
-                            public void run() {
-                                updateContent(mNetworkContent);
-                            }
-                        });
-                    }
-                }).start();
-            }
-        }
-        return mNetworkContent;
-    }
 
     private String formatLocationAccuracy(int acc) {
         String value = null;
@@ -985,6 +898,24 @@ public class SystemInfoMain extends Activity {
         mContentList.setSelection(0);
     }
 
+    private class ItemReceiver implements InfoProvider.AsyncInfoReceiver {
+        private ArrayList<InfoItem> mReceivedItems;
+        private Runnable mUpdateCmd = new Runnable() {
+            @Override
+            public void run() {
+                if (null != mReceivedItems) {
+                    updateContent(mReceivedItems);
+                }
+            }
+        };
+        @Override
+        public void onItemReceived(ArrayList<InfoItem> items) {
+            mReceivedItems = items;
+            runOnUiThread(mUpdateCmd);
+        }
+    }
+    private ItemReceiver mReceiver = new ItemReceiver();
+
     private void onItemSelected(View view) {
         ArrayList<InfoItem> items = null;
         switch (view.getId()) {
@@ -1016,7 +947,7 @@ public class SystemInfoMain extends Activity {
                 items = mConnectivityProvider.getItems();
                 break;
             case R.id.item_network:
-                items = getNetworkContent();
+                mNetworkProvider.getItemsAsync(mReceiver);
                 break;
             case R.id.item_location:
                 items = getLocationContent();

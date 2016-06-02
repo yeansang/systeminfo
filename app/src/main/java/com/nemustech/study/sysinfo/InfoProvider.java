@@ -3,6 +3,7 @@ package com.nemustech.study.sysinfo;
 import android.content.Context;
 import android.os.Build;
 
+import java.net.NetworkInterface;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -110,5 +111,18 @@ public abstract class InfoProvider {
             this.titleId = titleId;
             this.minSdk = minSdk;
         }
+    }
+
+    interface AsyncInfoReceiver {
+        void onItemReceived(ArrayList<InfoItem> items);
+    }
+
+    void getItemsAsync(final AsyncInfoReceiver receiver) {
+        new Thread(new Runnable() {
+            public void run() {
+                ArrayList<InfoItem> items = getItems();
+                receiver.onItemReceived(items);
+            }
+        }).start();
     }
 }
