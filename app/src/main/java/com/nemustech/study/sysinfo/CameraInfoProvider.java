@@ -1,10 +1,16 @@
 package com.nemustech.study.sysinfo;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraCharacteristics;
+import android.hardware.camera2.CameraManager;
 import android.os.Build;
+import android.util.Log;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -233,6 +239,55 @@ public class CameraInfoProvider extends InfoProvider {
         return null;
     }
 
+    private void appendValue(StringBuilder sb, Object val) {
+        if (val.getClass().isArray()) {
+            Class ct = val.getClass().getComponentType();
+            if (ct.isPrimitive()) {
+                int len = Array.getLength(val);
+                sb.append("[\n");
+                for (int idx = 0; idx < len; ++idx) {
+                    sb.append(Array.get(val, idx).toString()).append('\n');
+                }
+                sb.append("]\n");
+            } else {
+                Object[] array = (Object[]) val;
+                sb.append("{\n");
+                for (Object e : array) {
+                    appendValue(sb, e);
+                }
+                sb.append("}\n");
+            }
+        } else {
+            sb.append(val.toString()).append('\n');
+        }
+    }
+
+    private String formatValue(Object val) {
+        StringBuilder sb = new StringBuilder();
+        appendValue(sb, val);
+        return sb.toString();
+    }
+
+    @SuppressLint("NewApi")
+    private void testLogs() {
+        CameraManager cm = (CameraManager)(mContext.getSystemService(Context.CAMERA_SERVICE));
+
+        try {
+            String[] ids = cm.getCameraIdList();
+            for (String id: ids) {
+                Log.i(TAG, "CameraTest id: " + id);
+                CameraCharacteristics cc = cm.getCameraCharacteristics(id);
+                List<CameraCharacteristics.Key<?>> keys = cc.getKeys();
+                for (CameraCharacteristics.Key<?> key: keys) {
+                    Object value = cc.get(key);
+                    Log.i(TAG, "\t" + key.getName() + ": " + formatValue(value));
+                }
+            }
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
+
+    }
     @Override
     ArrayList<InfoItem> getItems() {
         if (null == sCameraItems) {
@@ -246,6 +301,7 @@ public class CameraInfoProvider extends InfoProvider {
                 }
             }
         }
+//        testLogs();
         return sCameraItems;
     }
 }
