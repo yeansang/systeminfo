@@ -24,6 +24,7 @@ public class CodecInfoProvider extends InfoProvider {
         super(context);
     }
 
+    @SuppressLint("NewApi")
     private void addCapability(StringBuilder sb, MediaCodecInfo.CodecCapabilities mccap) {
         MediaCodecInfo.AudioCapabilities ap = mccap.getAudioCapabilities();
         if (null == ap) {

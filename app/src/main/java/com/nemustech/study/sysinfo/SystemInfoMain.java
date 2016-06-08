@@ -9,11 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import java.security.Provider;
-import java.security.Security;
 import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Set;
 
 
 public class SystemInfoMain extends Activity {
@@ -42,6 +38,8 @@ public class SystemInfoMain extends Activity {
     private DrmInfoProvider mDrmProvider;
     private AccountInfoProvider mAccountProvider;
     private CodecInfoProvider mCodecProvider;
+    private SecurityInfoProvider mSecurityProvider;
+    private LocaleInfoProvider mLocaleProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +66,8 @@ public class SystemInfoMain extends Activity {
         mDrmProvider = new DrmInfoProvider(this);
         mAccountProvider = new AccountInfoProvider(this);
         mCodecProvider = new CodecInfoProvider(this);
+        mSecurityProvider = new SecurityInfoProvider(this);
+        mLocaleProvider = new LocaleInfoProvider(this);
 
         setItemSelected(R.id.item_android);
 
@@ -81,113 +81,6 @@ public class SystemInfoMain extends Activity {
         super.onDestroy();
     }
 
-    ArrayList<InfoItem> mLocaleContent;
-    ArrayList<InfoItem> mSecurityContent;
-
-    private String formatLocaleName(Locale locale) {
-        return locale.getDisplayName() + ": " + locale.getDisplayName(locale);
-    }
-    private String formatLocaleCodes(Locale locale) {
-        String lang = locale.getLanguage();
-        String cc = locale.getCountry();
-        String var = locale.getVariant();
-        String lang3 = null;
-        String cc3 = null;
-        try {
-            lang3 = locale.getISO3Language();
-            cc3 = locale.getISO3Country();
-        } catch (Exception e) {
-            Log.e(TAG, e.toString());
-        }
-        StringBuffer sb = new StringBuffer();
-        sb.append(lang);
-        if (null != cc && 0 < cc.length()) {
-            sb.append('_').append(cc);
-        }
-        if (null != var && 0 < var.length()) {
-            sb.append(", ").append(var);
-        }
-        sb.append(" (");
-        if (null == lang3 || 0 == lang3.length()) {
-            sb.append(getString(R.string.no_iso3));
-        } else {
-            sb.append(lang3);
-            if (null != cc3 && 0 < cc3.length()) {
-                sb.append('_').append(cc3);
-            }
-        }
-        sb.append(')');
-        return sb.toString();
-    }
-    private InfoItem getLocaleItem(Locale locale) {
-        return new InfoItem(formatLocaleName(locale), formatLocaleCodes(locale));
-    }
-    private void addSpecificLocale(ArrayList<InfoItem> list, String name, Locale locale) {
-        list.add(new InfoItem(name, formatLocaleCodes(locale) + " - " + formatLocaleName(locale)));
-    }
-    private ArrayList<InfoItem> getLocaleContent() {
-        if (null == mLocaleContent) {
-            mLocaleContent = new ArrayList<InfoItem>();
-            addSpecificLocale(mLocaleContent, getString(R.string.locale_current), getResources().getConfiguration().locale);
-            addSpecificLocale(mLocaleContent, getString(R.string.locale_default), Locale.getDefault());
-            Locale[] locales = Locale.getAvailableLocales();
-            for (Locale locale: locales) {
-                mLocaleContent.add(getLocaleItem(locale));
-            }
-        }
-        return mLocaleContent;
-    }
-
-    private void addSecurityContent(ArrayList<InfoItem> list, Provider provider) {
-        String name = provider.getName() + ": " + provider.getInfo();
-        Set<Provider.Service> services = provider.getServices();
-        StringBuffer sb = new StringBuffer();
-        if (null == services || 0 == services.size()) {
-            sb.append(getString(R.string.security_no_service));
-        } else {
-            Package pPkg = null;
-            for (Provider.Service ps: services) {
-                Class<?> cls = null;
-                Package pkg = null;
-                try {
-                    cls = Class.forName(ps.getClassName());
-                    pkg = cls.getPackage();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-                if (null != pkg && !pkg.equals(pPkg)) {
-                    sb.append("Package ").append(pkg.getName()).append('\n');
-                    pPkg = pkg;
-                }
-                sb.append(ps.getAlgorithm());
-                sb.append(" (").append(ps.getType()).append(")\n");
-//                String className;
-//                if (null != pkg) {
-//                    className = ps.getClassName().substring(pkg.getName().length() + 1);
-//                } else {
-//                    String fullName = ps.getClassName();
-//                    className = fullName.substring(fullName.lastIndexOf('.') + 1);
-//                }
-//                sb.append(" (").append(className).append(")\n");
-            }
-            sb.deleteCharAt(sb.length() - 1);
-        }
-        list.add(new InfoItem(name, sb.toString()));
-    }
-    private ArrayList<InfoItem> getSecurityContent() {
-        if (null == mSecurityContent) {
-            mSecurityContent = new ArrayList<InfoItem>();
-            Provider[] providers = Security.getProviders();
-            if (null == providers || 0 == providers.length) {
-                mSecurityContent.add(new InfoItem(getString(R.string.item_security), getString(R.string.security_none)));
-            } else {
-                for (Provider p: providers) {
-                    addSecurityContent(mSecurityContent, p);
-                }
-            }
-        }
-        return mSecurityContent;
-    }
     private void updateContent(ArrayList<InfoItem> items) {
         mAdapter.clear();
         for (InfoItem item: items) {
@@ -267,10 +160,10 @@ public class SystemInfoMain extends Activity {
                 items = mCodecProvider.getItems();
                 break;
             case R.id.item_security:
-                items = getSecurityContent();
+                items = mSecurityProvider.getItems();
                 break;
             case R.id.item_locale:
-                items = getLocaleContent();
+                items = mLocaleProvider.getItems();
                 break;
         }
         if (null != items) {
