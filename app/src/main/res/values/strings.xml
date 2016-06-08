@@ -256,7 +256,6 @@
     <string name="account_admin_none">No active administrator</string>
 
     <string name="codec_info">Multimedia CODEC info</string>
-    <string name="codec_is_encoder">(Encoder)</string>
     <string name="codec_none">No CODEC info!</string>
 
     <string name="security_none">No security provider!</string>

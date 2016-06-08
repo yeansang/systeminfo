@@ -3,7 +3,6 @@ package com.nemustech.study.sysinfo;
 import android.content.Context;
 import android.os.Build;
 
-import java.net.NetworkInterface;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;

@@ -73,28 +73,28 @@ public class InputInfoProvider extends InfoProvider {
     private void appendSourceClass(StringBuilder sb, int source) {
         int sourceClass = source & InputDevice.SOURCE_CLASS_MASK;
         if (bitsSet(sourceClass, InputDevice.SOURCE_CLASS_BUTTON)) {
-            sb.append("\t- Button class");
+            sb.append("\n\t- Button class");
         }
         if (bitsSet(sourceClass, InputDevice.SOURCE_CLASS_JOYSTICK)) {
-            sb.append("\t- Joystick class");
+            sb.append("\n\t- Joystick class");
         }
         if (bitsSet(sourceClass, InputDevice.SOURCE_CLASS_POINTER)) {
-            sb.append("\t- Pointer class");
+            sb.append("\n\t- Pointer class");
         }
         if (bitsSet(sourceClass, InputDevice.SOURCE_CLASS_POSITION)) {
-            sb.append("\t- Position class");
+            sb.append("\n\t- Position class");
         }
         if (bitsSet(sourceClass, InputDevice.SOURCE_CLASS_TRACKBALL)) {
-            sb.append("\t- Trackball class");
+            sb.append("\n\t- Trackball class");
         }
         if (sourceClass == InputDevice.SOURCE_CLASS_NONE) {
-            sb.append("\t- No class");
+            sb.append("\n\t- No class");
         }
     }
     private String formatSources(int sources) {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("x%08x", sources));
-        sb.append(String.format(" (class x%02x)\n", (sources & InputDevice.SOURCE_CLASS_MASK)));
+        sb.append(String.format(" (class x%02x)", (sources & InputDevice.SOURCE_CLASS_MASK)));
         appendSourceClass(sb, sources);
         sb.append(formatSource(sources));
         return sb.toString();

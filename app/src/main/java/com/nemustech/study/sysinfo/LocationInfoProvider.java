@@ -89,7 +89,6 @@ public class LocationInfoProvider extends InfoProvider {
             if (sSpd) {
                 sb.append("\n\tspeed");
             }
-            sb.append('\n');
         }
         list.add(new InfoItem(name, sb.toString()));
     }
