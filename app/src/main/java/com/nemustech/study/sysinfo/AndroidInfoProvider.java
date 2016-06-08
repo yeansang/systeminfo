@@ -45,15 +45,15 @@ public class AndroidInfoProvider extends InfoProvider {
             "KitKat for Wearables",
             "Lollipop",
             "Lollipop MR1",
-            "M"
+            "Marshmallow"
     };
 
-    private String getSdkName(int sdkInt) {
+    static String getSdkName(int sdkInt) {
         int idx = (sdkInt < 0 || SDK_NAMES.length <= sdkInt)? 0: sdkInt;
         return SDK_NAMES[idx];
     }
 
-    private String formatSdk(int sdkInt) {
+    static String formatSdk(int sdkInt) {
         return String.format("%d (%s)", sdkInt, getSdkName(sdkInt));
     }
     private String formatPreviewSdk(int sdkInt) {

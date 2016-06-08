@@ -75,5 +75,9 @@
         style="@style/ListItemText"
         android:text="@string/item_locale"
         />
-    
+    <TextView android:id="@+id/item_about"
+        style="@style/ListItemText"
+        android:text="@string/item_about"
+        />
+
 </LinearLayout>

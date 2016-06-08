@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.nemustech.study.sysinfo"
         minSdkVersion 9
-        targetSdkVersion 21
+        targetSdkVersion 23
     }
 
     buildTypes {

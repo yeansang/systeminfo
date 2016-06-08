@@ -40,6 +40,7 @@ public class SystemInfoMain extends Activity {
     private CodecInfoProvider mCodecProvider;
     private SecurityInfoProvider mSecurityProvider;
     private LocaleInfoProvider mLocaleProvider;
+    private AboutInfoProvider mAboutProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +69,7 @@ public class SystemInfoMain extends Activity {
         mCodecProvider = new CodecInfoProvider(this);
         mSecurityProvider = new SecurityInfoProvider(this);
         mLocaleProvider = new LocaleInfoProvider(this);
+        mAboutProvider = new AboutInfoProvider(this);
 
         setItemSelected(R.id.item_android);
 
@@ -164,6 +166,9 @@ public class SystemInfoMain extends Activity {
                 break;
             case R.id.item_locale:
                 items = mLocaleProvider.getItems();
+                break;
+            case R.id.item_about:
+                items = mAboutProvider.getItems();
                 break;
         }
         if (null != items) {
