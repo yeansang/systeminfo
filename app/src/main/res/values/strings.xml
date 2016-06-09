@@ -268,9 +268,24 @@
     <string name="about_app_name">App name</string>
     <string name="about_packagename">Packagename</string>
     <string name="about_version">Version</string>
-    <string name="about_supported_android">Supported android version</string>
+    <string name="about_supported_latest_android">Supported latest android version</string>
     <string name="about_developer">Developer</string>
     <string name="about_thanks">Special thanks</string>
+    <string name="about_source">Source code</string>
+    <string name="about_license">License</string>
+    <string name="about_license_gpl2">GNU General Public License, version 2
+\n\nCopyright (C) 2016  Cheolgyoon Yoo
+\n\nThis program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+\n\nThis program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+\n\nYou can see full terms and conditions here:
+\nhttp://www.gnu.org/licenses/gpl-2.0-standalone.html
+</string>
 
 <!--     <string name="phone_"></string> -->
 <!--     <string name="android_"></string> -->

@@ -42,18 +42,14 @@ public class AboutInfoProvider extends InfoProvider {
                     value = String.format("%s (%d)", pi.versionName, pi.versionCode);
                     break;
                 }
-                case R.string.about_supported_android: {
+                case R.string.about_supported_latest_android: {
                     value = AndroidInfoProvider.formatSdk(mContext.getApplicationInfo().targetSdkVersion);
                     break;
                 }
-                case R.string.about_developer: {
-                    value = "cheolgyoon.yoo@nemustech.com";
-                    break;
-                }
-                case R.string.about_thanks: {
-                    value = "Nemustech (http://www.nemustech.com)";
-                    break;
-                }
+                case R.string.about_developer: value = "cheolgyoon.yoo@nemustech.com"; break;
+                case R.string.about_thanks: value = "Nemustech (http://www.nemustech.com)"; break;
+                case R.string.about_source: value = "https://boylmm@bitbucket.org/boylmm/systeminfo.git"; break;
+                case R.string.about_license: value = getString(R.string.about_license_gpl2); break;
                 default:
                     value = getString(R.string.invalid_item);
                     break;
@@ -69,9 +65,11 @@ public class AboutInfoProvider extends InfoProvider {
             new InfoSpec(R.string.about_app_name, 1),
             new InfoSpec(R.string.about_packagename, 1),
             new InfoSpec(R.string.about_version, 1),
-            new InfoSpec(R.string.about_supported_android, 1),
+            new InfoSpec(R.string.about_supported_latest_android, 1),
             new InfoSpec(R.string.about_developer, 1),
             new InfoSpec(R.string.about_thanks, 1),
+            new InfoSpec(R.string.about_source, 1),
+            new InfoSpec(R.string.about_license, 1),
     };
 
     @Override
