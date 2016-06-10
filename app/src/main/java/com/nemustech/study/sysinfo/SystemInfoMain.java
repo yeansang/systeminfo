@@ -37,6 +37,7 @@ public class SystemInfoMain extends Activity {
     private OpenGlInfoProvider mOpenGlProvider;
     private DrmInfoProvider mDrmProvider;
     private AccountInfoProvider mAccountProvider;
+    private PolicyInfoProvider mPolicyProvider;
     private CodecInfoProvider mCodecProvider;
     private SecurityInfoProvider mSecurityProvider;
     private LocaleInfoProvider mLocaleProvider;
@@ -66,6 +67,7 @@ public class SystemInfoMain extends Activity {
         mOpenGlProvider = new OpenGlInfoProvider(this);
         mDrmProvider = new DrmInfoProvider(this);
         mAccountProvider = new AccountInfoProvider(this);
+        mPolicyProvider = new PolicyInfoProvider(this);
         mCodecProvider = new CodecInfoProvider(this);
         mSecurityProvider = new SecurityInfoProvider(this);
         mLocaleProvider = new LocaleInfoProvider(this);
@@ -157,6 +159,9 @@ public class SystemInfoMain extends Activity {
                 break;
             case R.id.item_account:
                 items = mAccountProvider.getItems();
+                break;
+            case R.id.item_policy:
+                items = mPolicyProvider.getItems();
                 break;
             case R.id.item_codec:
                 items = mCodecProvider.getItems();

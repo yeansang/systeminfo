@@ -18,6 +18,7 @@
     <string name="item_opengl">OpenGL</string>
     <string name="item_drm">DRM engines</string>
     <string name="item_account">Accounts</string>
+    <string name="item_policy">Device Policy</string>
     <string name="item_codec">Multimedia codec</string>
     <string name="item_security">Security providers</string>
     <string name="item_locale">Supported Locales</string>
@@ -253,8 +254,24 @@
     <string name="account_auth_none">No authenticator!</string>
     <string name="account_auth_package">Package</string>
     <string name="account_auth_type">Type</string>
-    <string name="account_admin">Administrators</string>
-    <string name="account_admin_none">No active administrator</string>
+
+    <string name="policy_admin">Administrators</string>
+    <string name="policy_admin_none">No active administrator</string>
+    <string name="policy_management_disabled_types">Account types with management disabled</string>
+    <string name="policy_failed_password_attempt">Current failed password attempts</string>
+    <string name="policy_restrictions">Restrictions</string>
+    <string name="policy_keyguard_disabled_features">Keyguard disabled features</string>
+    <string name="policy_max_failed_password_for_wipe">Maximum number of login attempt before wipe device</string>
+    <string name="policy_max_time_to_lock">Maximum time to lock</string>
+    <string name="policy_password_expiration">Current password expiration time</string>
+    <string name="policy_password_expiration_timeout">Password expiration timeout</string>
+    <string name="policy_password_history_len">Password history length</string>
+    <string name="policy_password_minimum_length">Password minimum length</string>
+    <string name="policy_password_quality">Password quality</string>
+    <string name="policy_password_quality_detail">Detailed password quality conditions</string>
+    <string name="policy_storage_encryption_status">Storage encryption</string>
+    <string name="policy_system_update_policy">System update policy</string>
+    <string name="policy_not_watching_login">Administrator is not watching login or no active administrator.</string>
 
     <string name="codec_info">Multimedia CODEC info</string>
     <string name="codec_none">No CODEC info!</string>

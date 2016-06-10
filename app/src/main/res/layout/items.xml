@@ -63,6 +63,10 @@
         style="@style/ListItemText"
         android:text="@string/item_account"
         />
+    <TextView android:id="@+id/item_policy"
+        style="@style/ListItemText"
+        android:text="@string/item_policy"
+        />
     <TextView android:id="@+id/item_codec"
         style="@style/ListItemText"
         android:text="@string/item_codec"

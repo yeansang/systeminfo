@@ -3,14 +3,11 @@ package com.nemustech.study.sysinfo;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.accounts.AuthenticatorDescription;
-import android.app.admin.DevicePolicyManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by cheolgyoon on 2016. 6. 7..
@@ -38,15 +35,6 @@ public class AccountInfoProvider extends InfoProvider {
         sb.append("\nPackage: ").append(ad.packageName);
         return new InfoItem("Authenticator: " + name, sb.toString());
     }
-    private InfoItem getAdminItem(List<ComponentName> admins) {
-        StringBuffer sb = new StringBuffer();
-        sb.append(admins.get(0));
-        for (int idx = 1; idx < admins.size(); ++idx) {
-            sb.append('\n').append(admins.get(idx));
-        }
-        return new InfoItem(getString(R.string.account_admin), sb.toString());
-    }
-
     @Override
     ArrayList<InfoItem> getItems() {
         if (null == sAccountItems) {
@@ -68,15 +56,6 @@ public class AccountInfoProvider extends InfoProvider {
                 for (AuthenticatorDescription ad: ads) {
                     sAccountItems.add(getAuthenticatorItem(ad, pm));
                 }
-            }
-
-            //  TODO: Separate and enhance policy informations.
-            DevicePolicyManager dpm = (DevicePolicyManager)mContext.getSystemService(Context.DEVICE_POLICY_SERVICE);
-            List<ComponentName> admins = dpm.getActiveAdmins();
-            if (null == admins || 0 == admins.size()) {
-                sAccountItems.add(new InfoItem(getString(R.string.account_admin), getString(R.string.account_admin_none)));
-            } else {
-                sAccountItems.add(getAdminItem(admins));
             }
         }
         return sAccountItems;
