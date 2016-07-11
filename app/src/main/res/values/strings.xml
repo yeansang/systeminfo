@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="no_data">Check your permission</string>
+
     <string name="app_name">SystemInfo</string>
 
     <string name="item_android">Android</string>

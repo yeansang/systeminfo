@@ -1,13 +1,17 @@
 
 package com.nemustech.study.sysinfo;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -51,6 +55,10 @@ public class SystemInfoMain extends Activity {
         mAdapter = new InfoListView.InfoItemAdapter(this, 0, new ArrayList<InfoItem>());
         mContentList = (ListView)findViewById(R.id.l_content);
         mContentList.setAdapter(mAdapter);
+        TextView emptyView = (TextView)findViewById(R.id.no_data);
+        mContentList.setEmptyView(emptyView);
+
+
 
         mAndroidProvider = new AndroidInfoProvider(this);
         mSystemProvider = new SystemInfoProvider(this);
@@ -114,6 +122,7 @@ public class SystemInfoMain extends Activity {
 
     private void onItemSelected(View view) {
         ArrayList<InfoItem> items = null;
+        int permissionCheck=0;
         switch (view.getId()) {
             case R.id.item_android:
                 items = mAndroidProvider.getItems();
@@ -131,7 +140,13 @@ public class SystemInfoMain extends Activity {
                 items = mStorageProvider.getItems();
                 break;
             case R.id.item_phone:
-                items = mTelephoneProvider.getItems();
+                permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_PHONE_STATE);
+                if(permissionCheck == PackageManager.PERMISSION_GRANTED) {
+                    items = mTelephoneProvider.getItems();
+                }else{
+                    requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 10);
+                    items=new ArrayList<InfoItem>();
+                }
                 break;
             case R.id.item_sensor:
                 items = mSensorProvider.getItems();
@@ -146,10 +161,22 @@ public class SystemInfoMain extends Activity {
                 mNetworkProvider.getItemsAsync(mReceiver);
                 break;
             case R.id.item_location:
-                items = mLocationProvider.getItems();
+                permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+                if(permissionCheck == PackageManager.PERMISSION_GRANTED) {
+                    items = mLocationProvider.getItems();
+                }else{
+                    requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 10);
+                    items=new ArrayList<InfoItem>();
+                }
                 break;
             case R.id.item_camera:
-                mCameraProvider.getItemsAsync(mReceiver);
+                permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA);
+                if(permissionCheck == PackageManager.PERMISSION_GRANTED) {
+                    mCameraProvider.getItemsAsync(mReceiver);
+                }else{
+                    requestPermissions(new String[]{Manifest.permission.CAMERA}, 10);
+                    items=new ArrayList<>();
+                }
                 break;
             case R.id.item_opengl:
                 items = mOpenGlProvider.getItems();
