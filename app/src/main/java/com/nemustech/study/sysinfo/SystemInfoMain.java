@@ -7,21 +7,35 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.util.Xml;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.xmlpull.v1.XmlSerializer;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.StringWriter;
 import java.util.ArrayList;
 
 
 public class SystemInfoMain extends Activity {
     @SuppressWarnings("unused")
     private static final String TAG = SystemInfoMain.class.getSimpleName();
+
+    final static String VER = "0.0";
+
+    String PATH;
+    File dir = null;
 
     LinearLayout mItemList;
     ArrayAdapter<InfoItem> mAdapter;
@@ -30,6 +44,7 @@ public class SystemInfoMain extends Activity {
     final static int REQUEST_PHONE = 1;
     final static int REQUEST_LOCATION = 2;
     final static int REQUEST_CAMERA = 3;
+    final static int REQUEST_ALL = 4;
 
     private OpenGlInfoProvider.GLHelper mGLHelper;
 
@@ -54,11 +69,20 @@ public class SystemInfoMain extends Activity {
     private LocaleInfoProvider mLocaleProvider;
     private AboutInfoProvider mAboutProvider;
 
+    private ArrayList<InfoItem> networkItems;
+
     int permissionCheck=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        PATH = getFilesDir().getAbsolutePath();
+        dir =  new File(PATH);
+        if(!dir.exists()){
+            dir.mkdir();
+        }
+
         setContentView(R.layout.l_main);
         mItemList = (LinearLayout)findViewById(R.id.l_items);
         mAdapter = new InfoListView.InfoItemAdapter(this, 0, new ArrayList<InfoItem>());
@@ -77,6 +101,7 @@ public class SystemInfoMain extends Activity {
         mInputProvider = new InputInfoProvider(this);
         mConnectivityProvider = new ConnectivityInfoProvider(this);
         mNetworkProvider = new NetworkInfoProvider(this);
+        mNetworkProvider.getItemsAsync(mReceiver);
         mLocationProvider = new LocationInfoProvider(this);
         mCameraProvider = new CameraInfoProvider(this);
         mOpenGlProvider = new OpenGlInfoProvider(this);
@@ -93,9 +118,6 @@ public class SystemInfoMain extends Activity {
         mGLHelper = mOpenGlProvider.getGlHelper();
         mGLHelper.onCreate();
 
-        /*if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_PHONE_STATE, Manifest.permission.CAMERA}, 10);
-        }*/
     }
 
     @Override
@@ -111,6 +133,7 @@ public class SystemInfoMain extends Activity {
         }
         mAdapter.notifyDataSetChanged();
         mContentList.setSelection(0);
+
     }
 
     private class ItemReceiver implements InfoProvider.AsyncInfoReceiver {
@@ -119,7 +142,8 @@ public class SystemInfoMain extends Activity {
             @Override
             public void run() {
                 if (null != mReceivedItems) {
-                    updateContent(mReceivedItems);
+                    //updateContent(mReceivedItems);
+                    networkItems = mReceivedItems;
                 }
             }
         };
@@ -173,7 +197,8 @@ public class SystemInfoMain extends Activity {
                 items = mConnectivityProvider.getItems();
                 break;
             case R.id.item_network:
-                mNetworkProvider.getItemsAsync(mReceiver);
+                items = networkItems;
+                itemToXML();
                 break;
             case R.id.item_location:
                 permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION);
@@ -254,6 +279,7 @@ public class SystemInfoMain extends Activity {
     @Override
     public void onRequestPermissionsResult (int requestCode, String[] permissions, int[] grantResults) {
         ArrayList<InfoItem> items = null;
+
         if (requestCode == REQUEST_PHONE) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 items = mTelephoneProvider.getItems();
@@ -272,14 +298,108 @@ public class SystemInfoMain extends Activity {
             } else {
                 items = new ArrayList<InfoItem>();
             }
-        }else{
+        }else if(requestCode == REQUEST_ALL){
+        }
+        else{
             Log.d("request code err",requestCode+"");
             items = new ArrayList<InfoItem>();
         }
         updateContent(items);
     }
 
-    public void itemToXML(ArrayList<InfoItem> items){
+    public void itemToXML(){
+        XmlSerializer serializer = Xml.newSerializer();
 
+        File fs = new File(PATH+"/device.xml");
+        FileOutputStream fos=null;
+
+        StringWriter writer = new StringWriter();
+
+        try {
+             fos = new FileOutputStream(fs);
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+            return;
+        }
+        ItemReceiver rec = new ItemReceiver();
+        try {
+            serializer.setOutput(writer);
+            serializer.startDocument("UNICODE",true);
+            serializer.startTag("","info");
+            serializer.attribute("","ver",VER);
+            serializer.endTag("","info");
+
+            xmlWriter("Android", new AndroidInfoProvider(this).getItems(), serializer);
+            xmlWriter("Screen", new ScreenInfoProvider(this).getItems(), serializer);
+            xmlWriter("System", new SystemInfoProvider(this).getItems(), serializer);
+            xmlWriter("Memory", new MemoryInfoProvider(this).getItems(), serializer);
+            xmlWriter("Storage", new StorageInfoProvider(this).getItems(), serializer);
+
+            permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_PHONE_STATE);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+                    xmlWriter("Telephone", new TelephoneInfoProvider(this).getItems(), serializer);
+                } else {
+                    xmlWriter("Telephone", new ArrayList<InfoItem>(), serializer);
+                }
+            }else{
+                xmlWriter("Telephone", new TelephoneInfoProvider(this).getItems(), serializer);
+            }
+
+            xmlWriter("Sensors", new SensorInfoProvider(this).getItems(), serializer);
+            xmlWriter("InputDevices", new InputInfoProvider(this).getItems(), serializer);
+            xmlWriter("Connectivity", new ConnectivityInfoProvider(this).getItems(), serializer);
+            xmlWriter("Networks", networkItems, serializer);
+
+            permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+                    xmlWriter("LocationProvider", new LocationInfoProvider(this).getItems(), serializer);
+                } else {
+                    xmlWriter("LocationProvider", new ArrayList<InfoItem>(), serializer);
+                }
+            }else{
+                xmlWriter("LocationProvider", new LocationInfoProvider(this).getItems(), serializer);
+            }
+
+            permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+                    xmlWriter("Camera", new CameraInfoProvider(this).getItems(), serializer);
+                } else {
+                    xmlWriter("Camera", new ArrayList<InfoItem>(), serializer);
+                }
+            }else{
+                xmlWriter("Camera", new CameraInfoProvider(this).getItems(), serializer);
+            }
+
+            xmlWriter("OpenGL", mOpenGlProvider.getItems(), serializer);
+            xmlWriter("DRM engines", new DrmInfoProvider(this).getItems(), serializer);
+            xmlWriter("Accounts", new AccountInfoProvider(this).getItems(), serializer);
+            xmlWriter("DevicePolicy", new PolicyInfoProvider(this).getItems(), serializer);
+            xmlWriter("Multimedia codec", new CodecInfoProvider(this).getItems(), serializer);
+            xmlWriter("Security providers", new SecurityInfoProvider(this).getItems(), serializer);
+            xmlWriter("SupportedLocales", new LocationInfoProvider(this).getItems(), serializer);
+            xmlWriter("AboutApp", new AboutInfoProvider(this).getItems(), serializer);
+
+            serializer.endDocument();
+            serializer.flush();
+            fos.write(writer.toString().getBytes());
+            fos.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public void xmlWriter(String tagName, ArrayList<InfoItem> items, XmlSerializer serializer) throws IOException {
+        serializer.startTag("",tagName);
+        for(InfoItem i : items){
+            Log.d("xmlWriter",i.name);
+            Log.d("xmlWriter",i.value);
+            serializer.attribute("",i.name,i.value);
+        }
+        serializer.endTag("",tagName);
     }
 }

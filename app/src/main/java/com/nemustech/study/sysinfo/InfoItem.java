@@ -9,7 +9,11 @@ public class InfoItem {
 
     public InfoItem(String name, String value) {
         this.name = name;
-        this.value = value;
+        if(value == null){
+            this.value = "";
+        }else {
+            this.value = value;
+        }
     }
 
     String name;

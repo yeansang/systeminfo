@@ -172,7 +172,7 @@ GNU General Public License for more details.
     <string name="network_none">No network!</string>
     <string name="network_subinterface">Subinterfaces: </string>
     <string name="network_up">(up)</string>
-    <string name="no_data">Check your permission</string>
+    <string name="no_data">Permission deny</string>
     <string name="no_iso3">* No ISO3 info</string>
     <string name="none">* None</string>
     <string name="opengl_extensions">Extensions</string>

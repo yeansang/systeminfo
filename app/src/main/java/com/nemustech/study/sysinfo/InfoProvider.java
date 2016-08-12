@@ -103,6 +103,7 @@ public abstract class InfoProvider {
         }
         return String.format("%.1f %s (%,d)", v, sUNIT[kidx], size);
     }
+
     static protected class InfoSpec {
         int titleId;
         int minSdk;
