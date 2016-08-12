@@ -3,8 +3,11 @@ package com.nemustech.study.sysinfo;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +26,10 @@ public class SystemInfoMain extends Activity {
     LinearLayout mItemList;
     ArrayAdapter<InfoItem> mAdapter;
     ListView mContentList;
+
+    final static int REQUEST_PHONE = 1;
+    final static int REQUEST_LOCATION = 2;
+    final static int REQUEST_CAMERA = 3;
 
     private OpenGlInfoProvider.GLHelper mGLHelper;
 
@@ -47,6 +54,8 @@ public class SystemInfoMain extends Activity {
     private LocaleInfoProvider mLocaleProvider;
     private AboutInfoProvider mAboutProvider;
 
+    int permissionCheck=0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,8 +66,6 @@ public class SystemInfoMain extends Activity {
         mContentList.setAdapter(mAdapter);
         TextView emptyView = (TextView)findViewById(R.id.no_data);
         mContentList.setEmptyView(emptyView);
-
-
 
         mAndroidProvider = new AndroidInfoProvider(this);
         mSystemProvider = new SystemInfoProvider(this);
@@ -85,6 +92,10 @@ public class SystemInfoMain extends Activity {
 
         mGLHelper = mOpenGlProvider.getGlHelper();
         mGLHelper.onCreate();
+
+        /*if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_PHONE_STATE, Manifest.permission.CAMERA}, 10);
+        }*/
     }
 
     @Override
@@ -122,7 +133,7 @@ public class SystemInfoMain extends Activity {
 
     private void onItemSelected(View view) {
         ArrayList<InfoItem> items = null;
-        int permissionCheck=0;
+
         switch (view.getId()) {
             case R.id.item_android:
                 items = mAndroidProvider.getItems();
@@ -141,11 +152,15 @@ public class SystemInfoMain extends Activity {
                 break;
             case R.id.item_phone:
                 permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_PHONE_STATE);
-                if(permissionCheck == PackageManager.PERMISSION_GRANTED) {
-                    items = mTelephoneProvider.getItems();
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+                        items = mTelephoneProvider.getItems();
+                    } else {
+                        requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_PHONE);
+                        //items = new ArrayList<InfoItem>();
+                    }
                 }else{
-                    requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 10);
-                    items=new ArrayList<InfoItem>();
+                    items = mTelephoneProvider.getItems();
                 }
                 break;
             case R.id.item_sensor:
@@ -162,20 +177,28 @@ public class SystemInfoMain extends Activity {
                 break;
             case R.id.item_location:
                 permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION);
-                if(permissionCheck == PackageManager.PERMISSION_GRANTED) {
-                    items = mLocationProvider.getItems();
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+                        items = mLocationProvider.getItems();
+                    } else {
+                        requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+                        //items = new ArrayList<InfoItem>();
+                    }
                 }else{
-                    requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 10);
-                    items=new ArrayList<InfoItem>();
+                    items = mLocationProvider.getItems();
                 }
                 break;
             case R.id.item_camera:
                 permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA);
-                if(permissionCheck == PackageManager.PERMISSION_GRANTED) {
-                    mCameraProvider.getItemsAsync(mReceiver);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+                        items = mCameraProvider.getItems();
+                    } else {
+                        requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
+                        //items = new ArrayList<InfoItem>();
+                    }
                 }else{
-                    requestPermissions(new String[]{Manifest.permission.CAMERA}, 10);
-                    items=new ArrayList<>();
+                    items = mCameraProvider.getItems();
                 }
                 break;
             case R.id.item_opengl:
@@ -226,5 +249,37 @@ public class SystemInfoMain extends Activity {
     public void onItemClick(View view) {
         Log.i(TAG, "CDSS onItemClick()");
         setItemSelected(view.getId());
+    }
+
+    @Override
+    public void onRequestPermissionsResult (int requestCode, String[] permissions, int[] grantResults) {
+        ArrayList<InfoItem> items = null;
+        if (requestCode == REQUEST_PHONE) {
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                items = mTelephoneProvider.getItems();
+            } else {
+                items = new ArrayList<InfoItem>();
+            }
+        }else if(requestCode == REQUEST_LOCATION){
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                items = mLocationProvider.getItems();
+            } else {
+                items = new ArrayList<InfoItem>();
+            }
+        }else if(requestCode == REQUEST_CAMERA){
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                items = mCameraProvider.getItems();
+            } else {
+                items = new ArrayList<InfoItem>();
+            }
+        }else{
+            Log.d("request code err",requestCode+"");
+            items = new ArrayList<InfoItem>();
+        }
+        updateContent(items);
+    }
+
+    public void itemToXML(ArrayList<InfoItem> items){
+
     }
 }
