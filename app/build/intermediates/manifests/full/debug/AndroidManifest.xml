@@ -25,6 +25,12 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.PICK" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.OPENABLE" />
+                <!-- <data android:mimeType="text/plain"/> -->
+                <data android:mimeType="*/*" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

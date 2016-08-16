@@ -3,8 +3,11 @@ package com.nemustech.study.sysinfo;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -12,15 +15,20 @@ import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.util.Xml;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.xmlpull.v1.XmlSerializer;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -32,7 +40,7 @@ public class SystemInfoMain extends Activity {
     @SuppressWarnings("unused")
     private static final String TAG = SystemInfoMain.class.getSimpleName();
 
-    final static String VER = "0.0";
+    final static String VER = "1.3";
 
     String PATH;
     File dir = null;
@@ -71,14 +79,71 @@ public class SystemInfoMain extends Activity {
 
     private ArrayList<InfoItem> networkItems;
 
+    private boolean outCome = false;
+
     int permissionCheck=0;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        MenuItem refresh = menu.getItem(0);
+        MenuItem share = menu.getItem(1);
+        refresh.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                    String[] requstPermission = new String[]{"","",""};
+                    permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_PHONE_STATE);
+                    if(permissionCheck == PackageManager.PERMISSION_DENIED){
+                        requstPermission[0]=Manifest.permission.READ_PHONE_STATE;
+                    }
+                    permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+                    if(permissionCheck == PackageManager.PERMISSION_DENIED){
+                        requstPermission[1]=Manifest.permission.ACCESS_FINE_LOCATION;
+                    }
+                    permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA);
+                    if(permissionCheck == PackageManager.PERMISSION_DENIED){
+                        requstPermission[2]=Manifest.permission.CAMERA;
+                    }
+                    requestPermissions(requstPermission,REQUEST_ALL);
+                }else {
+                    itemToXML();
+                }
+                Log.d("onCreateMenu","refresh");
+                return true;
+            }
+        });
+        share.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                Log.d("onCreateMenu","share");
+                File fs = new File(PATH + "/device.xml");
+                Uri fUri = Uri.fromFile(fs);
+
+                Intent mail = new Intent(Intent.ACTION_SEND);
+
+                Log.d("permission",checkUriPermission(fUri,null,null, Binder.getCallingPid(),Binder.getCallingUid(),Intent.FLAG_GRANT_READ_URI_PERMISSION)+"");
+                mail.setType("plain/text");
+                mail.putExtra(Intent.EXTRA_EMAIL, new String[]{""});
+
+                mail.putExtra(Intent.EXTRA_STREAM, fUri);
+                mail.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                Log.d("share",fUri.toString());
+                startActivity(Intent.createChooser(mail, "mail"));
+                return true;
+            }
+        });
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        PATH = getFilesDir().getAbsolutePath();
-        dir =  new File(PATH);
+        PATH = getExternalFilesDir(null).getPath();
+        dir =  new File(getExternalFilesDir(null),"device");
         if(!dir.exists()){
             dir.mkdir();
         }
@@ -118,6 +183,19 @@ public class SystemInfoMain extends Activity {
         mGLHelper = mOpenGlProvider.getGlHelper();
         mGLHelper.onCreate();
 
+        if(!outCome) {
+            File fs = new File(PATH + "/device.xml");
+            if (!fs.exists()) {
+                itemToXML();
+            }
+            FileInputStream xmlInput;
+            try {
+                xmlInput = new FileInputStream(fs);
+            }catch (FileNotFoundException e){
+                e.printStackTrace();
+            }
+        }
+
     }
 
     @Override
@@ -133,7 +211,6 @@ public class SystemInfoMain extends Activity {
         }
         mAdapter.notifyDataSetChanged();
         mContentList.setSelection(0);
-
     }
 
     private class ItemReceiver implements InfoProvider.AsyncInfoReceiver {
@@ -198,7 +275,6 @@ public class SystemInfoMain extends Activity {
                 break;
             case R.id.item_network:
                 items = networkItems;
-                itemToXML();
                 break;
             case R.id.item_location:
                 permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION);
@@ -299,12 +375,13 @@ public class SystemInfoMain extends Activity {
                 items = new ArrayList<InfoItem>();
             }
         }else if(requestCode == REQUEST_ALL){
+            itemToXML();
         }
         else{
             Log.d("request code err",requestCode+"");
             items = new ArrayList<InfoItem>();
         }
-        updateContent(items);
+        //updateContent(items);
     }
 
     public void itemToXML(){
@@ -315,16 +392,22 @@ public class SystemInfoMain extends Activity {
 
         StringWriter writer = new StringWriter();
 
+        Toast toast = Toast.makeText(getApplicationContext(),"refreshing...",Toast.LENGTH_SHORT);
+        toast.show();
+
         try {
              fos = new FileOutputStream(fs);
         }catch (FileNotFoundException e){
             e.printStackTrace();
+            toast = Toast.makeText(getApplicationContext(),"refresh err:File not found",Toast.LENGTH_SHORT);
+            toast.show();
             return;
         }
         ItemReceiver rec = new ItemReceiver();
         try {
             serializer.setOutput(writer);
-            serializer.startDocument("UNICODE",true);
+            serializer.startDocument("UTF-8",true);
+            serializer.startTag("","deviceinfo");
             serializer.startTag("","info");
             serializer.attribute("","ver",VER);
             serializer.endTag("","info");
@@ -386,20 +469,45 @@ public class SystemInfoMain extends Activity {
             serializer.flush();
             fos.write(writer.toString().getBytes());
             fos.close();
+            toast = Toast.makeText(getApplicationContext(),"refreshed!",Toast.LENGTH_SHORT);
+            toast.show();
 
         }catch (Exception e){
+            toast = Toast.makeText(getApplicationContext(),"refresh err:XML err",Toast.LENGTH_SHORT);
+            toast.show();
             e.printStackTrace();
         }
 
     }
 
     public void xmlWriter(String tagName, ArrayList<InfoItem> items, XmlSerializer serializer) throws IOException {
-        serializer.startTag("",tagName);
+        serializer.startTag("",tagName.replaceAll(" ","_"));
         for(InfoItem i : items){
-            Log.d("xmlWriter",i.name);
-            Log.d("xmlWriter",i.value);
-            serializer.attribute("",i.name,i.value);
+            serializer.startTag("","item");
+
+            serializer.startTag("","name");
+            serializer.text(i.name);
+            serializer.endTag("","name");
+
+            serializer.startTag("","value");
+            serializer.text(i.value);
+            serializer.endTag("","value");
+
+            serializer.endTag("","item");
         }
-        serializer.endTag("",tagName);
+        if(items.isEmpty()){
+            serializer.startTag("","item");
+
+            serializer.startTag("","name");
+            serializer.text("permission err");
+            serializer.endTag("","name");
+
+            serializer.startTag("","value");
+            serializer.text("permission err");
+            serializer.endTag("","value");
+
+            serializer.endTag("","item");
+        }
+        serializer.endTag("",tagName.replaceAll(" ","_"));
     }
 }
