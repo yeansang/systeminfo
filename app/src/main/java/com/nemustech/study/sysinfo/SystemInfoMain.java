@@ -25,6 +25,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
 import org.xmlpull.v1.XmlSerializer;
 
 import java.io.File;
@@ -32,7 +35,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.StringWriter;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 
@@ -56,28 +62,32 @@ public class SystemInfoMain extends Activity {
 
     private OpenGlInfoProvider.GLHelper mGLHelper;
 
-    private AndroidInfoProvider mAndroidProvider;
-    private SystemInfoProvider mSystemProvider;
-    private ScreenInfoProvider mScreenProvider;
-    private MemoryInfoProvider mMemoryProvider;
-    private StorageInfoProvider mStorageProvider;
-    private TelephoneInfoProvider mTelephoneProvider;
-    private SensorInfoProvider mSensorProvider;
-    private InputInfoProvider mInputProvider;
-    private ConnectivityInfoProvider mConnectivityProvider;
     private NetworkInfoProvider mNetworkProvider;
-    private LocationInfoProvider mLocationProvider;
-    private CameraInfoProvider mCameraProvider;
+    private ArrayList<InfoItem> tempNetworkItems= new ArrayList<>();
     private OpenGlInfoProvider mOpenGlProvider;
-    private DrmInfoProvider mDrmProvider;
-    private AccountInfoProvider mAccountProvider;
-    private PolicyInfoProvider mPolicyProvider;
-    private CodecInfoProvider mCodecProvider;
-    private SecurityInfoProvider mSecurityProvider;
-    private LocaleInfoProvider mLocaleProvider;
-    private AboutInfoProvider mAboutProvider;
 
-    private ArrayList<InfoItem> networkItems;
+    private ArrayList<InfoItem> androidItems = new ArrayList<>();
+    private ArrayList<InfoItem> systemItems= new ArrayList<>();
+    private ArrayList<InfoItem> screenItems= new ArrayList<>();
+    private ArrayList<InfoItem> memoryItems= new ArrayList<>();
+    private ArrayList<InfoItem> storageItems= new ArrayList<>();
+    private ArrayList<InfoItem> telephoneItems= new ArrayList<>();
+    private ArrayList<InfoItem> sensorItems= new ArrayList<>();
+    private ArrayList<InfoItem> inputItems= new ArrayList<>();
+    private ArrayList<InfoItem> connectivityItems= new ArrayList<>();
+    private ArrayList<InfoItem> networkItems= new ArrayList<>();
+    private ArrayList<InfoItem> locationItems= new ArrayList<>();
+    private ArrayList<InfoItem> cameraItems= new ArrayList<>();
+    private ArrayList<InfoItem> openglItems= new ArrayList<>();
+    private ArrayList<InfoItem> drmItems= new ArrayList<>();
+    private ArrayList<InfoItem> accountItems= new ArrayList<>();
+    private ArrayList<InfoItem> policyItems= new ArrayList<>();
+    private ArrayList<InfoItem> codecItems= new ArrayList<>();
+    private ArrayList<InfoItem> securityItems= new ArrayList<>();
+    private ArrayList<InfoItem> localeItems= new ArrayList<>();
+    private ArrayList<InfoItem> aboutItems= new ArrayList<>();
+
+    private XmlPullParser xpp;
 
     private boolean outCome = false;
 
@@ -111,6 +121,7 @@ public class SystemInfoMain extends Activity {
                     itemToXML();
                 }
                 Log.d("onCreateMenu","refresh");
+
                 return true;
             }
         });
@@ -148,35 +159,39 @@ public class SystemInfoMain extends Activity {
             dir.mkdir();
         }
 
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        String type = intent.getType();
+        File fa = null;
+
+
+
+        if(intent != null){
+            Uri urivalue = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
+            Log.d("text",intent.getData().toString());
+
+           //String xml = intent.getStringExtra(Intent.EXTRA_TEXT);
+            if(urivalue!=null) Log.d("text",urivalue.toString());
+            /*if (xml != null) {
+                String sendFile = intent.getData().getPath();
+                fa = new File(sendFile);
+                Log.d("onCreate", sendFile);
+                outCome = true;
+            }*/
+        }
+
         setContentView(R.layout.l_main);
         mItemList = (LinearLayout)findViewById(R.id.l_items);
         mAdapter = new InfoListView.InfoItemAdapter(this, 0, new ArrayList<InfoItem>());
         mContentList = (ListView)findViewById(R.id.l_content);
         mContentList.setAdapter(mAdapter);
         TextView emptyView = (TextView)findViewById(R.id.no_data);
+        emptyView.setText("Select list");
         mContentList.setEmptyView(emptyView);
 
-        mAndroidProvider = new AndroidInfoProvider(this);
-        mSystemProvider = new SystemInfoProvider(this);
-        mScreenProvider = new ScreenInfoProvider(this);
-        mMemoryProvider = new MemoryInfoProvider(this);
-        mStorageProvider = new StorageInfoProvider(this);
-        mTelephoneProvider = new TelephoneInfoProvider(this);
-        mSensorProvider = new SensorInfoProvider(this);
-        mInputProvider = new InputInfoProvider(this);
-        mConnectivityProvider = new ConnectivityInfoProvider(this);
         mNetworkProvider = new NetworkInfoProvider(this);
-        mNetworkProvider.getItemsAsync(mReceiver);
-        mLocationProvider = new LocationInfoProvider(this);
-        mCameraProvider = new CameraInfoProvider(this);
+
         mOpenGlProvider = new OpenGlInfoProvider(this);
-        mDrmProvider = new DrmInfoProvider(this);
-        mAccountProvider = new AccountInfoProvider(this);
-        mPolicyProvider = new PolicyInfoProvider(this);
-        mCodecProvider = new CodecInfoProvider(this);
-        mSecurityProvider = new SecurityInfoProvider(this);
-        mLocaleProvider = new LocaleInfoProvider(this);
-        mAboutProvider = new AboutInfoProvider(this);
 
         setItemSelected(R.id.item_android);
 
@@ -186,14 +201,15 @@ public class SystemInfoMain extends Activity {
         if(!outCome) {
             File fs = new File(PATH + "/device.xml");
             if (!fs.exists()) {
-                itemToXML();
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_PHONE_STATE}, REQUEST_ALL);
+                }else{
+                    itemToXML();
+                }
             }
-            FileInputStream xmlInput;
-            try {
-                xmlInput = new FileInputStream(fs);
-            }catch (FileNotFoundException e){
-                e.printStackTrace();
-            }
+            xmlReader(fs);
+        }else{
+            if(fa != null) xmlReader(fa);
         }
 
     }
@@ -220,7 +236,7 @@ public class SystemInfoMain extends Activity {
             public void run() {
                 if (null != mReceivedItems) {
                     //updateContent(mReceivedItems);
-                    networkItems = mReceivedItems;
+                    tempNetworkItems = mReceivedItems;
                 }
             }
         };
@@ -237,94 +253,64 @@ public class SystemInfoMain extends Activity {
 
         switch (view.getId()) {
             case R.id.item_android:
-                items = mAndroidProvider.getItems();
+                items = androidItems;
                 break;
             case R.id.item_system:
-                items = mSystemProvider.getItems();
+                items = systemItems;
                 break;
             case R.id.item_screen:
-                items = mScreenProvider.getItems();
+                items = screenItems;
                 break;
             case R.id.item_memory:
-                items = mMemoryProvider.getItems();
+                items = memoryItems;
                 break;
             case R.id.item_storage:
-                items = mStorageProvider.getItems();
+                items = storageItems;
                 break;
             case R.id.item_phone:
-                permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_PHONE_STATE);
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
-                        items = mTelephoneProvider.getItems();
-                    } else {
-                        requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_PHONE);
-                        //items = new ArrayList<InfoItem>();
-                    }
-                }else{
-                    items = mTelephoneProvider.getItems();
-                }
+                items = telephoneItems;
                 break;
             case R.id.item_sensor:
-                items = mSensorProvider.getItems();
+                items = sensorItems;
                 break;
             case R.id.item_input:
-                items = mInputProvider.getItems();
+                items = inputItems;
                 break;
             case R.id.item_connectivity:
-                items = mConnectivityProvider.getItems();
+                items = connectivityItems;
                 break;
             case R.id.item_network:
                 items = networkItems;
                 break;
             case R.id.item_location:
-                permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION);
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
-                        items = mLocationProvider.getItems();
-                    } else {
-                        requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
-                        //items = new ArrayList<InfoItem>();
-                    }
-                }else{
-                    items = mLocationProvider.getItems();
-                }
+                items = locationItems;
                 break;
             case R.id.item_camera:
-                permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA);
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
-                        items = mCameraProvider.getItems();
-                    } else {
-                        requestPermissions(new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
-                        //items = new ArrayList<InfoItem>();
-                    }
-                }else{
-                    items = mCameraProvider.getItems();
-                }
+                items = cameraItems;
                 break;
             case R.id.item_opengl:
-                items = mOpenGlProvider.getItems();
+                items = openglItems;
                 break;
             case R.id.item_drm:
-                items = mDrmProvider.getItems();
+                items = drmItems;
                 break;
             case R.id.item_account:
-                items = mAccountProvider.getItems();
+                items = accountItems;
                 break;
             case R.id.item_policy:
-                items = mPolicyProvider.getItems();
+                items = policyItems;
                 break;
             case R.id.item_codec:
-                items = mCodecProvider.getItems();
+                items = codecItems;
                 break;
             case R.id.item_security:
-                items = mSecurityProvider.getItems();
+                items = securityItems;
                 break;
             case R.id.item_locale:
-                items = mLocaleProvider.getItems();
+                items = localeItems;
                 break;
             case R.id.item_about:
-                items = mAboutProvider.getItems();
+                items = aboutItems;
                 break;
         }
         if (null != items) {
@@ -358,19 +344,19 @@ public class SystemInfoMain extends Activity {
 
         if (requestCode == REQUEST_PHONE) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                items = mTelephoneProvider.getItems();
+                //items = mTelephoneProvider.getItems();
             } else {
                 items = new ArrayList<InfoItem>();
             }
         }else if(requestCode == REQUEST_LOCATION){
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                items = mLocationProvider.getItems();
+                //items = mLocationProvider.getItems();
             } else {
                 items = new ArrayList<InfoItem>();
             }
         }else if(requestCode == REQUEST_CAMERA){
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                items = mCameraProvider.getItems();
+                //items = mCameraProvider.getItems();
             } else {
                 items = new ArrayList<InfoItem>();
             }
@@ -381,10 +367,11 @@ public class SystemInfoMain extends Activity {
             Log.d("request code err",requestCode+"");
             items = new ArrayList<InfoItem>();
         }
+
         //updateContent(items);
     }
 
-    public void itemToXML(){
+    private void itemToXML(){
         XmlSerializer serializer = Xml.newSerializer();
 
         File fs = new File(PATH+"/device.xml");
@@ -432,7 +419,8 @@ public class SystemInfoMain extends Activity {
             xmlWriter("Sensors", new SensorInfoProvider(this).getItems(), serializer);
             xmlWriter("InputDevices", new InputInfoProvider(this).getItems(), serializer);
             xmlWriter("Connectivity", new ConnectivityInfoProvider(this).getItems(), serializer);
-            xmlWriter("Networks", networkItems, serializer);
+            mNetworkProvider.getItemsAsync(mReceiver);
+            xmlWriter("Networks", tempNetworkItems, serializer);
 
             permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION);
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -457,12 +445,12 @@ public class SystemInfoMain extends Activity {
             }
 
             xmlWriter("OpenGL", mOpenGlProvider.getItems(), serializer);
-            xmlWriter("DRM engines", new DrmInfoProvider(this).getItems(), serializer);
+            xmlWriter("DRM_engines", new DrmInfoProvider(this).getItems(), serializer);
             xmlWriter("Accounts", new AccountInfoProvider(this).getItems(), serializer);
             xmlWriter("DevicePolicy", new PolicyInfoProvider(this).getItems(), serializer);
-            xmlWriter("Multimedia codec", new CodecInfoProvider(this).getItems(), serializer);
-            xmlWriter("Security providers", new SecurityInfoProvider(this).getItems(), serializer);
-            xmlWriter("SupportedLocales", new LocationInfoProvider(this).getItems(), serializer);
+            xmlWriter("Multimedia_codec", new CodecInfoProvider(this).getItems(), serializer);
+            xmlWriter("Security_providers", new SecurityInfoProvider(this).getItems(), serializer);
+            xmlWriter("SupportedLocales", new LocaleInfoProvider(this).getItems(), serializer);
             xmlWriter("AboutApp", new AboutInfoProvider(this).getItems(), serializer);
 
             serializer.endDocument();
@@ -477,10 +465,10 @@ public class SystemInfoMain extends Activity {
             toast.show();
             e.printStackTrace();
         }
-
+        //xmlReader(new File(PATH + "/device.xml"));
     }
 
-    public void xmlWriter(String tagName, ArrayList<InfoItem> items, XmlSerializer serializer) throws IOException {
+    private void xmlWriter(String tagName, ArrayList<InfoItem> items, XmlSerializer serializer) throws IOException {
         serializer.startTag("",tagName.replaceAll(" ","_"));
         for(InfoItem i : items){
             serializer.startTag("","item");
@@ -509,5 +497,76 @@ public class SystemInfoMain extends Activity {
             serializer.endTag("","item");
         }
         serializer.endTag("",tagName.replaceAll(" ","_"));
+    }
+
+    private void xmlReader(File fs){
+        FileInputStream xmlInput;
+        XmlPullParserFactory factory;
+        try {
+            factory= XmlPullParserFactory.newInstance();
+            xpp= factory.newPullParser();
+            xmlInput = new FileInputStream(fs);
+            xpp.setInput(new InputStreamReader(xmlInput));
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+        }catch (XmlPullParserException e){
+            e.printStackTrace();
+        }
+
+        String catName;
+        ArrayList<InfoItem> temp = null;
+        String name = null;
+        String value = null;
+        try{
+            while (xpp.getEventType() != XmlPullParser.END_DOCUMENT){
+                switch (xpp.getEventType()){
+                    case XmlPullParser.START_TAG:
+                        catName = xpp.getName();
+                        if(catName.equals("name")){
+                            xpp.next();
+                            name = xpp.getText();
+                            Log.d("xmlReader1", name);
+                        }else if(catName.equals("value")){
+                            xpp.next();
+                            value = xpp.getText();
+                            if(value != null) Log.d("xmlReader2", value);
+                        }else if(!catName.equals("item")){
+                            if(catName.equals("Android")) temp = androidItems;
+                            else if(catName.equals("Screen")) temp = screenItems;
+                            else if(catName.equals("System")) temp = systemItems;
+                            else if(catName.equals("Memory")) temp = memoryItems;
+                            else if(catName.equals("Storage")) temp = storageItems;
+                            else if(catName.equals("Telephone")) temp = telephoneItems;
+                            else if(catName.equals("Sensors")) temp = sensorItems;
+                            else if(catName.equals("InputDevices")) temp = inputItems;
+                            else if(catName.equals("Connectivity")) temp = connectivityItems;
+                            else if(catName.equals("Networks")) temp = networkItems;
+                            else if(catName.equals("LocationProvider")) temp = locationItems;
+                            else if(catName.equals("Camera")) temp = cameraItems;
+                            else if(catName.equals("OpenGL")) temp = openglItems;
+                            else if(catName.equals("DRM_engines")) temp = drmItems;
+                            else if(catName.equals("Accounts")) temp = accountItems;
+                            else if(catName.equals("DevicePolicy")) temp = policyItems;
+                            else if(catName.equals("Multimedia_codec")) temp = codecItems;
+                            else if(catName.equals("Security_providers")) temp = securityItems;
+                            else if(catName.equals("SupportedLocales")) temp = localeItems;
+                            else if(catName.equals("AboutApp")) temp = aboutItems;
+                            Log.d("xmlReader menu",catName);
+                            if(temp!=null)  temp.clear();
+                        }
+                        break;
+                    case XmlPullParser.END_TAG:
+                        if(xpp.getName().equals("item")){
+                            temp.add(new InfoItem(name,value));
+                        }
+                        break;
+                }
+                xpp.next();
+            }
+        }catch (XmlPullParserException e){
+            e.printStackTrace();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 }

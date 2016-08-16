@@ -33,6 +33,10 @@
                 <data android:mimeType="*/*" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <data android:pathPattern=".*\\.xml" />
             </intent-filter>
         </activity>
     </application>

@@ -21,185 +21,59 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2e047cf2-edd8-4c37-a3e7-1431d0d477fe" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/menu/menu_main.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/xml/filepaths.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/nemustech/study/sysinfo/InfoItem$override.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/nemustech/study/sysinfo/TelephoneInfoProvider$override.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/cache.properties.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/fileHashes.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/outputFileStates.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/outputFileStates.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/2.10/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/AboutInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/AboutInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/AccountInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/AccountInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/AndroidInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/AndroidInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/CameraInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/CameraInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/CodecInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/CodecInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/ConnectivityInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/ConnectivityInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/DrmInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/DrmInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/InfoListView$InfoItemAdapter.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/InfoListView$InfoItemAdapter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/InfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/InfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/InputInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/InputInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/LocaleInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/LocaleInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/LocationInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/LocationInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/MemoryInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/MemoryInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/NetworkInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/NetworkInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/OpenGlInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/OpenGlInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/PolicyInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/PolicyInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/R$color.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/R$color.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/R$dimen.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/R$dimen.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/R$drawable.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/R$drawable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/R$id.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/R$id.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/R$layout.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/R$layout.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/R$string.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/R$style.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/R$style.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/R.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/R.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/ScreenInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/ScreenInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/SecurityInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/SecurityInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/SensorInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/SensorInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/StorageInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/StorageInfoProvider.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/cache.properties.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileHashes.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshotsToTreeSnapshotsIndex.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/taskArtifacts.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/SystemInfoMain$1.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/SystemInfoMain$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/SystemInfoMain$2.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/SystemInfoMain$2.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/SystemInfoMain$ItemReceiver$1.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/SystemInfoMain$ItemReceiver$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/SystemInfoMain$ItemReceiver.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/SystemInfoMain$ItemReceiver.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/SystemInfoMain.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/SystemInfoMain.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/SystemInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/SystemInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/TelephoneInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/nemustech/study/sysinfo/TelephoneInfoProvider.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/AboutInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/AboutInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/AccountInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/AccountInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/AndroidInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/AndroidInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/CameraInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/CameraInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/CodecInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/CodecInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/ConnectivityInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/ConnectivityInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/DrmInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/DrmInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/InfoListView$InfoItemAdapter.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/InfoListView$InfoItemAdapter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/InfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/InfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/InputInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/InputInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/LocaleInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/LocaleInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/LocationInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/LocationInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/MemoryInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/MemoryInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/NetworkInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/NetworkInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/OpenGlInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/OpenGlInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/PolicyInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/PolicyInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/R$color.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/R$color.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/R$dimen.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/R$dimen.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/R$drawable.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/R$drawable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/R$id.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/R$id.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/R$layout.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/R$layout.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/R$string.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/R$style.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/R$style.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/R.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/R.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/ScreenInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/ScreenInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/SecurityInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/SecurityInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/SensorInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/SensorInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/StorageInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/StorageInfoProvider.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/SystemInfoMain$1.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/SystemInfoMain$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/SystemInfoMain$2.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/SystemInfoMain$2.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/SystemInfoMain$ItemReceiver$1.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/SystemInfoMain$ItemReceiver$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/SystemInfoMain$ItemReceiver.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/SystemInfoMain$ItemReceiver.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/SystemInfoMain.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/SystemInfoMain.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/SystemInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/SystemInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/TelephoneInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental-verifier/debug/com/nemustech/study/sysinfo/TelephoneInfoProvider.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/instant-run-support/debug/classes.zip" afterPath="$PROJECT_DIR$/app/build/intermediates/instant-run-support/debug/classes.zip" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/instant-run-support/debug/resources.zip" afterPath="$PROJECT_DIR$/app/build/intermediates/instant-run-support/debug/resources.zip" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/res/resources-debug-androidTest.ap_" afterPath="$PROJECT_DIR$/app/build/intermediates/res/resources-debug-androidTest.ap_" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/res/resources-debug.ap_" afterPath="$PROJECT_DIR$/app/build/intermediates/res/resources-debug.ap_" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_1/classes.dex" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_1/classes.dex" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/AboutInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/AboutInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/AccountInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/AccountInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/AndroidInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/AndroidInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/CameraInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/CameraInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/CodecInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/CodecInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/ConnectivityInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/ConnectivityInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/DrmInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/DrmInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/InfoListView$InfoItemAdapter.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/InfoListView$InfoItemAdapter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/InfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/InfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/InputInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/InputInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/LocaleInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/LocaleInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/LocationInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/LocationInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/MemoryInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/MemoryInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/NetworkInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/NetworkInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/OpenGlInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/OpenGlInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/PolicyInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/PolicyInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/R$color.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/R$color.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/R$dimen.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/R$dimen.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/R$drawable.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/R$drawable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/R$id.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/R$id.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/R$layout.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/R$layout.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/R$string.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/R$style.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/R$style.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/R.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/R.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/ScreenInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/ScreenInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/SecurityInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/SecurityInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/SensorInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/SensorInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/StorageInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/StorageInfoProvider.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/SystemInfoMain$1.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/SystemInfoMain$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/SystemInfoMain$2.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/SystemInfoMain$2.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/SystemInfoMain$ItemReceiver$1.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/SystemInfoMain$ItemReceiver$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/SystemInfoMain$ItemReceiver.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/SystemInfoMain$ItemReceiver.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/SystemInfoMain.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/SystemInfoMain.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/SystemInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/SystemInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/TelephoneInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/1/5/main/com/nemustech/study/sysinfo/TelephoneInfoProvider.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/android/tools/fd/runtime/AppPatchesLoaderImpl.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/android/tools/fd/runtime/AppPatchesLoaderImpl.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/nemustech/study/sysinfo/SystemInfoMain$1$override.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/nemustech/study/sysinfo/SystemInfoMain$1$override.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/nemustech/study/sysinfo/SystemInfoMain$2$override.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/nemustech/study/sysinfo/SystemInfoMain$2$override.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/nemustech/study/sysinfo/SystemInfoMain$ItemReceiver$1$override.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/nemustech/study/sysinfo/SystemInfoMain$ItemReceiver$1$override.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/nemustech/study/sysinfo/SystemInfoMain$ItemReceiver$override.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/nemustech/study/sysinfo/SystemInfoMain$ItemReceiver$override.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/nemustech/study/sysinfo/SystemInfoMain$override.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRun/debug/folders/4000/5/enhanced/com/nemustech/study/sysinfo/SystemInfoMain$override.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/AboutInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/AboutInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/AccountInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/AccountInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/AndroidInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/AndroidInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/CameraInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/CameraInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/CodecInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/CodecInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/ConnectivityInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/ConnectivityInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/DrmInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/DrmInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/InfoListView$InfoItemAdapter.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/InfoListView$InfoItemAdapter.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/InfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/InfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/InputInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/InputInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/LocaleInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/LocaleInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/LocationInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/LocationInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/MemoryInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/MemoryInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/NetworkInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/NetworkInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/OpenGlInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/OpenGlInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/PolicyInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/PolicyInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/R$color.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/R$color.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/R$dimen.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/R$dimen.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/R$drawable.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/R$drawable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/R$id.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/R$id.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/R$layout.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/R$layout.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/R$string.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/R$string.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/R$style.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/R$style.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/R.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/R.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/ScreenInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/ScreenInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/SecurityInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/SecurityInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/SensorInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/SensorInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/StorageInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/StorageInfoProvider.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/SystemInfoMain$1.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/SystemInfoMain$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/SystemInfoMain$2.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/SystemInfoMain$2.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/SystemInfoMain$ItemReceiver$1.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/SystemInfoMain$ItemReceiver$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/SystemInfoMain$ItemReceiver.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/SystemInfoMain$ItemReceiver.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/SystemInfoMain.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/SystemInfoMain.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/SystemInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/SystemInfoProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/TelephoneInfoProvider.class" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/com/nemustech/study/sysinfo/TelephoneInfoProvider.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/outputs/apk/app-debug-unaligned.apk" afterPath="$PROJECT_DIR$/app/build/outputs/apk/app-debug-unaligned.apk" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/outputs/apk/app-debug.apk" afterPath="$PROJECT_DIR$/app/build/outputs/apk/app-debug.apk" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/gradle.xml" afterPath="$PROJECT_DIR$/.idea/gradle.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/generated/source/r/debug/com/nemustech/study/sysinfo/R.java" afterPath="$PROJECT_DIR$/app/build/generated/source/r/debug/com/nemustech/study/sysinfo/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/single/drawable-xhdpi-v4.json" afterPath="$PROJECT_DIR$/app/build/intermediates/blame/res/debug/single/drawable-xhdpi-v4.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/bundles/debug/instant-run/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/build/intermediates/bundles/debug/instant-run/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merger.xml" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/mergeDebugResources/merger.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/instant-run-support/debug/manifest.crc" afterPath="$PROJECT_DIR$/app/build/intermediates/instant-run-support/debug/manifest.crc" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/instant-run-support/debug/reload-changes.txt" afterPath="$PROJECT_DIR$/app/build/intermediates/instant-run-support/debug/reload-changes.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/manifests/full/debug/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/build/intermediates/manifests/full/debug/AndroidManifest.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/restart-dex/debug/build-info.xml" afterPath="$PROJECT_DIR$/app/build/intermediates/restart-dex/debug/build-info.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/symbols/debug/R.txt" afterPath="$PROJECT_DIR$/app/build/intermediates/symbols/debug/R.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/buildId.txt" afterPath="$PROJECT_DIR$/app/build/intermediates/transforms/instantRunSlicer/debug/folders/1/5/slice_1/buildId.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/outputs/logs/manifest-merger-debug-report.txt" afterPath="$PROJECT_DIR$/app/build/outputs/logs/manifest-merger-debug-report.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nemustech/study/sysinfo/SystemInfoMain.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nemustech/study/sysinfo/SystemInfoMain.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.gradle" afterPath="$PROJECT_DIR$/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" />
     </list>
     <ignored path="systeminfo.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -242,8 +116,8 @@
       <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.785714">
-              <caret line="21" column="5" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
+            <state vertical-scroll-proportion="-11.535714">
+              <caret line="37" column="68" selection-start-line="37" selection-start-column="68" selection-end-line="37" selection-end-column="68" />
               <folding />
             </state>
           </provider>
@@ -264,7 +138,13 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="263" column="29" selection-start-line="263" selection-start-column="29" selection-end-line="263" selection-end-column="29" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#558#559#0" expanded="false" />
+                <element signature="e#588#589#0" expanded="false" />
+                <element signature="e#5442#5443#0" expanded="false" />
+                <element signature="e#5472#5473#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -291,19 +171,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="l_main.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout-land/l_main.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="30" column="38" selection-start-line="30" selection-start-column="38" selection-end-line="30" selection-end-column="38" />
-              <folding />
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="menu_main.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/menu_main.xml">
           <provider selected="true" editor-type-id="text-editor">
@@ -317,15 +184,25 @@
       <file leaf-file-name="SystemInfoMain.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nemustech/study/sysinfo/SystemInfoMain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5696864">
-              <caret line="375" column="13" selection-start-line="375" selection-start-column="13" selection-end-line="375" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.6738351">
+              <caret line="180" column="9" selection-start-line="180" selection-start-column="9" selection-end-line="180" selection-end-column="9" />
               <folding>
-                <element signature="e#2948#4396#0" expanded="true" />
-                <element signature="e#4395#4396#0" expanded="true" />
-                <element signature="e#4440#5347#0" expanded="true" />
-                <element signature="e#5346#5347#0" expanded="true" />
+                <element signature="e#3629#5078#0" expanded="true" />
+                <element signature="e#5077#5078#0" expanded="true" />
+                <element signature="e#5122#6029#0" expanded="true" />
+                <element signature="e#6028#6029#0" expanded="true" />
                 <element signature="method#onItemClick#0;class#SystemInfoMain#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Looper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/android/os/Looper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="147" column="0" selection-start-line="147" selection-start-column="0" selection-end-line="147" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -1920,17 +1797,16 @@
         <option value="$PROJECT_DIR$/app/src/main/res/menu/menu_action.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/menu_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/xml/filepaths.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/nemustech/study/sysinfo/InfoItem.java" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/nemustech/study/sysinfo/SystemInfoMain.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="x" value="960" />
+    <option name="width" value="960" />
+    <option name="height" value="1040" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -1994,6 +1870,20 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="systeminfo" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="manifests" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidManifestsGroupNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="ProjectPane" />
@@ -2005,7 +1895,7 @@
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="settings.editor.selected.configurable" value="android.sdk-updates" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="device.picker.selection" value="Nexus_5X_API_23" />
+    <property name="device.picker.selection" value="LGF670K5e8ec868" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../Launcher2" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/drawable-hdpi" />
   </component>
@@ -2286,7 +2176,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="960" y="0" width="960" height="1040" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -2295,7 +2185,7 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32962137" sideWeight="0.5021322" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32850778" sideWeight="0.4978678" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3344671" sideWeight="0.4978678" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6844444" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32962137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32850778" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -2304,7 +2194,7 @@
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.108208954" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22555555" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -2335,14 +2225,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nemustech/study/sysinfo/TelephoneInfoProvider.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="186" column="90" selection-start-line="186" selection-start-column="90" selection-end-line="186" selection-end-column="90" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nemustech/study/sysinfo/InfoProvider.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2371,10 +2253,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#2948#4396#0" expanded="true" />
-            <element signature="e#4395#4396#0" expanded="true" />
-            <element signature="e#4440#5347#0" expanded="true" />
-            <element signature="e#5346#5347#0" expanded="true" />
+            <element signature="e#3629#5078#0" expanded="true" />
+            <element signature="e#5077#5078#0" expanded="true" />
+            <element signature="e#5122#6029#0" expanded="true" />
+            <element signature="e#6028#6029#0" expanded="true" />
             <element signature="method#onItemClick#0;class#SystemInfoMain#0" expanded="false" />
           </folding>
         </state>
@@ -2428,7 +2310,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="186" column="90" selection-start-line="186" selection-start-column="90" selection-end-line="186" selection-end-column="90" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#558#559#0" expanded="false" />
+            <element signature="e#588#589#0" expanded="false" />
+            <element signature="e#5442#5443#0" expanded="false" />
+            <element signature="e#5472#5473#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2474,10 +2362,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#2948#4396#0" expanded="true" />
-            <element signature="e#4395#4396#0" expanded="true" />
-            <element signature="e#4440#5347#0" expanded="true" />
-            <element signature="e#5346#5347#0" expanded="true" />
+            <element signature="e#3629#5078#0" expanded="true" />
+            <element signature="e#5077#5078#0" expanded="true" />
+            <element signature="e#5122#6029#0" expanded="true" />
+            <element signature="e#6028#6029#0" expanded="true" />
             <element signature="method#onItemClick#0;class#SystemInfoMain#0" expanded="false" />
           </folding>
         </state>
@@ -2517,7 +2405,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="186" column="90" selection-start-line="186" selection-start-column="90" selection-end-line="186" selection-end-column="90" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#558#559#0" expanded="false" />
+            <element signature="e#588#589#0" expanded="false" />
+            <element signature="e#5442#5443#0" expanded="false" />
+            <element signature="e#5472#5473#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2577,10 +2471,10 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#2948#4396#0" expanded="true" />
-            <element signature="e#4395#4396#0" expanded="true" />
-            <element signature="e#4440#5347#0" expanded="true" />
-            <element signature="e#5346#5347#0" expanded="true" />
+            <element signature="e#3629#5078#0" expanded="true" />
+            <element signature="e#5077#5078#0" expanded="true" />
+            <element signature="e#5122#6029#0" expanded="true" />
+            <element signature="e#6028#6029#0" expanded="true" />
             <element signature="method#onItemClick#0;class#SystemInfoMain#0" expanded="false" />
           </folding>
         </state>
@@ -2597,7 +2491,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="183" column="0" selection-start-line="183" selection-start-column="0" selection-end-line="183" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#558#559#0" expanded="false" />
+            <element signature="e#588#589#0" expanded="false" />
+            <element signature="e#5442#5443#0" expanded="false" />
+            <element signature="e#5472#5473#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2699,7 +2599,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="263" column="29" selection-start-line="263" selection-start-column="29" selection-end-line="263" selection-end-column="29" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#558#559#0" expanded="false" />
+            <element signature="e#588#589#0" expanded="false" />
+            <element signature="e#5442#5443#0" expanded="false" />
+            <element signature="e#5472#5473#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2737,14 +2643,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.785714">
-          <caret line="21" column="5" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/filepaths.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-2.0357144">
@@ -2761,15 +2659,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.535714">
+          <caret line="37" column="68" selection-start-line="37" selection-start-column="68" selection-end-line="37" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-23/android/os/Looper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="147" column="0" selection-start-line="147" selection-start-column="0" selection-end-line="147" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nemustech/study/sysinfo/SystemInfoMain.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5696864">
-          <caret line="375" column="13" selection-start-line="375" selection-start-column="13" selection-end-line="375" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.6738351">
+          <caret line="180" column="9" selection-start-line="180" selection-start-column="9" selection-end-line="180" selection-end-column="9" />
           <folding>
-            <element signature="e#2948#4396#0" expanded="true" />
-            <element signature="e#4395#4396#0" expanded="true" />
-            <element signature="e#4440#5347#0" expanded="true" />
-            <element signature="e#5346#5347#0" expanded="true" />
+            <element signature="e#3629#5078#0" expanded="true" />
+            <element signature="e#5077#5078#0" expanded="true" />
+            <element signature="e#5122#6029#0" expanded="true" />
+            <element signature="e#6028#6029#0" expanded="true" />
             <element signature="method#onItemClick#0;class#SystemInfoMain#0" expanded="false" />
           </folding>
         </state>
