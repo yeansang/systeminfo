@@ -49,7 +49,7 @@ public class SystemInfoMain extends Activity {
     @SuppressWarnings("unused")
     private static final String TAG = SystemInfoMain.class.getSimpleName();
 
-    final static String VER = "1.3";
+    final static String VER = "1.5";
 
     String PATH;
     File dir = null;
@@ -57,10 +57,8 @@ public class SystemInfoMain extends Activity {
     LinearLayout mItemList;
     ArrayAdapter<InfoItem> mAdapter;
     ListView mContentList;
+    Toast toast;
 
-    final static int REQUEST_PHONE = 1;
-    final static int REQUEST_LOCATION = 2;
-    final static int REQUEST_CAMERA = 3;
     final static int REQUEST_ALL = 4;
 
     private OpenGlInfoProvider.GLHelper mGLHelper;
@@ -252,7 +250,6 @@ public class SystemInfoMain extends Activity {
             @Override
             public void run() {
                 if (null != mReceivedItems) {
-                    //updateContent(mReceivedItems);
                     tempNetworkItems = mReceivedItems;
                 }
             }
@@ -357,35 +354,13 @@ public class SystemInfoMain extends Activity {
 
     @Override
     public void onRequestPermissionsResult (int requestCode, String[] permissions, int[] grantResults) {
-        ArrayList<InfoItem> items = null;
 
-        if (requestCode == REQUEST_PHONE) {
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //items = mTelephoneProvider.getItems();
-            } else {
-                items = new ArrayList<InfoItem>();
-            }
-        }else if(requestCode == REQUEST_LOCATION){
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //items = mLocationProvider.getItems();
-            } else {
-                items = new ArrayList<InfoItem>();
-            }
-        }else if(requestCode == REQUEST_CAMERA){
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //items = mCameraProvider.getItems();
-            } else {
-                items = new ArrayList<InfoItem>();
-            }
-        }else if(requestCode == REQUEST_ALL){
+        if(requestCode == REQUEST_ALL){
             itemToXML();
         }
         else{
             Log.d("request code err",requestCode+"");
-            items = new ArrayList<InfoItem>();
         }
-
-        //updateContent(items);
     }
 
     private void itemToXML(){
@@ -396,7 +371,7 @@ public class SystemInfoMain extends Activity {
 
         StringWriter writer = new StringWriter();
 
-        Toast toast = Toast.makeText(getApplicationContext(),"refreshing...",Toast.LENGTH_SHORT);
+        toast = Toast.makeText(getApplicationContext(),"refreshing...",Toast.LENGTH_SHORT);
         toast.show();
 
         try {
@@ -482,12 +457,6 @@ public class SystemInfoMain extends Activity {
             toast.show();
             e.printStackTrace();
         }
-        /*try {
-            xmlReader(new FileInputStream(new File(PATH + "/device.xml")));
-            outCome = false;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }*/
     }
 
     private void xmlWriter(String tagName, ArrayList<InfoItem> items, XmlSerializer serializer) throws IOException {

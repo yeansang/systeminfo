@@ -46,9 +46,9 @@ public class AboutInfoProvider extends InfoProvider {
                     value = AndroidInfoProvider.formatSdk(mContext.getApplicationInfo().targetSdkVersion);
                     break;
                 }
-                case R.string.about_developer: value = "cheolgyoon.yoo@nemustech.com"; break;
+                case R.string.about_developer: value = "cheolgyoon.yoo@nemustech.com, ysan1991@gmail.com"; break;
                 case R.string.about_thanks: value = "Nemustech (http://www.nemustech.com)"; break;
-                case R.string.about_source: value = "https://boylmm@bitbucket.org/boylmm/systeminfo.git"; break;
+                case R.string.about_source: value = "https://github.com/yeansang/systeminfo"; break;
                 case R.string.about_license: value = getString(R.string.about_license_gpl2); break;
                 default:
                     value = getString(R.string.invalid_item);

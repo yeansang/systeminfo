@@ -1,33 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <instant-run
-    abi="armeabi-v7a,armeabi"
+    abi="x86"
     api-level="23"
-    density="xhdpi"
+    density="420dpi"
     format="7"
-    timestamp="16805570711060"
+    timestamp="20220476135135"
     token="6067727145701632333" >
 
     <task
         name="javac"
-        duration="172" />
+        duration="0" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="88" />
+        duration="0" />
     <task
         name="verifier"
-        duration="33" />
+        duration="0" />
 
-    <artifact
-        location="C:\Users\nemus\AndroidStudioProjects\systeminfo\app\build\outputs\apk\app-debug.apk"
-        type="MAIN" />
-
-    <build timestamp="16805570711060" >
+    <build timestamp="19841675208378" >
         <artifact
             location="C:\Users\nemus\AndroidStudioProjects\systeminfo\app\build\outputs\apk\app-debug.apk"
             type="MAIN" />
     </build>
+    <build timestamp="20079998351264" >
+        <artifact
+            location="C:\Users\nemus\AndroidStudioProjects\systeminfo\app\build\intermediates\res\resources-debug.ap_"
+            type="RESOURCES" />
+        <artifact
+            location="C:\Users\nemus\AndroidStudioProjects\systeminfo\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_8\classes.dex"
+            type="DEX" />
+        <artifact
+            location="C:\Users\nemus\AndroidStudioProjects\systeminfo\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-24.1.1_9cf1c40e39d35ff5e28e8d3ce4fe26c6f3b39f3e\classes.dex"
+            type="DEX" />
+        <artifact
+            location="C:\Users\nemus\AndroidStudioProjects\systeminfo\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_07f374c8c4fd60b67541c57e160b348d18d272e6\classes.dex"
+            type="DEX" />
+        <artifact
+            location="C:\Users\nemus\AndroidStudioProjects\systeminfo\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_9\classes.dex"
+            type="DEX" />
+        <artifact
+            location="C:\Users\nemus\AndroidStudioProjects\systeminfo\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_2\classes.dex"
+            type="DEX" />
+        <artifact
+            location="C:\Users\nemus\AndroidStudioProjects\systeminfo\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_0\classes.dex"
+            type="DEX" />
+        <artifact
+            location="C:\Users\nemus\AndroidStudioProjects\systeminfo\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_3\classes.dex"
+            type="DEX" />
+        <artifact
+            location="C:\Users\nemus\AndroidStudioProjects\systeminfo\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_1\classes.dex"
+            type="DEX" />
+        <artifact
+            location="C:\Users\nemus\AndroidStudioProjects\systeminfo\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_4\classes.dex"
+            type="DEX" />
+        <artifact
+            location="C:\Users\nemus\AndroidStudioProjects\systeminfo\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_62a897600bbe22103ca79ab9ed11d018434044d3\classes.dex"
+            type="DEX" />
+        <artifact
+            location="C:\Users\nemus\AndroidStudioProjects\systeminfo\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_5\classes.dex"
+            type="DEX" />
+        <artifact
+            location="C:\Users\nemus\AndroidStudioProjects\systeminfo\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_6\classes.dex"
+            type="DEX" />
+        <artifact
+            location="C:\Users\nemus\AndroidStudioProjects\systeminfo\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_7\classes.dex"
+            type="DEX" />
+        <artifact
+            location="C:\Users\nemus\AndroidStudioProjects\systeminfo\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.1.1_90ee08fbca3146802ca47a6ebec44c303981c11a\classes.dex"
+            type="DEX" />
+        <artifact
+            location="C:\Users\nemus\AndroidStudioProjects\systeminfo\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-24.1.1_044ddd3c561dfc03e462752ce3cb4a099e57ea26\classes.dex"
+            type="DEX" />
+    </build>
+    <build timestamp="20220476135135" />
 
 </instant-run>
