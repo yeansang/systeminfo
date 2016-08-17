@@ -361,6 +361,11 @@ public class SystemInfoMain extends Activity {
         else{
             Log.d("request code err",requestCode+"");
         }
+        try {
+            xmlReader(new FileInputStream(new File(PATH + "/device.xml")));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     private void itemToXML(){
