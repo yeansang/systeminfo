@@ -25,14 +25,16 @@ public final class R {
         public static final int activity_vertical_margin=0x7f060001;
     }
     public static final class drawable {
-        public static final int color_apps_bg_center=0x7f020003;
-        public static final int ic_launcher=0x7f020000;
-        public static final int ic_restore_page_white_48dp=0x7f020001;
-        public static final int ic_share_white_48dp=0x7f020002;
+        public static final int color_apps_bg_center=0x7f020004;
+        public static final int ic_exit_to_app_white_48dp=0x7f020000;
+        public static final int ic_launcher=0x7f020001;
+        public static final int ic_restore_page_white_48dp=0x7f020002;
+        public static final int ic_share_white_48dp=0x7f020003;
     }
     public static final class id {
-        public static final int action_refresh=0x7f0a001b;
-        public static final int action_share=0x7f0a001c;
+        public static final int action_outcome=0x7f0a001b;
+        public static final int action_refresh=0x7f0a001c;
+        public static final int action_share=0x7f0a001d;
         public static final int container=0x7f0a0017;
         public static final int content_name=0x7f0a0000;
         public static final int content_value=0x7f0a0001;

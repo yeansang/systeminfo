@@ -10,5 +10,9 @@
     {
         "merged": "C:\\Users\\nemus\\AndroidStudioProjects\\systeminfo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\ic_launcher.png",
         "source": "C:\\Users\\nemus\\AndroidStudioProjects\\systeminfo\\app\\src\\main\\res\\drawable-xhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\nemus\\AndroidStudioProjects\\systeminfo\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\ic_exit_to_app_white_48dp.png",
+        "source": "C:\\Users\\nemus\\AndroidStudioProjects\\systeminfo\\app\\src\\main\\res\\drawable-xhdpi\\ic_exit_to_app_white_48dp.png"
     }
 ]

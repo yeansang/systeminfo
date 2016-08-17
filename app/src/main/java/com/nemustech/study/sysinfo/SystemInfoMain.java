@@ -3,6 +3,7 @@ package com.nemustech.study.sysinfo;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -30,11 +31,13 @@ import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 import org.xmlpull.v1.XmlSerializer;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.net.URI;
@@ -88,8 +91,13 @@ public class SystemInfoMain extends Activity {
     private ArrayList<InfoItem> aboutItems= new ArrayList<>();
 
     private XmlPullParser xpp;
+    private InputStream xmlInput = null;
+
+    private String deviceName = "";
+    private String serialNum = "";
 
     private boolean outCome = false;
+
 
     int permissionCheck=0;
 
@@ -97,8 +105,14 @@ public class SystemInfoMain extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
-        MenuItem refresh = menu.getItem(0);
-        MenuItem share = menu.getItem(1);
+        MenuItem outcome = menu.getItem(0);
+        MenuItem refresh = menu.getItem(1);
+        MenuItem share = menu.getItem(2);
+
+        outcome.setVisible(false);
+        refresh.setVisible(!outCome);
+        share.setVisible(!outCome);
+
         refresh.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -153,6 +167,8 @@ public class SystemInfoMain extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+
         PATH = getExternalFilesDir(null).getPath();
         dir =  new File(getExternalFilesDir(null),"device");
         if(!dir.exists()){
@@ -160,24 +176,19 @@ public class SystemInfoMain extends Activity {
         }
 
         Intent intent = getIntent();
-        String action = intent.getAction();
-        String type = intent.getType();
-        File fa = null;
+        Uri data = intent.getData();
 
-
-
-        if(intent != null){
-            Uri urivalue = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
-            Log.d("text",intent.getData().toString());
-
-           //String xml = intent.getStringExtra(Intent.EXTRA_TEXT);
-            if(urivalue!=null) Log.d("text",urivalue.toString());
-            /*if (xml != null) {
-                String sendFile = intent.getData().getPath();
-                fa = new File(sendFile);
-                Log.d("onCreate", sendFile);
-                outCome = true;
-            }*/
+        if(data !=null){
+            final String scheme = data.getScheme();
+            if(ContentResolver.SCHEME_CONTENT.equals(scheme)){
+                try{
+                    ContentResolver cr = getApplicationContext().getContentResolver();
+                    xmlInput = cr.openInputStream(data);
+                    outCome = true;
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
         }
 
         setContentView(R.layout.l_main);
@@ -207,11 +218,17 @@ public class SystemInfoMain extends Activity {
                     itemToXML();
                 }
             }
-            xmlReader(fs);
-        }else{
-            if(fa != null) xmlReader(fa);
+            try {
+                xmlInput = new FileInputStream(fs);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
+        xmlReader(xmlInput);
 
+        updateContent(androidItems);
+
+        getActionBar().setTitle(deviceName+" : "+serialNum);
     }
 
     @Override
@@ -465,7 +482,12 @@ public class SystemInfoMain extends Activity {
             toast.show();
             e.printStackTrace();
         }
-        //xmlReader(new File(PATH + "/device.xml"));
+        /*try {
+            xmlReader(new FileInputStream(new File(PATH + "/device.xml")));
+            outCome = false;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }*/
     }
 
     private void xmlWriter(String tagName, ArrayList<InfoItem> items, XmlSerializer serializer) throws IOException {
@@ -499,16 +521,12 @@ public class SystemInfoMain extends Activity {
         serializer.endTag("",tagName.replaceAll(" ","_"));
     }
 
-    private void xmlReader(File fs){
-        FileInputStream xmlInput;
+    private void xmlReader(InputStream xmlInput){
         XmlPullParserFactory factory;
         try {
             factory= XmlPullParserFactory.newInstance();
             xpp= factory.newPullParser();
-            xmlInput = new FileInputStream(fs);
             xpp.setInput(new InputStreamReader(xmlInput));
-        }catch (FileNotFoundException e){
-            e.printStackTrace();
         }catch (XmlPullParserException e){
             e.printStackTrace();
         }
@@ -525,11 +543,11 @@ public class SystemInfoMain extends Activity {
                         if(catName.equals("name")){
                             xpp.next();
                             name = xpp.getText();
-                            Log.d("xmlReader1", name);
+//                            Log.d("xmlReader1", name);
                         }else if(catName.equals("value")){
                             xpp.next();
                             value = xpp.getText();
-                            if(value != null) Log.d("xmlReader2", value);
+//                            if(value != null) Log.d("xmlReader2", value);
                         }else if(!catName.equals("item")){
                             if(catName.equals("Android")) temp = androidItems;
                             else if(catName.equals("Screen")) temp = screenItems;
@@ -551,13 +569,15 @@ public class SystemInfoMain extends Activity {
                             else if(catName.equals("Security_providers")) temp = securityItems;
                             else if(catName.equals("SupportedLocales")) temp = localeItems;
                             else if(catName.equals("AboutApp")) temp = aboutItems;
-                            Log.d("xmlReader menu",catName);
+//                            Log.d("xmlReader menu",catName);
                             if(temp!=null)  temp.clear();
                         }
                         break;
                     case XmlPullParser.END_TAG:
                         if(xpp.getName().equals("item")){
                             temp.add(new InfoItem(name,value));
+                            if(name.equals("Model")) deviceName = value;
+                            if(name.equals("H/W Serial number")) serialNum = value;
                         }
                         break;
                 }
